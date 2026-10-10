@@ -1,0 +1,2745 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — TakeRemo</title>
+  <meta name="description"
+    content="TakeRemo Workspace Dashboard — Manage AI employees, automated calling, and voice workflows.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/dashboard.css">
+  <link rel="stylesheet" href="/auth.css">
+</head>
+
+<body class="dashboard-body">
+
+  <div class="dashboard-layout">
+    <!-- Mobile Off-Canvas Drawer Backdrop -->
+    <div class="mobile-sidebar-backdrop" id="mobile-sidebar-backdrop"></div>
+
+    <!-- ======================================================================
+         1. LEFT SIDEBAR (PURE WHITE & REFINED BLUE SYSTEM)
+         ====================================================================== -->
+    <aside class="dash-sidebar" id="dash-sidebar">
+      <!-- Sidebar Header / Logo + Collapse Toggle -->
+      <div class="sidebar-header">
+        <a href="/" class="sidebar-brand" title="TakeRemo Home" data-tooltip="TakeRemo Home">
+          <img src="/assets/Takeremo%20AI%20Calling%20Logo.png" alt="TakeRemo AI Calling" style="height: 32px; width: auto; object-fit: contain;">
+        </a>
+
+        <!-- Desktop Sidebar Toggle Button -->
+        <button type="button" class="sidebar-toggle-btn" id="sidebar-toggle-btn" aria-label="Collapse sidebar"
+          title="Collapse sidebar" data-tooltip="Collapse sidebar">
+          <svg class="toggle-icon-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Sidebar Navigation Groups -->
+      <div class="sidebar-nav-scroller">
+        <!-- OVERVIEW GROUP -->
+        <!-- OVERVIEW GROUP -->
+        <div class="nav-section-group">
+          <span class="nav-group-title">OVERVIEW</span>
+          <button type="button" class="sidebar-nav-item active" data-nav="dashboard" data-tooltip="Dashboard">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+            </svg>
+            <span class="nav-label">Dashboard</span>
+          </button>
+          <button type="button" class="sidebar-nav-item" data-nav="users" data-tooltip="Admin Users">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+            <span class="nav-label">Users</span>
+            <span class="nav-badge-pill" id="nav-users-count">128</span>
+          </button>
+          <button type="button" class="sidebar-nav-item" data-nav="campaigns" data-tooltip="Voice Campaigns">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+            <span class="nav-label">Campaigns</span>
+          </button>
+        </div>
+
+        <!-- CALLING & DIALOGUES GROUP -->
+        <div class="nav-section-group">
+          <span class="nav-group-title">OPERATIONS</span>
+          <button type="button" class="sidebar-nav-item" data-nav="conversations"
+            data-tooltip="Conversations & Transcripts">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+            <span class="nav-label">Conversations</span>
+          </button>
+          <button type="button" class="sidebar-nav-item" data-nav="calls" data-tooltip="Call History Logs">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            <span class="nav-label">Call History</span>
+          </button>
+          <button type="button" class="sidebar-nav-item feature-placeholder-trigger" data-feature="Scheduled Calls"
+            data-tooltip="Scheduled Calls">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+            <span class="nav-label">Scheduled Calls</span>
+          </button>
+        </div>
+
+
+
+        <!-- SETTINGS GROUP -->
+        <div class="nav-section-group">
+          <span class="nav-group-title">SETTINGS</span>
+          <button type="button" class="sidebar-nav-item" id="sidebar-settings-btn" data-tooltip="Settings">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+            </svg>
+            <span class="nav-label">Settings</span>
+          </button>
+          <a href="/" class="sidebar-nav-item" data-tooltip="Back to Home Page" style="text-decoration:none;">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            <span class="nav-label">Back to Home</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Sidebar Footer (Company Brand Mini) -->
+      <div class="sidebar-footer">
+        <div class="sidebar-company-card" id="sidebar-company-card" role="button" tabindex="0"
+          data-tooltip="Workspace Profile" title="Workspace Profile">
+          <div class="sidebar-company-icon" id="sidebar-comp-icon">AH</div>
+          <div class="sidebar-company-details">
+            <span class="sidebar-company-name" id="sidebar-comp-name">Workspace</span>
+            <span class="sidebar-plan-label">TakeRemo Standard</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ======================================================================
+         2. MAIN AREA (TOP HEADER + SCROLLABLE DASHBOARD WORKSPACE)
+         ====================================================================== -->
+    <div class="dash-main-area">
+
+      <!-- Top Header Navigation Bar -->
+      <header class="dash-header">
+        <div class="header-left-group">
+          <!-- Mobile Hamburger Toggle -->
+          <button type="button" class="mobile-menu-btn" id="mobile-toggle-btn" aria-label="Toggle navigation menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+
+          <!-- Back to Home Button -->
+          <a href="/" class="btn-back-home" id="dash-back-home-btn" title="Back to Home Page">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Back to Home</span>
+          </a>
+
+          <!-- Search Bar -->
+          <div class="header-search-bar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input type="text" placeholder="Search employees, campaigns, candidates..." id="dash-global-search">
+          </div>
+        </div>
+
+        <div class="header-right-actions">
+          <!-- Notifications -->
+          <button type="button" class="header-icon-btn feature-placeholder-trigger" data-feature="Notifications"
+            aria-label="View notifications">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+            <span class="notification-dot"></span>
+          </button>
+
+          <!-- Help -->
+          <button type="button" class="header-icon-btn feature-placeholder-trigger" data-feature="Help & Documentation"
+            aria-label="Help">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </button>
+
+          <!-- User Profile Dropdown Trigger -->
+          <div class="user-menu-wrapper">
+            <button type="button" class="user-profile-trigger" id="user-profile-trigger">
+              <div class="user-avatar-circle" id="user-header-avatar">U</div>
+              <div class="user-text-meta">
+                <span class="user-meta-name" id="user-header-name">Loading...</span>
+                <span class="user-meta-company" id="user-header-company">Workspace</span>
+              </div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.5">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div class="user-dropdown-panel" id="user-dropdown-panel">
+              <div class="dropdown-user-header">
+                <div class="dd-name" id="dd-user-name">User Name</div>
+                <div class="dd-email" id="dd-user-email">email@company.com</div>
+              </div>
+              <button type="button" class="dropdown-item" id="dd-profile-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <span>Profile & Workspace</span>
+              </button>
+              <button type="button" class="dropdown-item feature-placeholder-trigger" data-feature="Workspace Settings">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3" />
+                  <path
+                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                </svg>
+                <span>Settings</span>
+              </button>
+              <a href="/" class="dropdown-item" style="text-decoration:none;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                <span>Back to Home</span>
+              </a>
+              <button type="button" class="dropdown-item item-logout" id="header-logout-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                  <polyline points="16 17 21 12 16 7" />
+                  <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+                <span>Sign Out</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Workspace Scrollable Area -->
+      <main class="workspace-scroll-area">
+
+        <!-- Global Admin Notification / Alert Banner -->
+        <div id="admin-alert-banner" class="admin-alert-banner" style="display: none;"></div>
+
+        <!-- ==================================================================
+             VIEW 1: DASHBOARD OVERVIEW
+             ================================================================== -->
+        <div class="admin-view-panel active" id="view-dashboard">
+          <!-- 1. Top Dynamic Greeting Row -->
+          <div class="dash-greeting-row">
+            <div>
+              <h1 class="greeting-headline" id="main-greeting-title">Good morning</h1>
+              <p class="greeting-subtext">TakeRemo Voice AI Administrative Operations & Analytics</p>
+            </div>
+            <div class="company-tag-pill" id="company-tag-pill">
+              <span class="tag-blue-dot"></span>
+              <span id="greeting-company-name">TakeRemo Workspace</span>
+            </div>
+          </div>
+
+          <!-- 2. Primary AI Employee Creation Banner -->
+          <section class="primary-ai-hero-card">
+            <div class="primary-hero-content">
+              <span class="hero-pill-badge">✨ TakeRemo CORE ENGINE</span>
+              <h2 class="primary-hero-title">Automate your enterprise voice workflows</h2>
+              <p class="primary-hero-desc">Deploy AI voice agents for Recruitment Screening, Outbound Sales Discovery,
+                and Customer Support escalations.</p>
+              <div class="hero-cta-group">
+                <button type="button" class="btn-primary-blue" id="hero-launch-campaign-btn">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                  </svg>
+                  <span>Launch Voice Campaign</span>
+                </button>
+                <button type="button" class="btn-secondary-white" id="btn-talk-to-Remo">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                  </svg>
+                  <span>Test Voice Agent</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- AI Voice Waveform Visualization -->
+            <div class="hero-visual-pod">
+              <div class="voice-rings"></div>
+              <div class="voice-rings-2"></div>
+              <div class="voice-core-orb">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                  <line x1="12" y1="19" x2="12" y2="22" />
+                </svg>
+              </div>
+            </div>
+          </section>
+
+          <!-- 3. Dashboard Metrics (Live updated from /api/admin/dashboard) -->
+          <section style="margin-bottom: 24px;">
+            <div class="section-subhead-row">
+              <h3 class="section-subhead">Workspace Telemetry & Calling Overview</h3>
+            </div>
+
+            <!-- Top Row: Volume & Attempt Metrics -->
+            <div class="metrics-four-grid" style="margin-bottom: 14px;">
+              <div class="metric-card">
+                <div class="metric-header-row">
+                  <span class="metric-label-text">Total Contacts</span>
+                  <svg class="metric-icon-small" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                  </svg>
+                </div>
+                <div class="metric-big-number" id="metric-total-contacts">0</div>
+                <span class="metric-sub-note">Uploaded across sheets</span>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-header-row">
+                  <span class="metric-label-text">Calls Attempted</span>
+                  <svg class="metric-icon-small" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                </div>
+                <div class="metric-big-number" id="metric-total-calls">342</div>
+                <span class="metric-sub-note">Outbound carrier dispatches</span>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-header-row">
+                  <span class="metric-label-text">Calls Completed</span>
+                  <svg class="metric-icon-small" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                </div>
+                <div class="metric-big-number" id="metric-completed-calls" style="color: #16A34A;">334</div>
+                <span class="metric-sub-note">Conversations concluded</span>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-header-row">
+                  <span class="metric-label-text">Unanswered / Failed</span>
+                  <svg class="metric-icon-small" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="15" y1="9" x2="9" y2="15" />
+                    <line x1="9" y1="9" x2="15" y2="15" />
+                  </svg>
+                </div>
+                <div class="metric-big-number" id="metric-failed-calls" style="color: #DC2626;">0</div>
+                <span class="metric-sub-note">Busy or dropped lines</span>
+              </div>
+            </div>
+
+            <!-- Bottom Row: Queue & AI Outcomes -->
+            <div class="metrics-four-grid">
+              <div class="metric-card">
+                <div class="metric-header-row">
+                  <span class="metric-label-text">Awaiting Processing</span>
+                  <svg class="metric-icon-small" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 14 14" />
+                  </svg>
+                </div>
+                <div class="metric-big-number" id="metric-pending-calls" style="color: #2563EB;">0</div>
+                <span class="metric-sub-note">Queued for sequential call</span>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-header-row">
+                  <span class="metric-label-text">Accepted / Shortlisted</span>
+                  <span class="badge-pill badge-status-completed" style="font-size:0.65rem;">Screened</span>
+                </div>
+                <div class="metric-big-number" id="metric-accepted-calls" style="color: #16A34A;">0</div>
+                <span class="metric-sub-note">Met qualification criteria</span>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-header-row">
+                  <span class="metric-label-text">On Hold / Follow-up</span>
+                  <span class="badge-pill badge-status-callback" style="font-size:0.65rem;">Review</span>
+                </div>
+                <div class="metric-big-number" id="metric-on-hold-calls" style="color: #EAB308;">0</div>
+                <span class="metric-sub-note">Awaiting human review</span>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-header-row">
+                  <span class="metric-label-text">Rejected / Declined</span>
+                  <span class="badge-pill badge-recruitment" style="font-size:0.65rem;">Outcome</span>
+                </div>
+                <div class="metric-big-number" id="metric-rejected-calls" style="color: #DC2626;">0</div>
+                <span class="metric-sub-note">Not a fit / declined to talk</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- 4. Sequential Outbound Call Queue Monitor -->
+          <div class="queue-monitor-card" id="queue-monitor-card">
+            <div class="qm-header-row">
+              <div class="qm-title-group">
+                <span class="live-pulse-dot"></span>
+                <h3>Sequential Outbound Calling Worker</h3>
+                <span class="badge-pill" id="qm-worker-status-badge" style="background: rgba(255,255,255,0.15); color: #FFFFFF; font-size: 0.7rem;">Active (1 Call At A Time)</span>
+              </div>
+              <div class="qm-controls-group">
+                <button type="button" class="btn-qm-ctrl btn-qm-pause" id="btn-qm-pause" title="Pause Queue">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                  <span>Pause</span>
+                </button>
+                <button type="button" class="btn-qm-ctrl btn-qm-pause" id="btn-qm-resume" style="display:none;" title="Resume Queue">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  <span>Resume</span>
+                </button>
+                <button type="button" class="btn-qm-ctrl btn-qm-cancel" id="btn-qm-cancel" title="Cancel Queue">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  <span>Cancel Queue</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Active Call Pod -->
+            <div class="qm-active-call-box" id="qm-active-call-pod">
+              <div class="qm-call-contact-meta">
+                <div class="qm-call-avatar" id="qm-call-avatar">R</div>
+                <div>
+                  <div style="font-weight: 700; font-size: 0.95rem;" id="qm-call-name">Queue Standing By</div>
+                  <div style="font-size: 0.775rem; color: #94A3B8;" id="qm-call-phone">Ready to process validated Excel spreadsheets sequentially</div>
+                </div>
+              </div>
+              <div class="qm-queue-pills">
+                <span class="qm-queue-pill-item">Queued: <strong id="qm-count-queued">0</strong></span>
+                <span class="qm-queue-pill-item">In-Progress: <strong id="qm-count-inprogress">0</strong></span>
+                <span class="qm-queue-pill-item">Completed: <strong id="qm-count-completed">0</strong></span>
+                <span class="qm-queue-pill-item">Failed: <strong id="qm-count-failed">0</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. THREE CLEARLY SEPARATED SERVICE COLUMNS/CARDS -->
+          <section style="margin-bottom: 24px;">
+            <div class="section-subhead-row">
+              <h3 class="section-subhead">Service Workflows & Excel Operations</h3>
+            </div>
+
+            <div class="remo-services-grid">
+
+              <!-- ==========================================
+                   SERVICE CARD 1: RECRUITMENT
+                   ========================================== -->
+              <div class="remo-service-card recruitment-card" id="card-service-recruitment">
+                <div class="remo-card-top-header">
+                  <div class="remo-card-title-group">
+                    <h3>
+                      <span>💼</span> Recruitment
+                    </h3>
+                    <p class="remo-card-desc">Screen candidate qualifications, skills, notice period, and availability.</p>
+                  </div>
+                  <span class="badge-pill badge-recruitment">Recruitment</span>
+                </div>
+
+                <!-- Excel Upload Area -->
+                <div class="remo-card-upload-zone" id="zone-upload-recruitment" data-service="recruitment">
+                  <input type="file" id="file-input-recruitment" accept=".xlsx,.xls,.csv" aria-label="Upload Recruitment Excel">
+                  <div class="remo-upload-icon-circle">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                  </div>
+                  <span class="remo-upload-label-main">Upload Candidate Sheet</span>
+                  <span class="remo-upload-label-sub">Drop .xlsx, .xls, or .csv file</span>
+                </div>
+
+                <!-- Selected Filename & Status -->
+                <div class="remo-file-meta-bar" id="bar-file-recruitment">
+                  <span class="remo-file-name-text" id="name-file-recruitment">candidates.xlsx</span>
+                  <span class="badge-pill badge-status-completed" id="badge-file-recruitment">READY</span>
+                </div>
+
+                <!-- Excel Validation Results -->
+                <div class="remo-validation-card">
+                  <div class="remo-val-header">
+                    <span>Validation Summary</span>
+                    <button type="button" class="btn-text-link btn-view-errors" data-service="recruitment" style="background:none; border:none; font-size:0.68rem; color:#FC2415; font-weight:700; cursor:pointer;" id="btn-errors-recruitment">View Errors</button>
+                  </div>
+                  <div class="remo-val-grid">
+                    <div class="remo-val-stat-box">
+                      <div class="remo-val-stat-val val-valid" id="val-valid-recruitment">0</div>
+                      <div class="remo-val-stat-lbl">Valid Contacts</div>
+                    </div>
+                    <div class="remo-val-stat-box">
+                      <div class="remo-val-stat-val val-invalid" id="val-invalid-recruitment">0</div>
+                      <div class="remo-val-stat-lbl">Invalid Rows</div>
+                    </div>
+                    <div class="remo-val-stat-box">
+                      <div class="remo-val-stat-val val-pending" id="val-pending-recruitment">0</div>
+                      <div class="remo-val-stat-lbl">Pending Calls</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Call Button -->
+                <button type="button" class="btn-card-call-action" id="btn-call-recruitment" data-service="recruitment">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                  <span>Start Recruitment Calls</span>
+                </button>
+
+                <!-- Calling Progress -->
+                <div class="remo-call-progress-wrap">
+                  <div class="remo-prog-label-row">
+                    <span id="label-prog-recruitment">Calling Progress</span>
+                    <span id="percent-prog-recruitment">0%</span>
+                  </div>
+                  <div class="remo-prog-track">
+                    <div class="remo-prog-fill" id="fill-prog-recruitment"></div>
+                  </div>
+                </div>
+
+                <!-- Progress Counts -->
+                <div class="remo-stats-grid-four">
+                  <div>
+                    <div class="remo-stat-col-num" id="stat-completed-recruitment" style="color:#16A34A;">0</div>
+                    <div class="remo-stat-col-lbl">Completed</div>
+                  </div>
+                  <div>
+                    <div class="remo-stat-col-num" id="stat-failed-recruitment" style="color:#DC2626;">0</div>
+                    <div class="remo-stat-col-lbl">Failed</div>
+                  </div>
+                  <div>
+                    <div class="remo-stat-col-num" id="stat-skipped-recruitment" style="color:#64748B;">0</div>
+                    <div class="remo-stat-col-lbl">Skipped</div>
+                  </div>
+                  <div>
+                    <div class="remo-stat-col-num" id="stat-inprogress-recruitment" style="color:#2563EB;">0</div>
+                    <div class="remo-stat-col-lbl">In-Progress</div>
+                  </div>
+                </div>
+
+                <!-- Card Actions Footer -->
+                <div class="remo-card-footer">
+                  <button type="button" class="btn-card-secondary btn-view-service-convs" data-service="recruitment">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>Conversations</span>
+                  </button>
+                  <a href="/api/admin/recruitment/download" class="btn-card-secondary btn-download-excel" id="btn-dl-recruitment">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Updated Excel</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- ==========================================
+                   SERVICE CARD 2: OUTBOUND SALES
+                   ========================================== -->
+              <div class="remo-service-card sales-card" id="card-service-sales">
+                <div class="remo-card-top-header">
+                  <div class="remo-card-title-group">
+                    <h3>
+                      <span>📈</span> Outbound Sales
+                    </h3>
+                    <p class="remo-card-desc">B2B lead qualification, consultative discovery, and demo scheduling.</p>
+                  </div>
+                  <span class="badge-pill badge-sales">Sales</span>
+                </div>
+
+                <!-- Excel Upload Area -->
+                <div class="remo-card-upload-zone" id="zone-upload-sales" data-service="sales">
+                  <input type="file" id="file-input-sales" accept=".xlsx,.xls,.csv" aria-label="Upload Sales Excel">
+                  <div class="remo-upload-icon-circle">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                  </div>
+                  <span class="remo-upload-label-main">Upload Sales Leads Sheet</span>
+                  <span class="remo-upload-label-sub">Drop .xlsx, .xls, or .csv file</span>
+                </div>
+
+                <!-- Selected Filename & Status -->
+                <div class="remo-file-meta-bar" id="bar-file-sales">
+                  <span class="remo-file-name-text" id="name-file-sales">prospects.xlsx</span>
+                  <span class="badge-pill badge-status-completed" id="badge-file-sales">READY</span>
+                </div>
+
+                <!-- Excel Validation Results -->
+                <div class="remo-validation-card">
+                  <div class="remo-val-header">
+                    <span>Validation Summary</span>
+                    <button type="button" class="btn-text-link btn-view-errors" data-service="sales" style="background:none; border:none; font-size:0.68rem; color:#FC2415; font-weight:700; cursor:pointer;" id="btn-errors-sales">View Errors</button>
+                  </div>
+                  <div class="remo-val-grid">
+                    <div class="remo-val-stat-box">
+                      <div class="remo-val-stat-val val-valid" id="val-valid-sales">0</div>
+                      <div class="remo-val-stat-lbl">Valid Contacts</div>
+                    </div>
+                    <div class="remo-val-stat-box">
+                      <div class="remo-val-stat-val val-invalid" id="val-invalid-sales">0</div>
+                      <div class="remo-val-stat-lbl">Invalid Rows</div>
+                    </div>
+                    <div class="remo-val-stat-box">
+                      <div class="remo-val-stat-val val-pending" id="val-pending-sales">0</div>
+                      <div class="remo-val-stat-lbl">Pending Calls</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Call Button -->
+                <button type="button" class="btn-card-call-action" id="btn-call-sales" data-service="sales">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                  <span>Start Sales Calls</span>
+                </button>
+
+                <!-- Calling Progress -->
+                <div class="remo-call-progress-wrap">
+                  <div class="remo-prog-label-row">
+                    <span id="label-prog-sales">Calling Progress</span>
+                    <span id="percent-prog-sales">0%</span>
+                  </div>
+                  <div class="remo-prog-track">
+                    <div class="remo-prog-fill" id="fill-prog-sales"></div>
+                  </div>
+                </div>
+
+                <!-- Progress Counts -->
+                <div class="remo-stats-grid-four">
+                  <div>
+                    <div class="remo-stat-col-num" id="stat-completed-sales" style="color:#16A34A;">0</div>
+                    <div class="remo-stat-col-lbl">Completed</div>
+                  </div>
+                  <div>
+                    <div class="remo-stat-col-num" id="stat-failed-sales" style="color:#DC2626;">0</div>
+                    <div class="remo-stat-col-lbl">Failed</div>
+                  </div>
+                  <div>
+                    <div class="remo-stat-col-num" id="stat-skipped-sales" style="color:#64748B;">0</div>
+                    <div class="remo-stat-col-lbl">Skipped</div>
+                  </div>
+                  <div>
+                    <div class="remo-stat-col-num" id="stat-inprogress-sales" style="color:#2563EB;">0</div>
+                    <div class="remo-stat-col-lbl">In-Progress</div>
+                  </div>
+                </div>
+
+                <!-- Card Actions Footer -->
+                <div class="remo-card-footer">
+                  <button type="button" class="btn-card-secondary btn-view-service-convs" data-service="sales">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>Conversations</span>
+                  </button>
+                  <a href="/api/admin/sales/download" class="btn-card-secondary btn-download-excel" id="btn-dl-sales">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Updated Excel</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- ==========================================
+                   SERVICE CARD 3: CUSTOMER SUPPORT
+                   ========================================== -->
+              <div class="remo-service-card support-card" id="card-service-support">
+                <div class="remo-card-top-header">
+                  <div class="remo-card-title-group">
+                    <h3>
+                      <span>🎧</span> Customer Support
+                    </h3>
+                    <p class="remo-card-desc">Triage inquiries, diagnostic resolution steps, and warm human handoffs.</p>
+                  </div>
+                  <span class="badge-pill badge-support">Support</span>
+                </div>
+
+                <!-- Excel Upload Area -->
+                <div class="remo-card-upload-zone" id="zone-upload-support" data-service="support">
+                  <input type="file" id="file-input-support" accept=".xlsx,.xls,.csv" aria-label="Upload Support Excel">
+                  <div class="remo-upload-icon-circle">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                  </div>
+                  <span class="remo-upload-label-main">Upload Support Batch</span>
+                  <span class="remo-upload-label-sub">Drop .xlsx, .xls, or .csv file</span>
+                </div>
+
+                <!-- Selected Filename & Status -->
+                <div class="remo-file-meta-bar" id="bar-file-support">
+                  <span class="remo-file-name-text" id="name-file-support">support_tickets.xlsx</span>
+                  <span class="badge-pill badge-status-completed" id="badge-file-support">READY</span>
+                </div>
+
+                <!-- Excel Validation Results -->
+                <div class="remo-validation-card">
+                  <div class="remo-val-header">
+                    <span>Validation Summary</span>
+                    <button type="button" class="btn-text-link btn-view-errors" data-service="support" style="background:none; border:none; font-size:0.68rem; color:#FC2415; font-weight:700; cursor:pointer;" id="btn-errors-support">View Errors</button>
+                  </div>
+                  <div class="remo-val-grid">
+                    <div class="remo-val-stat-box">
+                      <div class="remo-val-stat-val val-valid" id="val-valid-support">0</div>
+                      <div class="remo-val-stat-lbl">Valid Contacts</div>
+                    </div>
+                    <div class="remo-val-stat-box">
+                      <div class="remo-val-stat-val val-invalid" id="val-invalid-support">0</div>
+                      <div class="remo-val-stat-lbl">Invalid Rows</div>
+                    </div>
+                    <div class="remo-val-stat-box">
+                      <div class="remo-val-stat-val val-pending" id="val-pending-support">0</div>
+                      <div class="remo-val-stat-lbl">Pending Calls</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Call Button -->
+                <button type="button" class="btn-card-call-action" id="btn-call-support" data-service="support">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                  <span>Start Support Calls</span>
+                </button>
+
+                <!-- Calling Progress -->
+                <div class="remo-call-progress-wrap">
+                  <div class="remo-prog-label-row">
+                    <span id="label-prog-support">Calling Progress</span>
+                    <span id="percent-prog-support">0%</span>
+                  </div>
+                  <div class="remo-prog-track">
+                    <div class="remo-prog-fill" id="fill-prog-support"></div>
+                  </div>
+                </div>
+
+                <!-- Progress Counts -->
+                <div class="remo-stats-grid-four">
+                  <div>
+                    <div class="remo-stat-col-num" id="stat-completed-support" style="color:#16A34A;">0</div>
+                    <div class="remo-stat-col-lbl">Completed</div>
+                  </div>
+                  <div>
+                    <div class="remo-stat-col-num" id="stat-failed-support" style="color:#DC2626;">0</div>
+                    <div class="remo-stat-col-lbl">Failed</div>
+                  </div>
+                  <div>
+                    <div class="remo-stat-col-num" id="stat-skipped-support" style="color:#64748B;">0</div>
+                    <div class="remo-stat-col-lbl">Skipped</div>
+                  </div>
+                  <div>
+                    <div class="remo-stat-col-num" id="stat-inprogress-support" style="color:#2563EB;">0</div>
+                    <div class="remo-stat-col-lbl">In-Progress</div>
+                  </div>
+                </div>
+
+                <!-- Card Actions Footer -->
+                <div class="remo-card-footer">
+                  <button type="button" class="btn-card-secondary btn-view-service-convs" data-service="support">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>Conversations</span>
+                  </button>
+                  <a href="/api/admin/support/download" class="btn-card-secondary btn-download-excel" id="btn-dl-support">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Updated Excel</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+
+          <!-- 5. Quick Actions Grid -->
+          <section style="margin-bottom: 24px;">
+            <div class="section-subhead-row">
+              <h3 class="section-subhead">Quick Operations</h3>
+            </div>
+
+            <div class="quick-actions-grid">
+              <!-- Card 1: Start Campaign -->
+              <button type="button" class="quick-action-card" data-view-target="campaigns">
+                <div class="qa-icon-wrap">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                  </svg>
+                </div>
+                <h4 class="qa-title">Start Voice Campaign</h4>
+                <p class="qa-desc">Upload Excel candidates or prospects to launch carrier-grade calling.</p>
+                <span class="qa-footer-arrow">
+                  <span>Upload & launch</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </span>
+              </button>
+
+              <!-- Card 2: View Users -->
+              <button type="button" class="quick-action-card" data-view-target="users">
+                <div class="qa-icon-wrap">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                </div>
+                <h4 class="qa-title">Manage Users</h4>
+                <p class="qa-desc">Inspect customer companies, roles, active phone lines, and usage quotas.</p>
+                <span class="qa-footer-arrow">
+                  <span>Open user directory</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </span>
+              </button>
+
+              <!-- Card 3: View Conversations -->
+              <button type="button" class="quick-action-card" data-view-target="conversations">
+                <div class="qa-icon-wrap">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                  </svg>
+                </div>
+                <h4 class="qa-title">Review Conversations</h4>
+                <p class="qa-desc">Audit turn-by-turn dialogue transcripts, AI summaries, and sentiment scores.</p>
+                <span class="qa-footer-arrow">
+                  <span>Open transcripts</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </span>
+              </button>
+
+              <!-- Card 4: View Call Logs -->
+              <button type="button" class="quick-action-card" data-view-target="calls">
+                <div class="qa-icon-wrap">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                </div>
+                <h4 class="qa-title">Call History & CDRs</h4>
+                <p class="qa-desc">Live telephony log stream, carrier latency, durations, and call costs.</p>
+                <span class="qa-footer-arrow">
+                  <span>View call history</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </section>
+
+          <!-- 6. Recent Activity Table -->
+          <section class="admin-card">
+            <div class="admin-card-header">
+              <div class="admin-card-title-group">
+                <h3>Recent Live Telephony Activity</h3>
+                <p>Streaming recent AI voice calls across active customer accounts</p>
+              </div>
+              <button type="button" class="btn-table-action" data-view-target="calls">
+                <span>View All Call Logs</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Call ID</th>
+                    <th>Service</th>
+                    <th>Contact / Phone</th>
+                    <th>Direction</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                    <th>Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboard-recent-calls-tbody">
+                  <tr>
+                    <td colspan="7" style="text-align: center; padding: 24px; color: #94A3B8;">
+                      Loading live telephony activity...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <!-- ==================================================================
+             VIEW 2: USERS DIRECTORY (/api/admin/users)
+             ================================================================== -->
+        <div class="admin-view-panel" id="view-users">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div class="admin-card-title-group">
+                <h3>Admin User Management</h3>
+                <p>Manage customer accounts, roles, telephony quotas, and subscribed services</p>
+              </div>
+
+              <!-- Toolbar: Search + Status filter -->
+              <div class="admin-toolbar">
+                <div class="admin-search-wrap">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                  <input type="text" class="admin-search-input" id="users-search-input"
+                    placeholder="Search by name, email, company...">
+                </div>
+
+                <select class="admin-select" id="users-status-select">
+                  <option value="">All Statuses</option>
+                  <option value="ACTIVE">Active</option>
+                  <option value="INACTIVE">Inactive</option>
+                  <option value="PENDING">Pending</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Subscribed Services</th>
+                    <th>Total Calls</th>
+                    <th>Active Calls</th>
+                    <th>Last Activity</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="users-table-body">
+                  <tr>
+                    <td colspan="9" style="text-align: center; padding: 28px; color: #94A3B8;">
+                      Loading users directory...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="admin-pagination">
+              <span id="users-page-info">Showing page 1</span>
+              <div class="pagination-btns">
+                <button type="button" class="btn-page" id="users-prev-btn" disabled>Previous</button>
+                <button type="button" class="btn-page" id="users-next-btn">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             VIEW 3: VOICE CAMPAIGNS (/api/admin/{service}/upload & start)
+             ================================================================== -->
+        <div class="admin-view-panel" id="view-campaigns">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div class="admin-card-title-group">
+                <h3>Voice Automation Campaigns</h3>
+                <p>Upload Excel contact spreadsheets (.xlsx, .xls, .csv) and initiate automated AI calling campaigns.
+                </p>
+              </div>
+            </div>
+
+            <!-- Service Selection Tabs -->
+            <div class="service-tabs-bar" id="campaign-service-tabs">
+              <button type="button" class="service-tab-btn active" data-service="recruitment">
+                <span>💼 Recruitment</span>
+              </button>
+              <button type="button" class="service-tab-btn" data-service="sales">
+                <span>📈 Outbound Sales</span>
+              </button>
+              <button type="button" class="service-tab-btn" data-service="support">
+                <span>🎧 Customer Support</span>
+              </button>
+            </div>
+
+            <!-- Upload & Campaign Launch Grid -->
+            <div class="campaign-upload-grid">
+              <!-- Left: File Upload Dropzone -->
+              <div>
+                <div class="upload-dropzone" id="campaign-dropzone">
+                  <input type="file" id="campaign-file-input" accept=".xlsx,.xls,.csv" aria-label="Upload Excel File">
+                  <div class="dropzone-icon-orb">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="17 8 12 3 7 8" />
+                      <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                  </div>
+                  <h4 class="dropzone-title">Upload Excel Contact Spreadsheet</h4>
+                  <p class="dropzone-sub">Drag & drop your file here, or click to browse</p>
+                  <p style="font-size: 0.72rem; color: #94A3B8; margin-top: 8px;">Supports .xlsx, .xls, and .csv formats
+                  </p>
+                </div>
+              </div>
+
+              <!-- Right: Staged File Preview & Launch Box -->
+              <div class="campaign-preview-box">
+                <h4 class="campaign-preview-header">Campaign Staging</h4>
+
+                <div id="campaign-status-alert" class="admin-alert-banner info"
+                  style="display: none; margin-bottom: 12px; font-size: 0.8rem;"></div>
+
+                <div class="preview-stat-row">
+                  <span class="preview-stat-label">Target Service:</span>
+                  <span class="preview-stat-value" id="stage-service-label">Recruitment</span>
+                </div>
+                <div class="preview-stat-row">
+                  <span class="preview-stat-label">File Name:</span>
+                  <span class="preview-stat-value" id="stage-file-name"
+                    style="font-family: monospace;">candidates.xlsx</span>
+                </div>
+                <div class="preview-stat-row">
+                  <span class="preview-stat-label">Parsed Contacts:</span>
+                  <span class="preview-stat-value" id="stage-record-count">120 records</span>
+                </div>
+                <div class="preview-stat-row">
+                  <span class="preview-stat-label">Pipeline Status:</span>
+                  <span class="preview-stat-value"><span class="badge-pill badge-status-completed"
+                      id="stage-status-badge">READY</span></span>
+                </div>
+
+                <button type="button" class="btn-start-calling" id="btn-start-campaign">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                  </svg>
+                  <span>Start Calling Process</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             VIEW 4: CONVERSATIONS (/api/admin/conversations)
+             ================================================================== -->
+        <div class="admin-view-panel" id="view-conversations">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div class="admin-card-title-group">
+                <h3>Voice Conversations & Transcripts</h3>
+                <p>Turn-by-turn dialogue logs, extracted interview/prospect fields, and AI summaries</p>
+              </div>
+
+              <!-- Filters: Service & Search -->
+              <div class="admin-toolbar">
+                <div class="admin-search-wrap">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                  <input type="text" class="admin-search-input" id="convs-search-input"
+                    placeholder="Search contact, phone, company...">
+                </div>
+
+                <select class="admin-select" id="convs-service-select">
+                  <option value="">All Services</option>
+                  <option value="recruitment">Recruitment</option>
+                  <option value="sales">Sales</option>
+                  <option value="support">Customer Support</option>
+                </select>
+
+                <select class="admin-select" id="convs-status-select">
+                  <option value="">All Statuses</option>
+                  <option value="completed">Completed</option>
+                  <option value="in-progress">In-Progress</option>
+                  <option value="callback_required">Callback Required</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Service</th>
+                    <th>Company / Account</th>
+                    <th>Contact</th>
+                    <th>Phone</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="conversations-table-body">
+                  <tr>
+                    <td colspan="8" style="text-align: center; padding: 28px; color: #94A3B8;">
+                      Loading conversations...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             VIEW 5: CALL HISTORY (/api/admin/calls)
+             ================================================================== -->
+        <div class="admin-view-panel" id="view-calls">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div class="admin-card-title-group">
+                <h3>Telephony Call Detail Records (CDRs)</h3>
+                <p>Auditable carrier-grade call records, network latency, telephony costs, and timestamps</p>
+              </div>
+
+              <!-- Filters -->
+              <div class="admin-toolbar">
+                <div class="admin-search-wrap">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                  <input type="text" class="admin-search-input" id="calls-search-input"
+                    placeholder="Search call ID, contact, phone...">
+                </div>
+
+                <select class="admin-select" id="calls-service-select">
+                  <option value="">All Services</option>
+                  <option value="recruitment">Recruitment</option>
+                  <option value="sales">Sales</option>
+                  <option value="support">Customer Support</option>
+                </select>
+
+                <select class="admin-select" id="calls-status-select">
+                  <option value="">All Statuses</option>
+                  <option value="completed">Completed</option>
+                  <option value="in-progress">In-Progress</option>
+                  <option value="callback_required">Callback Required</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Call ID</th>
+                    <th>Service</th>
+                    <th>Contact / Phone</th>
+                    <th>Company</th>
+                    <th>Direction</th>
+                    <th>Duration</th>
+                    <th>Cost</th>
+                    <th>Status</th>
+                    <th>Timestamp</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="calls-table-body">
+                  <tr>
+                    <td colspan="9" style="text-align: center; padding: 28px; color: #94A3B8;">
+                      Loading call logs...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="admin-pagination">
+              <span id="calls-page-info">Showing page 1</span>
+              <div class="pagination-btns">
+                <button type="button" class="btn-page" id="calls-prev-btn" disabled>Previous</button>
+                <button type="button" class="btn-page" id="calls-next-btn">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       3. PROFILE & WORKSPACE SETTINGS MODAL
+       ====================================================================== -->
+  <div class="modal-backdrop-layer" id="profile-modal">
+    <div class="modal-dialog-card">
+      <button type="button" class="modal-close-x" id="profile-modal-close" aria-label="Close modal">×</button>
+      <h3 class="modal-title-text">Profile & Workspace</h3>
+      <p class="modal-subtitle-text">Update your personalized details and workspace preferences.</p>
+
+      <div id="profile-modal-alert" style="display: none;"></div>
+
+      <form class="auth-form" id="profile-edit-form">
+        <div class="form-group">
+          <label class="form-label" for="edit-email">Account Email</label>
+          <input type="email" id="edit-email" class="auth-input input-readonly" readonly aria-readonly="true">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="edit-name">Full Name</label>
+          <input type="text" id="edit-name" class="auth-input" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="edit-company">Company Name</label>
+          <input type="text" id="edit-company" class="auth-input" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="edit-phone">Phone Number</label>
+          <input type="tel" id="edit-phone" class="auth-input" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="edit-job-title">Job Title <span
+              style="color:#94A3B8;font-weight:400;">(Optional)</span></label>
+          <input type="text" id="edit-job-title" class="auth-input" placeholder="e.g. Founder, Head of People">
+        </div>
+
+        <button type="submit" class="btn-auth-primary" style="margin-top: 12px;">
+          <span>Save Changes</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       4. FEATURE PREVIEW MODAL (FOR UNBUILT MODULES)
+       ====================================================================== -->
+  <div class="modal-backdrop-layer" id="feature-modal">
+    <div class="modal-dialog-card" style="text-align: center;">
+      <button type="button" class="modal-close-x" id="feature-modal-close" aria-label="Close modal">×</button>
+
+      <div
+        style="width: 56px; height: 56px; border-radius: 50%; background: #EFF6FF; border: 1px solid #BFDBFE; display: flex; align-items: center; justify-content: center; color: #FC2415; margin: 0 auto 16px;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
+      </div>
+
+      <h3 class="modal-title-text" id="feature-modal-title">Feature Preview</h3>
+      <p class="modal-subtitle-text" id="feature-modal-desc">This feature will be available soon. You can test live AI
+        voice interaction using "Talk to Remo".</p>
+
+      <button type="button" class="btn-primary-blue" id="feature-modal-ok-btn" style="margin: 0 auto;">
+        <span>Got it</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       5. CONVERSATION TRANSCRIPT & AI SUMMARY MODAL
+       ====================================================================== -->
+  <div class="modal-backdrop-layer" id="conversation-detail-modal">
+    <div class="modal-dialog-card conversation-modal-dialog">
+      <button type="button" class="modal-close-x" id="conv-modal-close" aria-label="Close modal">×</button>
+
+      <div class="conv-meta-header">
+        <div class="conv-contact-info">
+          <h4 id="conv-modal-contact">Rahul Sharma</h4>
+          <p id="conv-modal-submeta">Acme Corp • +91 98765 43210 • Recruitment Screening</p>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <span class="badge-pill badge-recruitment" id="conv-modal-service-badge">Recruitment</span>
+          <span class="badge-pill badge-status-completed" id="conv-modal-status-badge">Completed</span>
+          <span class="badge-pill" id="conv-modal-duration-badge"
+            style="background:#F1F5F9; color:#475569; border: 1px solid #E2E8F0;">04:32</span>
+        </div>
+      </div>
+
+      <!-- AI Summary Box -->
+      <div class="conv-summary-box">
+        <div class="conv-summary-label">✨ AI Automated Conversation Summary</div>
+        <div class="conv-summary-text" id="conv-modal-summary-text">Loading conversation summary...</div>
+        <div class="conv-extracted-grid" id="conv-modal-extracted-grid">
+          <!-- Dynamically populated key-value chips -->
+        </div>
+      </div>
+
+      <!-- Turn-by-Turn Audio & Transcript Dialogue -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+        <span
+          style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--dash-text-muted); letter-spacing: 0.05em;">Turn-by-Turn
+          Voice Transcript</span>
+        <span style="font-size: 0.72rem; color: #64748B;" id="conv-modal-timestamp">Oct 05, 2026</span>
+      </div>
+
+      <div class="transcript-stream-container" id="conv-modal-transcript-stream">
+        <!-- Dynamically injected turn-by-turn chat bubbles -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       6. EXCEL BATCH CONFIRMATION & PREVIEW MODAL
+       ====================================================================== -->
+  <div class="modal-backdrop-layer" id="batch-confirm-modal">
+    <div class="modal-dialog-card" style="max-width: 660px; width: 94%;">
+      <button type="button" class="modal-close-x" id="batch-confirm-close" aria-label="Close modal">×</button>
+      <h3 class="modal-title-text" id="batch-confirm-title">Confirm Outbound Calling Batch</h3>
+      <p class="modal-subtitle-text" id="batch-confirm-subtitle">Verify contacts before initiating the sequential calling queue.</p>
+
+      <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 14px 18px; margin: 16px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <div>
+          <div style="font-size: 0.68rem; color: #64748B; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Service Workflow</div>
+          <div style="font-weight: 700; color: #0F172A; text-transform: capitalize;" id="batch-confirm-service">Recruitment</div>
+        </div>
+        <div>
+          <div style="font-size: 0.68rem; color: #64748B; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Valid Contacts</div>
+          <div style="font-weight: 800; color: #16A34A; font-size: 1.15rem;" id="batch-confirm-valid">0</div>
+        </div>
+        <div>
+          <div style="font-size: 0.68rem; color: #64748B; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Excluded (Invalid)</div>
+          <div style="font-weight: 800; color: #DC2626; font-size: 1.15rem;" id="batch-confirm-invalid">0</div>
+        </div>
+        <div>
+          <div style="font-size: 0.68rem; color: #64748B; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Dispatch Rule</div>
+          <div style="font-weight: 700; color: #2563EB;" id="batch-confirm-queue-mode">Strictly 1 Call At A Time</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: #64748B; letter-spacing: 0.05em;">Validated Contact Preview</span>
+        <span style="font-size: 0.72rem; color: #94A3B8; font-family: monospace;" id="batch-confirm-file-name">candidates.xlsx</span>
+      </div>
+
+      <div style="max-height: 220px; overflow-y: auto; border: 1px solid #E2E8F0; border-radius: 8px; margin-bottom: 18px;">
+        <table class="data-table" style="font-size: 0.775rem; width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="background: #F1F5F9; border-bottom: 1px solid #E2E8F0; text-align: left;">
+              <th style="padding: 8px 12px; width: 50px;">Row</th>
+              <th style="padding: 8px 12px;">Name</th>
+              <th style="padding: 8px 12px;">Phone</th>
+              <th style="padding: 8px 12px;">Role / Context</th>
+              <th style="padding: 8px 12px;">Language</th>
+            </tr>
+          </thead>
+          <tbody id="batch-confirm-preview-tbody">
+            <!-- Dynamically injected preview rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button type="button" class="btn-card-secondary" id="batch-confirm-cancel-btn" style="flex: none; padding: 10px 18px;">Cancel</button>
+        <button type="button" class="btn-card-call-action" id="batch-confirm-start-btn" style="width: auto; margin-bottom: 0; padding: 10px 24px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span>Confirm & Start Calls</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       7. ROW-BY-ROW EXCEL VALIDATION ERRORS MODAL
+       ====================================================================== -->
+  <div class="modal-backdrop-layer" id="val-errors-modal">
+    <div class="modal-dialog-card" style="max-width: 620px; width: 92%;">
+      <button type="button" class="modal-close-x" id="val-errors-close" aria-label="Close modal">×</button>
+      <h3 class="modal-title-text" id="val-errors-title">Excel Validation Report</h3>
+      <p class="modal-subtitle-text" id="val-errors-subtitle">Detailed breakdown of invalid rows excluded from the calling queue.</p>
+
+      <div style="max-height: 320px; overflow-y: auto; border: 1px solid #E2E8F0; border-radius: 8px; margin: 16px 0;">
+        <table class="data-table" style="font-size: 0.775rem; width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="background: #F1F5F9; border-bottom: 1px solid #E2E8F0; text-align: left;">
+              <th style="padding: 8px 12px; width: 70px;">Excel Row</th>
+              <th style="padding: 8px 12px;">Identifier</th>
+              <th style="padding: 8px 12px;">Validation Error</th>
+            </tr>
+          </thead>
+          <tbody id="val-errors-tbody">
+            <!-- Dynamically injected error rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button type="button" class="btn-card-secondary" id="val-errors-dismiss-btn" style="padding: 8px 20px;">
+          <span>Close Report</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/auth-client.js"></script>
+  <script src="/admin-client.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Guard Authentication: Must be logged in
+      const user = await AuthClient.getCurrentUser();
+      if (!user) {
+        window.location.href = '/signin';
+        return;
+      }
+
+      // 2. Guard Onboarding: If incomplete, redirect to /onboarding
+      if (!user.profileCompleted) {
+        window.location.href = '/onboarding';
+        return;
+      }
+
+      // 3. Populate Dynamic User Profile Elements
+      const firstName = user.name ? user.name.split(' ')[0] : 'there';
+      const hours = new Date().getHours();
+      let timeGreeting = 'Good morning';
+      if (hours >= 12 && hours < 17) timeGreeting = 'Good afternoon';
+      else if (hours >= 17) timeGreeting = 'Good evening';
+
+      const greetingEl = document.getElementById('main-greeting-title');
+      if (greetingEl) {
+        greetingEl.textContent = `${timeGreeting}, ${firstName}`;
+      }
+
+      const compName = user.companyName || 'TakeRemo Workspace';
+      const companyTagEl = document.getElementById('greeting-company-name');
+      if (companyTagEl) companyTagEl.textContent = compName;
+
+      const sidebarCompName = document.getElementById('sidebar-comp-name');
+      if (sidebarCompName) sidebarCompName.textContent = compName;
+
+      const sidebarCompIcon = document.getElementById('sidebar-comp-icon');
+      if (sidebarCompIcon) {
+        sidebarCompIcon.textContent = compName.slice(0, 2).toUpperCase();
+      }
+
+      const headerName = document.getElementById('user-header-name');
+      if (headerName) headerName.textContent = user.name;
+
+      const headerComp = document.getElementById('user-header-company');
+      if (headerComp) headerComp.textContent = compName;
+
+      const headerAvatar = document.getElementById('user-header-avatar');
+      if (headerAvatar) {
+        const parts = user.name.trim().split(' ');
+        const initials = parts.length > 1 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : parts[0][0].toUpperCase();
+        headerAvatar.textContent = initials;
+      }
+
+      const ddName = document.getElementById('dd-user-name');
+      if (ddName) ddName.textContent = user.name;
+
+      const ddEmail = document.getElementById('dd-user-email');
+      if (ddEmail) ddEmail.textContent = user.email;
+
+      // 4. Header Dropdown Toggle
+      const trigger = document.getElementById('user-profile-trigger');
+      const dropdown = document.getElementById('user-dropdown-panel');
+      if (trigger && dropdown) {
+        trigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          dropdown.classList.toggle('open');
+        });
+
+        document.addEventListener('click', () => {
+          dropdown.classList.remove('open');
+        });
+      }
+
+      // 5. Sign Out Handlers
+      const logoutBtn = document.getElementById('header-logout-btn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          AuthClient.logout();
+        });
+      }
+
+      // ======================================================================
+      // 6. ADMIN VIEW NAVIGATION CONTROLLER
+      // ======================================================================
+      let activeView = 'dashboard';
+
+      function showAdminAlert(message, type = 'error') {
+        const banner = document.getElementById('admin-alert-banner');
+        if (!banner) return;
+        banner.className = `admin-alert-banner ${type}`;
+        banner.textContent = message;
+        banner.style.display = 'flex';
+      }
+
+      function hideAdminAlert() {
+        const banner = document.getElementById('admin-alert-banner');
+        if (banner) banner.style.display = 'none';
+      }
+
+      function switchAdminView(viewName) {
+        hideAdminAlert();
+        activeView = viewName;
+
+        // Toggle panel display
+        document.querySelectorAll('.admin-view-panel').forEach(panel => {
+          panel.classList.remove('active');
+        });
+        const targetPanel = document.getElementById(`view-${viewName}`);
+        if (targetPanel) {
+          targetPanel.classList.add('active');
+        }
+
+        // Toggle sidebar active item
+        document.querySelectorAll('.sidebar-nav-item[data-nav]').forEach(item => {
+          if (item.getAttribute('data-nav') === viewName) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+
+        // Trigger corresponding data loaders
+        if (viewName === 'dashboard') {
+          loadDashboardStats();
+          loadRecentCalls();
+        } else if (viewName === 'users') {
+          loadUsers(1);
+        } else if (viewName === 'campaigns') {
+          setupCampaignView();
+        } else if (viewName === 'conversations') {
+          loadConversations();
+        } else if (viewName === 'calls') {
+          loadCalls(1);
+        }
+      }
+
+      // Sidebar nav buttons
+      document.querySelectorAll('.sidebar-nav-item[data-nav]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = btn.getAttribute('data-nav');
+          if (target) switchAdminView(target);
+        });
+      });
+
+      // Quick action cards & links with data-view-target
+      document.querySelectorAll('[data-view-target]').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = el.getAttribute('data-view-target');
+          if (target) switchAdminView(target);
+        });
+      });
+
+      const heroLaunchBtn = document.getElementById('hero-launch-campaign-btn');
+      if (heroLaunchBtn) {
+        heroLaunchBtn.addEventListener('click', () => switchAdminView('campaigns'));
+      }
+
+      // ======================================================================
+      // 7. DASHBOARD DATA & SEQUENTIAL CALLING CONTROLLER
+      // ======================================================================
+      const serviceBatchState = {
+        recruitment: null,
+        sales: null,
+        support: null
+      };
+      let activeConfirmService = null;
+      let activeValErrorsService = null;
+
+      async function loadDashboardStats() {
+        try {
+          const stats = await AdminClient.getDashboard();
+          if (!stats) return;
+
+          // 1. Core overview & telemetry metrics
+          const setTxt = (id, val) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = val;
+          };
+
+          setTxt('metric-users', stats.totalUsers ?? 128);
+          setTxt('nav-users-count', stats.totalUsers ?? 128);
+          setTxt('metric-total-contacts', stats.totalContacts ?? 0);
+          setTxt('metric-total-calls', stats.totalCalls ?? 342);
+          setTxt('metric-completed-calls', stats.completedCalls ?? 334);
+          setTxt('metric-failed-calls', stats.failedCalls ?? 0);
+          setTxt('metric-pending-calls', stats.pendingCalls ?? 0);
+          setTxt('metric-accepted-calls', stats.acceptedCount ?? 0);
+          setTxt('metric-on-hold-calls', stats.onHoldCount ?? 0);
+          setTxt('metric-rejected-calls', stats.rejectedCount ?? 0);
+          setTxt('metric-recruitment-calls', stats.recruitmentCalls ?? 150);
+          setTxt('metric-sales-calls', stats.salesCalls ?? 102);
+          setTxt('metric-support-calls', stats.supportCalls ?? 90);
+
+          const activeCallsEl = document.getElementById('metric-active-calls');
+          if (activeCallsEl) {
+            activeCallsEl.innerHTML = `<span class="live-pulse-dot"></span>${stats.activeCalls ?? 8}`;
+          }
+
+          // 2. Update Three Service Cards
+          if (stats.services) {
+            ['recruitment', 'sales', 'support'].forEach(s => {
+              const sData = stats.services[s];
+              if (!sData) return;
+
+              // Validation & Queue stat values
+              setTxt(`val-valid-${s}`, sData.valid ?? 0);
+              setTxt(`val-invalid-${s}`, sData.invalid ?? 0);
+              setTxt(`val-pending-${s}`, sData.pending ?? 0);
+
+              // Progress counts strip
+              setTxt(`stat-completed-${s}`, sData.completed ?? 0);
+              setTxt(`stat-failed-${s}`, sData.failed ?? 0);
+              setTxt(`stat-skipped-${s}`, sData.skipped ?? 0);
+              setTxt(`stat-inprogress-${s}`, sData.inProgress ?? 0);
+
+              // Progress percentage & bar
+              const totalToCall = sData.valid;
+              const processed = (sData.completed || 0) + (sData.failed || 0) + (sData.skipped || 0);
+              let pct = 0;
+              if (totalToCall > 0) {
+                pct = Math.min(100, Math.round((processed / totalToCall) * 100));
+              } else if (sData.completed > 0) {
+                pct = 100;
+              }
+
+              const fillEl = document.getElementById(`fill-prog-${s}`);
+              if (fillEl) fillEl.style.width = `${pct}%`;
+              const pctEl = document.getElementById(`percent-prog-${s}`);
+              if (pctEl) pctEl.textContent = `${pct}%`;
+
+              // File bar update if batch uploaded
+              if (sData.latestFile) {
+                const nameEl = document.getElementById(`name-file-${s}`);
+                if (nameEl) nameEl.textContent = sData.latestFile;
+              }
+
+              // Card call button state
+              const callBtn = document.getElementById(`btn-call-${s}`);
+              if (callBtn) {
+                if (sData.inProgress > 0) {
+                  callBtn.disabled = true;
+                  callBtn.innerHTML = `<span class="auth-spinner"></span> <span>Calling In-Progress...</span>`;
+                } else if (sData.pending === 0 && sData.valid > 0 && processed >= totalToCall) {
+                  callBtn.disabled = false;
+                  callBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> <span>All Calls Concluded (Re-run)</span>`;
+                } else {
+                  callBtn.disabled = false;
+                  const sLabel = s.charAt(0).toUpperCase() + s.slice(1);
+                  callBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> <span>Start ${sLabel} Calls</span>`;
+                }
+              }
+            });
+          }
+
+          // 3. Sequential Outbound Call Queue Monitor Card
+          if (stats.queue) {
+            const q = stats.queue;
+            setTxt('qm-count-queued', q.queuedCount ?? 0);
+            setTxt('qm-count-inprogress', q.inProgressCount ?? (q.activeCall ? 1 : 0));
+            setTxt('qm-count-completed', q.completedCount ?? 0);
+            setTxt('qm-count-failed', q.failedCount ?? 0);
+
+            const qBadge = document.getElementById('qm-worker-status-badge');
+            const qPauseBtn = document.getElementById('btn-qm-pause');
+            const qResumeBtn = document.getElementById('btn-qm-resume');
+
+            if (qBadge) {
+              if (q.isPaused) {
+                qBadge.textContent = 'Queue Paused';
+                qBadge.style.background = 'rgba(234, 179, 8, 0.25)';
+                qBadge.style.color = '#FDE047';
+                if (qPauseBtn) qPauseBtn.style.display = 'none';
+                if (qResumeBtn) qResumeBtn.style.display = 'inline-flex';
+              } else if (q.isRunning || q.activeCall || (q.queuedCount || 0) > 0) {
+                qBadge.textContent = 'Active (1 Outbound Call At A Time)';
+                qBadge.style.background = 'rgba(37, 99, 235, 0.35)';
+                qBadge.style.color = '#93C5FD';
+                if (qPauseBtn) qPauseBtn.style.display = 'inline-flex';
+                if (qResumeBtn) qResumeBtn.style.display = 'none';
+              } else {
+                qBadge.textContent = 'Standing By (Sequential Mode)';
+                qBadge.style.background = 'rgba(255, 255, 255, 0.15)';
+                qBadge.style.color = '#FFFFFF';
+                if (qPauseBtn) qPauseBtn.style.display = 'inline-flex';
+                if (qResumeBtn) qResumeBtn.style.display = 'none';
+              }
+            }
+
+            const callName = document.getElementById('qm-call-name');
+            const callPhone = document.getElementById('qm-call-phone');
+            const callAvatar = document.getElementById('qm-call-avatar');
+
+            if (q.activeCall) {
+              if (callName) callName.innerHTML = `<span style="color:#60A5FA;">DISPATCHED:</span> ${q.activeCall.contact_name || 'Contact'} <span class="badge-pill badge-status-calling" style="margin-left:6px;"><span class="live-pulse-dot"></span>${q.activeCall.call_status || 'CALLING'}</span>`;
+              if (callPhone) callPhone.textContent = `${q.activeCall.phone_number} • ${(q.activeCall.service || '').toUpperCase()} • ID: ${q.activeCall.call_id || 'carrier-connecting'}`;
+              if (callAvatar) callAvatar.textContent = (q.activeCall.contact_name ? q.activeCall.contact_name[0] : 'R').toUpperCase();
+            } else if ((q.queuedCount || 0) > 0) {
+              if (callName) callName.textContent = `Queue Active — Initiating Next Contact (${q.queuedCount} pending)`;
+              if (callPhone) callPhone.textContent = `Strict sequential dispatch: waiting for terminal provider callback before next call.`;
+              if (callAvatar) callAvatar.textContent = 'Q';
+            } else {
+              if (callName) callName.textContent = 'Queue Standing By';
+              if (callPhone) callPhone.textContent = 'Upload Excel spreadsheets or click Call to process valid contacts sequentially.';
+              if (callAvatar) callAvatar.textContent = 'R';
+            }
+          }
+        } catch (err) {
+          if (err.status === 403) {
+            showAdminAlert('Admin role required. Current user has limited workspace permissions.', 'error');
+          } else {
+            console.warn('[Dashboard] Could not load stats:', err.message);
+          }
+        }
+      }
+
+      // ======================================================================
+      // 7B. SERVICE CARDS: EXCEL UPLOAD, VALIDATION PREVIEW & CALL ACTIONS
+      // ======================================================================
+      function setupServiceCards() {
+        ['recruitment', 'sales', 'support'].forEach(service => {
+          const dropzone = document.getElementById(`zone-upload-${service}`);
+          const fileInput = document.getElementById(`file-input-${service}`);
+
+          if (dropzone && fileInput) {
+            ['dragenter', 'dragover'].forEach(evt => {
+              dropzone.addEventListener(evt, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzone.classList.add('dragover');
+              });
+            });
+
+            ['dragleave', 'drop'].forEach(evt => {
+              dropzone.addEventListener(evt, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzone.classList.remove('dragover');
+              });
+            });
+
+            dropzone.addEventListener('drop', async (e) => {
+              const files = e.dataTransfer.files;
+              if (files && files.length > 0) {
+                await handleServiceExcelUpload(service, files[0]);
+              }
+            });
+
+            fileInput.addEventListener('change', async () => {
+              if (fileInput.files && fileInput.files.length > 0) {
+                await handleServiceExcelUpload(service, fileInput.files[0]);
+              }
+            });
+          }
+
+          // Call button triggers confirmation modal
+          const callBtn = document.getElementById(`btn-call-${service}`);
+          if (callBtn) {
+            callBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              openBatchConfirmModal(service);
+            });
+          }
+
+          // View errors button triggers validation error modal
+          const errBtn = document.getElementById(`btn-errors-${service}`);
+          if (errBtn) {
+            errBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              openValErrorsModal(service);
+            });
+          }
+        });
+
+        // Conversations button on service cards switches to conversations view
+        document.querySelectorAll('.btn-view-service-convs').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const service = btn.getAttribute('data-service');
+            const selectEl = document.getElementById('convs-service-select');
+            if (selectEl && service) selectEl.value = service;
+            switchAdminView('conversations');
+          });
+        });
+
+        // Queue Control Handlers
+        const qmPauseBtn = document.getElementById('btn-qm-pause');
+        if (qmPauseBtn) {
+          qmPauseBtn.addEventListener('click', async () => {
+            try {
+              await AdminClient.pauseQueue();
+              loadDashboardStats();
+            } catch (err) {
+              showAdminAlert(`Failed to pause queue: ${err.message}`, 'error');
+            }
+          });
+        }
+
+        const qmResumeBtn = document.getElementById('btn-qm-resume');
+        if (qmResumeBtn) {
+          qmResumeBtn.addEventListener('click', async () => {
+            try {
+              await AdminClient.resumeQueue();
+              loadDashboardStats();
+            } catch (err) {
+              showAdminAlert(`Failed to resume queue: ${err.message}`, 'error');
+            }
+          });
+        }
+
+        const qmCancelBtn = document.getElementById('btn-qm-cancel');
+        if (qmCancelBtn) {
+          qmCancelBtn.addEventListener('click', async () => {
+            if (!confirm('Are you sure you want to cancel the active calling queue? Remaining queued calls will be cancelled.')) return;
+            try {
+              await AdminClient.cancelQueue();
+              loadDashboardStats();
+            } catch (err) {
+              showAdminAlert(`Failed to cancel queue: ${err.message}`, 'error');
+            }
+          });
+        }
+      }
+
+      async function handleServiceExcelUpload(service, file) {
+        const badge = document.getElementById(`badge-file-${service}`);
+        const nameEl = document.getElementById(`name-file-${service}`);
+        if (nameEl) nameEl.textContent = file.name;
+        if (badge) {
+          badge.className = 'badge-pill badge-status-calling';
+          badge.innerHTML = `<span class="auth-spinner" style="width:10px;height:10px;margin-right:4px;"></span> PARSING`;
+        }
+
+        try {
+          const res = await AdminClient.uploadExcel(service, file);
+          serviceBatchState[service] = res;
+
+          if (badge) {
+            badge.className = 'badge-pill badge-status-completed';
+            badge.textContent = 'READY';
+          }
+
+          // Update validation stats on the card
+          const valValid = document.getElementById(`val-valid-${service}`);
+          if (valValid) valValid.textContent = res.validRows ?? res.records ?? 0;
+
+          const valInvalid = document.getElementById(`val-invalid-${service}`);
+          if (valInvalid) valInvalid.textContent = res.invalidRows ?? 0;
+
+          const valPending = document.getElementById(`val-pending-${service}`);
+          if (valPending) valPending.textContent = res.validRows ?? res.records ?? 0;
+
+          // Open confirmation and contact preview modal
+          openBatchConfirmModal(service, res);
+          loadDashboardStats();
+        } catch (err) {
+          if (badge) {
+            badge.className = 'badge-pill badge-recruitment';
+            badge.textContent = 'ERROR';
+          }
+          showAdminAlert(`Failed to parse Excel file: ${err.message}`, 'error');
+        }
+      }
+
+      function openBatchConfirmModal(service, batchData = null) {
+        const modal = document.getElementById('batch-confirm-modal');
+        if (!modal) return;
+
+        const data = batchData || serviceBatchState[service] || {
+          fileId: `file_${service}_batch`,
+          fileName: `${service}_contacts.xlsx`,
+          validRows: 0,
+          invalidRows: 0,
+          previewContacts: []
+        };
+
+        activeConfirmService = service;
+        const sName = service.charAt(0).toUpperCase() + service.slice(1);
+
+        const sEl = document.getElementById('batch-confirm-service');
+        if (sEl) sEl.textContent = sName;
+        const vEl = document.getElementById('batch-confirm-valid');
+        if (vEl) vEl.textContent = data.validRows ?? data.records ?? 0;
+        const invEl = document.getElementById('batch-confirm-invalid');
+        if (invEl) invEl.textContent = data.invalidRows ?? 0;
+        const fnEl = document.getElementById('batch-confirm-file-name');
+        if (fnEl) fnEl.textContent = data.fileName || `${service}.xlsx`;
+
+        const tbody = document.getElementById('batch-confirm-preview-tbody');
+        if (tbody) {
+          const previewList = data.previewContacts || [];
+          if (previewList.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:16px; color:#94A3B8;">No preview contacts available. Click confirm to process all validated rows.</td></tr>`;
+          } else {
+            tbody.innerHTML = previewList.map(c => `
+              <tr style="border-bottom: 1px solid #F1F5F9;">
+                <td style="padding: 8px 12px; font-family: monospace; color:#64748B;">${c.row || '—'}</td>
+                <td style="padding: 8px 12px; font-weight: 600; color:#0F172A;">${c.name || 'Unnamed'}</td>
+                <td style="padding: 8px 12px; font-family: monospace; color:#334155;">${c.phone || '—'}</td>
+                <td style="padding: 8px 12px; color:#475569;">${c.details || c.role || c.company || c.issue || '—'}</td>
+                <td style="padding: 8px 12px;"><span class="badge-pill" style="font-size:0.65rem; background:#EFF6FF; color:#2563EB;">${c.language || 'English'}</span></td>
+              </tr>
+            `).join('');
+          }
+        }
+
+        modal.classList.add('open');
+      }
+
+      function closeBatchConfirmModal() {
+        const modal = document.getElementById('batch-confirm-modal');
+        if (modal) modal.classList.remove('open');
+      }
+
+      // Batch confirmation modal bindings
+      const batchConfirmClose = document.getElementById('batch-confirm-close');
+      const batchConfirmCancel = document.getElementById('batch-confirm-cancel-btn');
+      const batchConfirmStart = document.getElementById('batch-confirm-start-btn');
+
+      if (batchConfirmClose) batchConfirmClose.addEventListener('click', closeBatchConfirmModal);
+      if (batchConfirmCancel) batchConfirmCancel.addEventListener('click', closeBatchConfirmModal);
+
+      if (batchConfirmStart) {
+        batchConfirmStart.addEventListener('click', async () => {
+          if (!activeConfirmService) return;
+          const service = activeConfirmService;
+          const cached = serviceBatchState[service] || {};
+          const fileId = cached.fileId || `file_${service}_${Date.now()}`;
+
+          batchConfirmStart.disabled = true;
+          batchConfirmStart.innerHTML = `<span class="auth-spinner"></span> <span>Queueing Calls...</span>`;
+
+          try {
+            const res = await AdminClient.startCalling(service, fileId);
+            closeBatchConfirmModal();
+            showAdminAlert(`✓ Sequential outbound calling queue initialized for ${service.toUpperCase()} (${res.total || res.valid || 0} valid contacts queued). Calling 1 contact at a time.`, 'success');
+            loadDashboardStats();
+          } catch (err) {
+            showAdminAlert(`Failed to start ${service} calling queue: ${err.message}`, 'error');
+          } finally {
+            batchConfirmStart.disabled = false;
+            batchConfirmStart.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> <span>Confirm & Start Calls</span>`;
+          }
+        });
+      }
+
+      // Validation Errors Modal
+      function openValErrorsModal(service) {
+        const modal = document.getElementById('val-errors-modal');
+        if (!modal) return;
+
+        const data = serviceBatchState[service] || {};
+        const errors = data.errorSummary || [];
+        const sName = service.charAt(0).toUpperCase() + service.slice(1);
+        const titleEl = document.getElementById('val-errors-title');
+        if (titleEl) titleEl.textContent = `${sName} — Validation Errors`;
+
+        const tbody = document.getElementById('val-errors-tbody');
+        if (tbody) {
+          if (errors.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding:24px; color:#16A34A; font-weight:600;">✓ No validation errors! All rows in the uploaded spreadsheet are valid.</td></tr>`;
+          } else {
+            tbody.innerHTML = errors.map(e => `
+              <tr style="border-bottom: 1px solid #F1F5F9;">
+                <td style="padding: 8px 12px; font-family: monospace; font-weight: 700; color: #DC2626;">Row ${e.row || '?'}</td>
+                <td style="padding: 8px 12px; font-weight: 600; color: #0F172A;">${e.name || e.phone || 'Row record'}</td>
+                <td style="padding: 8px 12px; color: #DC2626;">${e.error || e.reason || 'Invalid data'}</td>
+              </tr>
+            `).join('');
+          }
+        }
+
+        modal.classList.add('open');
+      }
+
+      function closeValErrorsModal() {
+        const modal = document.getElementById('val-errors-modal');
+        if (modal) modal.classList.remove('open');
+      }
+
+      const valErrorsClose = document.getElementById('val-errors-close');
+      const valErrorsDismiss = document.getElementById('val-errors-dismiss-btn');
+      if (valErrorsClose) valErrorsClose.addEventListener('click', closeValErrorsModal);
+      if (valErrorsDismiss) valErrorsDismiss.addEventListener('click', closeValErrorsModal);
+
+      async function loadRecentCalls() {
+        const tbody = document.getElementById('dashboard-recent-calls-tbody');
+        if (!tbody) return;
+        try {
+          const data = await AdminClient.getCalls({ limit: 5 });
+          const calls = data.data || [];
+          if (calls.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 20px; color: #94A3B8;">No recent calls recorded.</td></tr>`;
+            return;
+          }
+          tbody.innerHTML = calls.map(c => {
+            const sBadgeClass = c.service === 'recruitment' ? 'badge-recruitment' : c.service === 'sales' ? 'badge-sales' : 'badge-support';
+            const statusBadgeClass = c.status === 'completed' ? 'badge-status-completed' : c.status === 'in-progress' ? 'badge-status-calling' : 'badge-status-callback';
+            return `
+              <tr>
+                <td style="font-family: monospace; font-weight: 600; color: #FC2415;">${c.id}</td>
+                <td><span class="badge-pill ${sBadgeClass}">${c.service}</span></td>
+                <td>
+                  <div style="font-weight: 600; color: #0F172A;">${c.contact}</div>
+                  <div style="font-size: 0.75rem; color: #64748B;">${c.phone}</div>
+                </td>
+                <td style="text-transform: capitalize;">${c.direction}</td>
+                <td style="font-family: monospace;">${c.duration}</td>
+                <td><span class="badge-pill ${statusBadgeClass}">${c.status}</span></td>
+                <td style="font-size: 0.775rem; color: #64748B;">${c.timestamp || 'Today'}</td>
+              </tr>
+            `;
+          }).join('');
+        } catch (err) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 20px; color: #EF4444;">Unable to load recent calls: ${err.message}</td></tr>`;
+        }
+      }
+
+      // ======================================================================
+      // 8. USERS DIRECTORY LOADER (GET /api/admin/users)
+      // ======================================================================
+      let currentUsersPage = 1;
+      let totalUsersPages = 1;
+
+      async function loadUsers(page = 1) {
+        currentUsersPage = page;
+        const tbody = document.getElementById('users-table-body');
+        if (!tbody) return;
+
+        const search = document.getElementById('users-search-input')?.value.trim() || '';
+        const status = document.getElementById('users-status-select')?.value || '';
+
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 28px; color: #94A3B8;"><span class="auth-spinner" style="margin-right: 8px;"></span> Loading users...</td></tr>`;
+
+        try {
+          const res = await AdminClient.getUsers({ page, limit: 10, search, status });
+          const users = res.data || [];
+          totalUsersPages = res.pagination ? res.pagination.totalPages : 1;
+
+          const pageInfo = document.getElementById('users-page-info');
+          if (pageInfo) {
+            pageInfo.textContent = `Showing page ${res.pagination?.page || 1} of ${totalUsersPages} (${res.pagination?.total || users.length} total)`;
+          }
+
+          const prevBtn = document.getElementById('users-prev-btn');
+          const nextBtn = document.getElementById('users-next-btn');
+          if (prevBtn) prevBtn.disabled = currentUsersPage <= 1;
+          if (nextBtn) nextBtn.disabled = currentUsersPage >= totalUsersPages;
+
+          if (users.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 28px; color: #94A3B8;">No users found matching query.</td></tr>`;
+            return;
+          }
+
+          tbody.innerHTML = users.map(u => {
+            const roleClass = u.role === 'admin' ? 'badge-role-admin' : 'badge-role-user';
+            const statusClass = u.status === 'ACTIVE' ? 'badge-status-completed' : 'badge-status-callback';
+            const svcs = (u.services || []).map(s => `<span class="badge-pill badge-recruitment" style="margin-right: 3px; font-size: 0.65rem;">${s}</span>`).join('');
+
+            return `
+              <tr>
+                <td>
+                  <div style="font-weight: 700; color: #0F172A;">${u.name}</div>
+                  <div style="font-size: 0.72rem; color: #64748B;">ID: ${u.id}</div>
+                </td>
+                <td style="color: #475569;">${u.email}</td>
+                <td style="font-weight: 600;">${u.company}</td>
+                <td><span class="badge-pill ${roleClass}">${u.role}</span></td>
+                <td>${svcs || '—'}</td>
+                <td style="font-family: monospace; font-weight: 600;">${u.totalCalls ?? 0}</td>
+                <td><span class="badge-pill badge-status-calling"><span class="live-pulse-dot"></span>${u.activeCalls ?? 0}</span></td>
+                <td style="font-size: 0.775rem; color: #64748B;">${u.lastActivity || 'Just now'}</td>
+                <td><span class="badge-pill ${statusClass}">${u.status}</span></td>
+              </tr>
+            `;
+          }).join('');
+        } catch (err) {
+          tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 28px; color: #EF4444;">Error loading users: ${err.message}</td></tr>`;
+          if (err.status === 403) {
+            showAdminAlert('Admin privileges required to access the User Directory.', 'error');
+          }
+        }
+      }
+
+      // User search & status listeners with debounce
+      let usersDebounceTimer;
+      const usersSearchInput = document.getElementById('users-search-input');
+      if (usersSearchInput) {
+        usersSearchInput.addEventListener('input', () => {
+          clearTimeout(usersDebounceTimer);
+          usersDebounceTimer = setTimeout(() => loadUsers(1), 300);
+        });
+      }
+
+      const usersStatusSelect = document.getElementById('users-status-select');
+      if (usersStatusSelect) {
+        usersStatusSelect.addEventListener('change', () => loadUsers(1));
+      }
+
+      const usersPrevBtn = document.getElementById('users-prev-btn');
+      if (usersPrevBtn) {
+        usersPrevBtn.addEventListener('click', () => {
+          if (currentUsersPage > 1) loadUsers(currentUsersPage - 1);
+        });
+      }
+
+      const usersNextBtn = document.getElementById('users-next-btn');
+      if (usersNextBtn) {
+        usersNextBtn.addEventListener('click', () => {
+          if (currentUsersPage < totalUsersPages) loadUsers(currentUsersPage + 1);
+        });
+      }
+
+      // ======================================================================
+      // 9. VOICE CAMPAIGNS CONTROLLER (/api/admin/{service}/upload & start)
+      // ======================================================================
+      let selectedCampaignService = 'recruitment';
+      let stagedFileId = 'candidates_2026_batch_01';
+
+      const serviceDefaults = {
+        recruitment: { label: 'Recruitment', defaultFile: 'candidates.xlsx', records: '120 candidates' },
+        sales: { label: 'Outbound Sales', defaultFile: 'prospects.xlsx', records: '85 prospects' },
+        support: { label: 'Customer Support', defaultFile: 'support_tickets.xlsx', records: '50 tickets' }
+      };
+
+      function setupCampaignView() {
+        updateCampaignPreview();
+      }
+
+      function updateCampaignPreview() {
+        const conf = serviceDefaults[selectedCampaignService] || serviceDefaults.recruitment;
+        const stageLabel = document.getElementById('stage-service-label');
+        if (stageLabel) stageLabel.textContent = conf.label;
+
+        const stageFile = document.getElementById('stage-file-name');
+        if (stageFile) stageFile.textContent = conf.defaultFile;
+
+        const stageRec = document.getElementById('stage-record-count');
+        if (stageRec) stageRec.textContent = conf.records;
+
+        const stageStatus = document.getElementById('stage-status-badge');
+        if (stageStatus) {
+          stageStatus.className = 'badge-pill badge-status-completed';
+          stageStatus.textContent = 'READY';
+        }
+
+        const alertBox = document.getElementById('campaign-status-alert');
+        if (alertBox) alertBox.style.display = 'none';
+
+        const btn = document.getElementById('btn-start-campaign');
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> <span>Start Calling Process</span>`;
+        }
+      }
+
+      // Service Tabs
+      document.querySelectorAll('#campaign-service-tabs .service-tab-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          document.querySelectorAll('#campaign-service-tabs .service-tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedCampaignService = btn.getAttribute('data-service') || 'recruitment';
+          updateCampaignPreview();
+        });
+      });
+
+      // File Input & Drag/Drop
+      const dropzone = document.getElementById('campaign-dropzone');
+      const fileInput = document.getElementById('campaign-file-input');
+
+      if (dropzone && fileInput) {
+        ['dragenter', 'dragover'].forEach(name => {
+          dropzone.addEventListener(name, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropzone.classList.add('dragover');
+          });
+        });
+
+        ['dragleave', 'drop'].forEach(name => {
+          dropzone.addEventListener(name, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropzone.classList.remove('dragover');
+          });
+        });
+
+        dropzone.addEventListener('drop', async (e) => {
+          const files = e.dataTransfer.files;
+          if (files && files.length > 0) {
+            await handleCampaignFileUpload(files[0]);
+          }
+        });
+
+        fileInput.addEventListener('change', async () => {
+          if (fileInput.files && fileInput.files.length > 0) {
+            await handleCampaignFileUpload(fileInput.files[0]);
+          }
+        });
+      }
+
+      async function handleCampaignFileUpload(file) {
+        const alertBox = document.getElementById('campaign-status-alert');
+        try {
+          if (alertBox) {
+            alertBox.className = 'admin-alert-banner info';
+            alertBox.textContent = `Validating and uploading ${file.name}...`;
+            alertBox.style.display = 'flex';
+          }
+
+          const res = await AdminClient.uploadExcel(selectedCampaignService, file);
+
+          if (alertBox) {
+            alertBox.className = 'admin-alert-banner success';
+            alertBox.textContent = `✓ Uploaded ${res.fileName}: ${res.records} valid contacts verified. Ready to initiate automated calling.`;
+            alertBox.style.display = 'flex';
+          }
+
+          const stageFile = document.getElementById('stage-file-name');
+          if (stageFile) stageFile.textContent = res.fileName;
+
+          const stageRec = document.getElementById('stage-record-count');
+          if (stageRec) stageRec.textContent = `${res.records} records`;
+
+          const stageStatus = document.getElementById('stage-status-badge');
+          if (stageStatus) {
+            stageStatus.className = 'badge-pill badge-status-completed';
+            stageStatus.textContent = res.status || 'READY';
+          }
+          stagedFileId = `file_${Date.now()}`;
+        } catch (err) {
+          if (alertBox) {
+            alertBox.className = 'admin-alert-banner error';
+            alertBox.textContent = err.message || 'File upload failed. Ensure you are uploading an Excel (.xlsx, .xls) or .csv file.';
+            alertBox.style.display = 'flex';
+          }
+        }
+      }
+
+      // Start Calling Button
+      const startCampaignBtn = document.getElementById('btn-start-campaign');
+      if (startCampaignBtn) {
+        startCampaignBtn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          const alertBox = document.getElementById('campaign-status-alert');
+
+          startCampaignBtn.disabled = true;
+          startCampaignBtn.innerHTML = `<span class="auth-spinner"></span> <span>Initiating AI Telephony...</span>`;
+
+          try {
+            const res = await AdminClient.startCalling(selectedCampaignService, stagedFileId);
+
+            if (alertBox) {
+              alertBox.className = 'admin-alert-banner success';
+              alertBox.innerHTML = `<strong>🚀 CALLING STARTED:</strong> Successfully queued ${res.total || 120} carrier phone calls for ${selectedCampaignService.toUpperCase()} workflow. Telephony simulator is executing turns.`;
+              alertBox.style.display = 'flex';
+            }
+
+            const stageStatus = document.getElementById('stage-status-badge');
+            if (stageStatus) {
+              stageStatus.className = 'badge-pill badge-status-calling';
+              stageStatus.innerHTML = `<span class="live-pulse-dot"></span>${res.status || 'CALLING_STARTED'}`;
+            }
+
+            startCampaignBtn.innerHTML = `✓ Calling In Progress (${res.total} Lines)`;
+          } catch (err) {
+            if (alertBox) {
+              alertBox.className = 'admin-alert-banner error';
+              alertBox.textContent = err.message || 'Failed to start calling process.';
+              alertBox.style.display = 'flex';
+            }
+            startCampaignBtn.disabled = false;
+            startCampaignBtn.innerHTML = `<span>Retry Starting Calls</span>`;
+          }
+        });
+      }
+
+      // ======================================================================
+      // 10. CONVERSATIONS & TRANSCRIPTS CONTROLLER
+      // ======================================================================
+      async function loadConversations() {
+        const tbody = document.getElementById('conversations-table-body');
+        if (!tbody) return;
+
+        const service = document.getElementById('convs-service-select')?.value || '';
+        const status = document.getElementById('convs-status-select')?.value || '';
+        const search = document.getElementById('convs-search-input')?.value.trim() || '';
+
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 28px; color: #94A3B8;"><span class="auth-spinner" style="margin-right: 8px;"></span> Loading conversations...</td></tr>`;
+
+        try {
+          const res = await AdminClient.getConversations({ service, status, search });
+          const convs = res.data || [];
+
+          if (convs.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 28px; color: #94A3B8;">No conversations found matching criteria.</td></tr>`;
+            return;
+          }
+
+          tbody.innerHTML = convs.map(c => {
+            const sBadgeClass = c.service === 'recruitment' ? 'badge-recruitment' : c.service === 'sales' ? 'badge-sales' : 'badge-support';
+            const statusClass = c.status === 'completed' ? 'badge-status-completed' : c.status === 'in-progress' ? 'badge-status-calling' : 'badge-status-callback';
+
+            return `
+              <tr>
+                <td style="font-family: monospace; font-weight: 600; color: #FC2415;">${c.id}</td>
+                <td><span class="badge-pill ${sBadgeClass}">${c.service}</span></td>
+                <td style="font-weight: 600;">${c.user}</td>
+                <td style="font-weight: 700; color: #0F172A;">${c.contact}</td>
+                <td style="font-family: monospace; color: #475569;">${c.phone}</td>
+                <td style="font-family: monospace;">${c.duration}</td>
+                <td><span class="badge-pill ${statusClass}">${c.status}</span></td>
+                <td>
+                  <button type="button" class="btn-table-action btn-view-conv" data-conv-id="${c.id}" style="margin-right: 8px;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <span>Transcript</span>
+                  </button>
+                  <button type="button" class="btn-secondary" style="color: #EF4444; border-color: #FECACA; padding: 4px 8px; font-size: 0.75rem;" onclick="deleteConversationRecord('${c.id}')">Delete</button>
+                </td>
+              </tr>
+            `;
+          }).join('');
+
+          // Bind view transcript clicks
+          document.querySelectorAll('.btn-view-conv').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              e.preventDefault();
+              const id = btn.getAttribute('data-conv-id');
+              if (id) openConversationModal(id);
+            });
+          });
+        } catch (err) {
+          tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 28px; color: #EF4444;">Error loading conversations: ${err.message}</td></tr>`;
+        }
+      }
+
+      // Filter listeners for conversations
+      let convsSearchTimer;
+      const convsSearchInput = document.getElementById('convs-search-input');
+      if (convsSearchInput) {
+        convsSearchInput.addEventListener('input', () => {
+          clearTimeout(convsSearchTimer);
+          convsSearchTimer = setTimeout(loadConversations, 300);
+        });
+      }
+      const convsServiceSelect = document.getElementById('convs-service-select');
+      if (convsServiceSelect) convsServiceSelect.addEventListener('change', loadConversations);
+
+      const convsStatusSelect = document.getElementById('convs-status-select');
+      if (convsStatusSelect) convsStatusSelect.addEventListener('change', loadConversations);
+
+      // Open Conversation Modal
+      const convModal = document.getElementById('conversation-detail-modal');
+      const convModalClose = document.getElementById('conv-modal-close');
+
+      async function openConversationModal(id) {
+        if (!convModal) return;
+        convModal.classList.add('open');
+
+        const contactEl = document.getElementById('conv-modal-contact');
+        const submetaEl = document.getElementById('conv-modal-submeta');
+        const summaryTextEl = document.getElementById('conv-modal-summary-text');
+        const streamContainer = document.getElementById('conv-modal-transcript-stream');
+        const extractedGrid = document.getElementById('conv-modal-extracted-grid');
+
+        if (contactEl) contactEl.textContent = 'Loading conversation...';
+        if (summaryTextEl) summaryTextEl.textContent = 'Fetching transcript turns and AI summary...';
+        if (streamContainer) streamContainer.innerHTML = '<div style="text-align:center; padding:20px; color:#94A3B8;"><span class="auth-spinner"></span> Loading transcript...</div>';
+        if (extractedGrid) extractedGrid.innerHTML = '';
+
+        try {
+          const res = await AdminClient.getConversationById(id);
+          const c = res.conversation || res;
+
+          if (contactEl) contactEl.textContent = `${c.contact || c.contact_name || 'Contact'} (${c.phone || ''})`;
+          if (submetaEl) submetaEl.textContent = `${c.user} • ${c.service.toUpperCase()} • ID: ${c.id}`;
+
+          const serviceBadge = document.getElementById('conv-modal-service-badge');
+          if (serviceBadge) {
+            serviceBadge.className = `badge-pill ${c.service === 'recruitment' ? 'badge-recruitment' : c.service === 'sales' ? 'badge-sales' : 'badge-support'}`;
+            serviceBadge.textContent = c.service;
+          }
+
+          const statusBadge = document.getElementById('conv-modal-status-badge');
+          if (statusBadge) {
+            statusBadge.className = `badge-pill ${c.status === 'completed' ? 'badge-status-completed' : 'badge-status-calling'}`;
+            statusBadge.textContent = c.status;
+          }
+
+          const durBadge = document.getElementById('conv-modal-duration-badge');
+          if (durBadge) durBadge.textContent = c.duration;
+
+          const tsEl = document.getElementById('conv-modal-timestamp');
+          if (tsEl) tsEl.textContent = c.timestamp;
+
+          if (summaryTextEl) summaryTextEl.textContent = c.summary || 'Call completed successfully.';
+
+          // Extracted Fields Chips
+          if (extractedGrid && c.extractedFields) {
+            extractedGrid.innerHTML = Object.entries(c.extractedFields).map(([k, v]) => `
+              <div class="extracted-item-chip">
+                <div class="extracted-key">${k.replace(/([A-Z])/g, ' $1')}</div>
+                <div class="extracted-val">${v}</div>
+              </div>
+            `).join('');
+          }
+
+          // Transcript turns
+          if (streamContainer && c.transcript) {
+            streamContainer.innerHTML = c.transcript.map(t => {
+              const isAgent = t.speaker === 'agent' || t.speaker.toLowerCase().includes('agent') || t.speaker.toLowerCase().includes('remo');
+              const avatarLabel = isAgent ? 'AH' : (c.contact ? c.contact.slice(0, 2).toUpperCase() : 'U');
+              const speakerTitle = isAgent ? 'TakeRemo AI' : c.contact;
+
+              return `
+                <div class="transcript-bubble-wrap ${isAgent ? 'agent' : 'contact'}">
+                  <div class="transcript-avatar ${isAgent ? 'agent' : 'contact'}">${avatarLabel}</div>
+                  <div class="transcript-bubble-content">
+                    <div class="transcript-speaker-tag">${speakerTitle}</div>
+                    <div>${t.text}</div>
+                    <span class="transcript-time-tag">${t.time || ''}</span>
+                  </div>
+                </div>
+              `;
+            }).join('');
+          }
+        } catch (err) {
+          if (summaryTextEl) summaryTextEl.textContent = `Error loading transcript: ${err.message}`;
+        }
+      }
+
+      if (convModalClose) {
+        convModalClose.addEventListener('click', () => {
+          convModal.classList.remove('open');
+        });
+      }
+
+      // ======================================================================
+      // 11. CALL HISTORY CONTROLLER (GET /api/admin/calls)
+      // ======================================================================
+      let currentCallsPage = 1;
+      let totalCallsPages = 1;
+
+      async function loadCalls(page = 1) {
+        currentCallsPage = page;
+        const tbody = document.getElementById('calls-table-body');
+        if (!tbody) return;
+
+        const service = document.getElementById('calls-service-select')?.value || '';
+        const status = document.getElementById('calls-status-select')?.value || '';
+        const search = document.getElementById('calls-search-input')?.value.trim() || '';
+
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 28px; color: #94A3B8;"><span class="auth-spinner" style="margin-right: 8px;"></span> Loading call records...</td></tr>`;
+
+        try {
+          const res = await AdminClient.getCalls({ page, limit: 10, service, status, search });
+          const calls = res.data || [];
+          totalCallsPages = res.pagination ? res.pagination.totalPages : 1;
+
+          const pageInfo = document.getElementById('calls-page-info');
+          if (pageInfo) {
+            pageInfo.textContent = `Showing page ${res.pagination?.page || 1} of ${totalCallsPages} (${res.pagination?.total || calls.length} CDRs)`;
+          }
+
+          const prevBtn = document.getElementById('calls-prev-btn');
+          const nextBtn = document.getElementById('calls-next-btn');
+          if (prevBtn) prevBtn.disabled = currentCallsPage <= 1;
+          if (nextBtn) nextBtn.disabled = currentCallsPage >= totalCallsPages;
+
+          if (calls.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 28px; color: #94A3B8;">No call history records found.</td></tr>`;
+            return;
+          }
+
+          tbody.innerHTML = calls.map(c => {
+            const sBadgeClass = c.service === 'recruitment' ? 'badge-recruitment' : c.service === 'sales' ? 'badge-sales' : 'badge-support';
+            const statusClass = c.status === 'completed' ? 'badge-status-completed' : c.status === 'in-progress' ? 'badge-status-calling' : 'badge-status-callback';
+
+            return `
+              <tr>
+                <td style="font-family: monospace; font-weight: 700; color: #FC2415;">${c.id}</td>
+                <td><span class="badge-pill ${sBadgeClass}">${c.service}</span></td>
+                <td>
+                  <div style="font-weight: 600; color: #0F172A;">${c.contact}</div>
+                  <div style="font-size: 0.72rem; color: #64748B;">${c.phone}</div>
+                </td>
+                <td style="color: #475569;">${c.user}</td>
+                <td style="text-transform: capitalize;">${c.direction}</td>
+                <td style="font-family: monospace;">${c.duration}</td>
+                <td style="font-family: monospace; font-weight: 600; color: #059669;">${c.cost || '$0.00'}</td>
+                <td><span class="badge-pill ${statusClass}">${c.status}</span></td>
+                <td style="font-size: 0.775rem; color: #64748B;">${c.timestamp || 'Today'}</td>
+                <td>
+                  <button class="btn-secondary" style="color: #EF4444; border-color: #FECACA; padding: 4px 8px; font-size: 0.75rem;" onclick="deleteCallRecord('${c.id}')">Delete</button>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        } catch (err) {
+          tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 28px; color: #EF4444;">Error loading calls: ${err.message}</td></tr>`;
+        }
+      }
+
+      // Call history filter listeners
+      let callsSearchTimer;
+      const callsSearchInput = document.getElementById('calls-search-input');
+      if (callsSearchInput) {
+        callsSearchInput.addEventListener('input', () => {
+          clearTimeout(callsSearchTimer);
+          callsSearchTimer = setTimeout(() => loadCalls(1), 300);
+        });
+      }
+      const callsServiceSelect = document.getElementById('calls-service-select');
+      if (callsServiceSelect) callsServiceSelect.addEventListener('change', () => loadCalls(1));
+
+      const callsStatusSelect = document.getElementById('calls-status-select');
+      if (callsStatusSelect) callsStatusSelect.addEventListener('change', () => loadCalls(1));
+
+      const callsPrevBtn = document.getElementById('calls-prev-btn');
+      if (callsPrevBtn) {
+        callsPrevBtn.addEventListener('click', () => {
+          if (currentCallsPage > 1) loadCalls(currentCallsPage - 1);
+        });
+      }
+      const callsNextBtn = document.getElementById('calls-next-btn');
+      if (callsNextBtn) {
+        callsNextBtn.addEventListener('click', () => {
+          if (currentCallsPage < totalCallsPages) loadCalls(currentCallsPage + 1);
+        });
+      }
+
+      // ======================================================================
+      // 12. INITIAL PAGE LOAD & AUTO-DATA FETCH
+      // ======================================================================
+      loadDashboardStats();
+      loadRecentCalls();
+      setupServiceCards();
+
+      // Auto-poll dashboard stats and sequential queue status every 3.5 seconds
+      setInterval(() => {
+        if (activeView === 'dashboard') {
+          loadDashboardStats();
+        }
+      }, 3500);
+
+      // Sidebar Collapse / Expand (Desktop) & Off-Canvas Drawer (Mobile)
+      const SIDEBAR_STORAGE_KEY = 'agentRemo_sidebarCollapsed';
+      const sidebar = document.getElementById('dash-sidebar');
+      const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+      const mobileToggle = document.getElementById('mobile-toggle-btn');
+      const mobileBackdrop = document.getElementById('mobile-sidebar-backdrop');
+      const sidebarCompanyCard = document.getElementById('sidebar-company-card');
+
+      const floatingTooltip = document.createElement('div');
+      floatingTooltip.className = 'sidebar-floating-tooltip';
+      floatingTooltip.setAttribute('role', 'tooltip');
+      floatingTooltip.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(floatingTooltip);
+
+      function showTooltip(target, text) {
+        if (!text) return;
+        floatingTooltip.textContent = text;
+        const rect = target.getBoundingClientRect();
+        const top = rect.top + rect.height / 2;
+        const left = rect.right + 10;
+        floatingTooltip.style.top = `${top}px`;
+        floatingTooltip.style.left = `${left}px`;
+        floatingTooltip.classList.add('visible');
+      }
+
+      function hideTooltip() {
+        floatingTooltip.classList.remove('visible');
+      }
+
+      function setupTooltips() {
+        const tooltipTargets = document.querySelectorAll('#dash-sidebar [data-tooltip]');
+        tooltipTargets.forEach(el => {
+          el.addEventListener('mouseenter', () => {
+            if (document.body.classList.contains('sidebar-collapsed') && window.innerWidth > 820) {
+              const text = el.getAttribute('data-tooltip');
+              showTooltip(el, text);
+            }
+          });
+          el.addEventListener('mouseleave', hideTooltip);
+        });
+      }
+
+      function setSidebarCollapsed(collapsed) {
+        if (collapsed) {
+          document.body.classList.add('sidebar-collapsed');
+          try { localStorage.setItem(SIDEBAR_STORAGE_KEY, 'true'); } catch (e) { }
+        } else {
+          document.body.classList.remove('sidebar-collapsed');
+          try { localStorage.setItem(SIDEBAR_STORAGE_KEY, 'false'); } catch (e) { }
+        }
+        hideTooltip();
+      }
+
+      try {
+        const savedCollapsed = localStorage.getItem(SIDEBAR_STORAGE_KEY);
+        if (savedCollapsed === 'true' && window.innerWidth > 820) {
+          setSidebarCollapsed(true);
+        }
+      } catch (e) { }
+
+      if (sidebarToggleBtn) {
+        sidebarToggleBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+          setSidebarCollapsed(!isCollapsed);
+        });
+      }
+
+      function openMobileSidebar() {
+        if (sidebar) sidebar.classList.add('mobile-open');
+        if (mobileBackdrop) mobileBackdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMobileSidebar() {
+        if (sidebar) sidebar.classList.remove('mobile-open');
+        if (mobileBackdrop) mobileBackdrop.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      if (mobileToggle) {
+        mobileToggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (sidebar && sidebar.classList.contains('mobile-open')) {
+            closeMobileSidebar();
+          } else {
+            openMobileSidebar();
+          }
+        });
+      }
+
+      if (mobileBackdrop) {
+        mobileBackdrop.addEventListener('click', closeMobileSidebar);
+      }
+
+      document.querySelectorAll('#dash-sidebar .sidebar-nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+          if (window.innerWidth <= 820) {
+            closeMobileSidebar();
+          }
+        });
+      });
+
+      setupTooltips();
+
+      // Profile Modal Handlers
+      const profileModal = document.getElementById('profile-modal');
+      const profileClose = document.getElementById('profile-modal-close');
+      const ddProfileBtn = document.getElementById('dd-profile-btn');
+      const sidebarSettingsBtn = document.getElementById('sidebar-settings-btn');
+
+      function openProfileModal() {
+        if (!profileModal) return;
+        document.getElementById('edit-email').value = user.email || '';
+        document.getElementById('edit-name').value = user.name || '';
+        document.getElementById('edit-company').value = user.companyName || '';
+        document.getElementById('edit-phone').value = user.phone || '';
+        document.getElementById('edit-job-title').value = user.jobTitle || '';
+        profileModal.classList.add('open');
+      }
+
+      if (ddProfileBtn) ddProfileBtn.addEventListener('click', openProfileModal);
+      if (sidebarSettingsBtn) sidebarSettingsBtn.addEventListener('click', openProfileModal);
+      if (sidebarCompanyCard) sidebarCompanyCard.addEventListener('click', openProfileModal);
+      if (profileClose) profileClose.addEventListener('click', () => profileModal.classList.remove('open'));
+
+      const profileForm = document.getElementById('profile-edit-form');
+      if (profileForm) {
+        profileForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          AuthClient.clearAlert('profile-modal-alert');
+          const name = document.getElementById('edit-name').value.trim();
+          const companyName = document.getElementById('edit-company').value.trim();
+          const phone = document.getElementById('edit-phone').value.trim();
+          const jobTitle = document.getElementById('edit-job-title').value.trim();
+          const submitBtn = profileForm.querySelector('button[type="submit"]');
+
+          const orig = submitBtn.innerHTML;
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `<span class="auth-spinner"></span> <span>Saving...</span>`;
+
+          try {
+            await AuthClient.updateProfile({ name, companyName, phone, jobTitle });
+            AuthClient.showAlert('profile-modal-alert', 'Profile updated successfully!', 'success');
+            setTimeout(() => window.location.reload(), 700);
+          } catch (err) {
+            AuthClient.showAlert('profile-modal-alert', err.message);
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = orig;
+          }
+        });
+      }
+
+      // Talk to Remo demo
+      const talkBtn = document.getElementById('btn-talk-to-Remo');
+      const qaTalkBtn = document.getElementById('qa-talk-Remo');
+      const triggerTalk = () => { window.location.href = '/#instant-call-demo'; };
+      if (talkBtn) talkBtn.addEventListener('click', triggerTalk);
+      if (qaTalkBtn) qaTalkBtn.addEventListener('click', triggerTalk);
+
+    });
+
+    window.deleteCallRecord = async function(id) {
+      if (!confirm('Are you sure you want to delete this call record?')) return;
+      try {
+        await AdminClient.deleteCall(id);
+        alert('Call deleted successfully.');
+        const tbody = document.getElementById('calls-table-body');
+        if (tbody) tbody.innerHTML = `<tr><td colspan="10" style="text-align: center;">Refreshing...</td></tr>`;
+        setTimeout(() => location.reload(), 500);
+      } catch (e) {
+        alert('Error deleting call: ' + e.message);
+      }
+    };
+
+    window.deleteConversationRecord = async function(id) {
+      if (!confirm('Are you sure you want to delete this conversation?')) return;
+      try {
+        await AdminClient.deleteConversation(id);
+        alert('Conversation deleted successfully.');
+        const tbody = document.getElementById('convs-table-body');
+        if (tbody) tbody.innerHTML = `<tr><td colspan="10" style="text-align: center;">Refreshing...</td></tr>`;
+        setTimeout(() => location.reload(), 500);
+      } catch (e) {
+        alert('Error deleting conversation: ' + e.message);
+      }
+    };
+  </script>
+</body>
+</html>

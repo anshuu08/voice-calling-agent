@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Overview — TakeRemo</title>
+  <meta http-equiv="refresh" content="0; url=/dashboard">
+  <script>window.location.replace('/dashboard');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/auth.css">
+  <style>
+    .account-navbar {
+      width: 100%;
+      background: #FFFFFF;
+      border-bottom: 1px solid #E2E8F0;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+    }
+    .account-nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .account-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btn-nav-outline {
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #031740;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      text-decoration: none;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-nav-outline:hover {
+      background: #F8FAFC;
+      border-color: #CBD5E1;
+    }
+    .btn-nav-primary {
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      background: #FC2415;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-nav-primary:hover {
+      background: #E01E10;
+    }
+    .account-container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+    .account-header {
+      margin-bottom: 32px;
+    }
+    .account-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #031740;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .account-sub {
+      color: #64748B;
+      font-size: 0.95rem;
+    }
+    .account-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 768px) {
+      .account-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .account-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 16px rgba(3, 23, 64, 0.04);
+    }
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #031740;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #F1F5F9;
+      font-size: 0.9rem;
+    }
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    .info-label {
+      color: #64748B;
+      font-weight: 500;
+    }
+    .info-value {
+      color: #031740;
+      font-weight: 600;
+    }
+    .badge-status-active {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: #F0FDF4;
+      color: #16A34A;
+      border: 1px solid #BBF7D0;
+    }
+    .plan-box {
+      background: #FFF5F5;
+      border: 1px solid #FECACA;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .plan-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #FC2415;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .plan-calls {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #031740;
+    }
+    .plan-desc {
+      font-size: 0.8rem;
+      color: #64748B;
+      margin-top: 4px;
+    }
+    .action-btn-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn-outline-danger {
+      width: 100%;
+      padding: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #DC2626;
+      border: 1px solid #FECACA;
+      background: #FFFFFF;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-outline-danger:hover {
+      background: #FEF2F2;
+    }
+  </style>
+</head>
+<body class="auth-body">
+  <div class="auth-bg-ambient"></div>
+  <div class="auth-bg-grid"></div>
+
+  <nav class="account-navbar">
+    <a href="/" class="account-nav-brand">
+      <img src="/assets/Takeremo%20AI%20Calling%20Logo.png" alt="TakeRemo AI Calling" style="height: 36px; width: auto; object-fit: contain;">
+    </a>
+    <div class="account-nav-actions">
+      <a href="/dashboard" class="btn-nav-primary">Open Console</a>
+      <button class="btn-nav-outline" id="btn-logout" type="button">Sign Out</button>
+    </div>
+  </nav>
+
+  <main class="account-container">
+    <div class="account-header">
+      <h1 class="account-title">Account Settings</h1>
+      <p class="account-sub">Manage your profile, team members, API credentials, and voice quotas.</p>
+    </div>
+
+    <div class="account-grid">
+      <!-- Left: Profile & Company Info -->
+      <div class="account-card">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FC2415" stroke-width="2.2">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          Profile Information
+        </h2>
+        <div class="info-row">
+          <span class="info-label">Full Name</span>
+          <span class="info-value" id="user-display-name">Loading...</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Email Address</span>
+          <span class="info-value" id="user-display-email">Loading...</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Company / Workspace</span>
+          <span class="info-value" id="user-display-company">TakeRemo Enterprise</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Role</span>
+          <span class="info-value" id="user-display-role">Organization Owner</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Status</span>
+          <span class="badge-status-active">Active</span>
+        </div>
+      </div>
+
+      <!-- Right: Subscription & Actions -->
+      <div class="account-card">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FC2415" stroke-width="2.2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="m10 15 5-3-5-3v6Z"/>
+          </svg>
+          Voice Plan
+        </h2>
+        <div class="plan-box">
+          <div class="plan-name">Pro Enterprise Plan</div>
+          <div class="plan-calls">5,000</div>
+          <div class="plan-desc">Monthly Automated Minutes</div>
+        </div>
+        <div class="action-btn-list">
+          <a href="/dashboard" class="btn-auth-primary" style="text-decoration:none;">Go to Live Operations</a>
+          <button class="btn-outline-danger" id="btn-danger-signout" type="button">Sign Out</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/auth-client.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = window.TakeRemoAuth ? window.TakeRemoAuth.getCurrentUser() : null;
+      if (user) {
+        document.getElementById('user-display-name').textContent = user.name || 'Admin User';
+        document.getElementById('user-display-email').textContent = user.email || 'admin@takeremo.com';
+        document.getElementById('user-display-company').textContent = user.company || 'TakeRemo HQ';
+        if (user.role) {
+          document.getElementById('user-display-role').textContent = user.role.toUpperCase();
+        }
+      }
+      
+      const doLogout = async () => {
+        if (window.TakeRemoAuth) {
+          await window.TakeRemoAuth.signOut();
+        }
+        window.location.href = '/signin';
+      };
+
+      document.getElementById('btn-logout')?.addEventListener('click', doLogout);
+      document.getElementById('btn-danger-signout')?.addEventListener('click', doLogout);
+    });
+  </script>
+</body>
+</html>

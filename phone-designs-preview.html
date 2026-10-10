@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Hari — Phone UI Comparison Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0B0F19;
+      color: #F8FAFC;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    /* Top Sticky Navigation */
+    .preview-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 15, 25, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(37, 99, 235, 0.2);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #38BDF8;
+    }
+
+    .brand-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      color: #94A3B8;
+    }
+
+    .nav-shortcuts {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .shortcut-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #CBD5E1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .shortcut-pill:hover {
+      background: rgba(37, 99, 235, 0.25);
+      border-color: #38BDF8;
+      color: #FFFFFF;
+    }
+
+    .shortcut-pill.featured {
+      background: #2563EB;
+      color: #FFFFFF;
+      border-color: #3B82F6;
+    }
+
+    /* Hero Banner */
+    .showcase-hero {
+      text-align: center;
+      padding: 48px 24px 36px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #38BDF8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 5px 14px;
+      border-radius: 9999px;
+      margin-bottom: 14px;
+    }
+
+    .hero-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: #94A3B8;
+      line-height: 1.6;
+    }
+
+    /* Comparison Cards Grid */
+    .comparison-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 32px;
+      justify-content: center;
+    }
+
+    .design-card {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(12px);
+      transition: transform 0.25s, border-color 0.25s;
+    }
+
+    .design-card:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-4px);
+    }
+
+    .design-card.highlight-card {
+      border-color: rgba(37, 99, 235, 0.6);
+      background: rgba(15, 23, 42, 0.85);
+      box-shadow: 0 10px 40px rgba(37, 99, 235, 0.2);
+    }
+
+    .card-top-info {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      gap: 12px;
+    }
+
+    .card-meta-col {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .card-number-badge {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #38BDF8;
+    }
+
+    .card-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+
+    .card-traits {
+      font-size: 0.78rem;
+      color: #94A3B8;
+      line-height: 1.4;
+    }
+
+    .btn-view-full {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      background: #2563EB;
+      border: 1px solid #3B82F6;
+      padding: 8px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .btn-view-full:hover {
+      background: #1D4ED8;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* Embedded Phone Frame Wrapper */
+    .phone-embed-wrapper {
+      width: 100%;
+      height: 790px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .phone-embed-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .preview-navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px 20px;
+      }
+      .comparison-container {
+        grid-template-columns: 1fr;
+        padding: 0 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <header class="preview-navbar">
+    <div class="brand-group">
+      <div class="brand-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+      </div>
+      <div>
+        <div class="brand-title">Agent Hari — Phone UI Comparison</div>
+        <div class="brand-sub">Independent Phone UI Design Variants</div>
+      </div>
+    </div>
+
+    <nav class="nav-shortcuts">
+      <a href="#design-1" class="shortcut-pill">Design 1</a>
+      <a href="#design-2" class="shortcut-pill">Design 2</a>
+      <a href="#design-3" class="shortcut-pill">Design 3</a>
+      <a href="#design-4" class="shortcut-pill">Design 4</a>
+      <a href="#design-5-live" class="shortcut-pill featured">Design 5 (Live Command)</a>
+    </nav>
+  </header>
+
+  <!-- Showcase Hero -->
+  <section class="showcase-hero">
+    <div class="hero-eyebrow">DESIGN COMPARISON LAB</div>
+    <h1 class="hero-title">Select the Final Agent Hari Phone UI</h1>
+    <p class="hero-desc">
+      Compare all independent variants below. Each design features authentic Agent Hari recruitment call content, realistic iOS proportions, interactive waveform animations, live call timer, and telephony controls.
+    </p>
+  </section>
+
+  <!-- Comparison Container Grid -->
+  <main class="comparison-container">
+    
+    <!-- ==========================================
+         DESIGN 5: LIVE AI CALL COMMAND CENTER (NEW PRIMARY)
+         ========================================== -->
+    <article class="design-card highlight-card" id="design-5-live">
+      <div class="card-top-info">
+        <div class="card-meta-col">
+          <span class="card-number-badge" style="color:#60A5FA;">DESIGN 5 — LIVE AI CALL COMMAND CENTER</span>
+          <h2 class="card-name">Live AI Call Command Center</h2>
+          <p class="card-traits">Central focal avatar with voice ring, 4 satellite action cards, Gaussian waveform, conversation timeline & 6-cell intelligence grid.</p>
+        </div>
+        <a href="agent-hari-phone-designs/phone-design-5-live-command.html" target="_blank" class="btn-view-full">
+          <span>View Full Design</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+
+      <div class="phone-embed-wrapper">
+        <iframe src="agent-hari-phone-designs/phone-design-5-live-command.html" class="phone-embed-frame" title="Agent Hari Phone Design 5 (Live Command Center) Preview"></iframe>
+      </div>
+    </article>
+
+    <!-- ==========================================
+         DESIGN 1: REFERENCE 1 (Classic White Glass iOS)
+         ========================================== -->
+    <article class="design-card" id="design-1">
+      <div class="card-top-info">
+        <div class="card-meta-col">
+          <span class="card-number-badge">DESIGN 1 — REFERENCE 1</span>
+          <h2 class="card-name">Classic White Glass iOS</h2>
+          <p class="card-traits">Clean white background, glass cards, live waveform, speech bubbles & verified checkmarks.</p>
+        </div>
+        <a href="agent-hari-phone-designs/phone-design-1.html" target="_blank" class="btn-view-full">
+          <span>View Full Design</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+
+      <div class="phone-embed-wrapper">
+        <iframe src="agent-hari-phone-designs/phone-design-1.html" class="phone-embed-frame" title="Agent Hari Phone Design 1 Preview"></iframe>
+      </div>
+    </article>
+
+    <!-- ==========================================
+         DESIGN 2: REFERENCE 2 (Translucent Soft Blue Glassmorphism)
+         ========================================== -->
+    <article class="design-card" id="design-2">
+      <div class="card-top-info">
+        <div class="card-meta-col">
+          <span class="card-number-badge">DESIGN 2 — REFERENCE 2</span>
+          <h2 class="card-name">Soft Blue Glassmorphism</h2>
+          <p class="card-traits">Translucent frosted cards, cyan-to-blue gradient waves, floating dock & capsule badges.</p>
+        </div>
+        <a href="agent-hari-phone-designs/phone-design-2.html" target="_blank" class="btn-view-full">
+          <span>View Full Design</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+
+      <div class="phone-embed-wrapper">
+        <iframe src="agent-hari-phone-designs/phone-design-2.html" class="phone-embed-frame" title="Agent Hari Phone Design 2 Preview"></iframe>
+      </div>
+    </article>
+
+    <!-- ==========================================
+         DESIGN 3: REFERENCE 3 (Minimalist Executive White)
+         ========================================== -->
+    <article class="design-card" id="design-3">
+      <div class="card-top-info">
+        <div class="card-meta-col">
+          <span class="card-number-badge">DESIGN 3 — REFERENCE 3</span>
+          <h2 class="card-name">Minimalist Executive White</h2>
+          <p class="card-traits">Crisp Scandinavian minimalism, razor-sharp borders, candidate dossier & intelligence table.</p>
+        </div>
+        <a href="agent-hari-phone-designs/phone-design-3.html" target="_blank" class="btn-view-full">
+          <span>View Full Design</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+
+      <div class="phone-embed-wrapper">
+        <iframe src="agent-hari-phone-designs/phone-design-3.html" class="phone-embed-frame" title="Agent Hari Phone Design 3 Preview"></iframe>
+      </div>
+    </article>
+
+    <!-- ==========================================
+         DESIGN 4: REFERENCE 4 (Obsidian Dark Glass Mode)
+         ========================================== -->
+    <article class="design-card" id="design-4">
+      <div class="card-top-info">
+        <div class="card-meta-col">
+          <span class="card-number-badge">DESIGN 4 — REFERENCE 4</span>
+          <h2 class="card-name">Obsidian Dark Glass Mode</h2>
+          <p class="card-traits">Space Black titanium frame, dark navy glass cards, electric cyan/blue neon accents & dark controls.</p>
+        </div>
+        <a href="agent-hari-phone-designs/phone-design-4.html" target="_blank" class="btn-view-full">
+          <span>View Full Design</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+
+      <div class="phone-embed-wrapper">
+        <iframe src="agent-hari-phone-designs/phone-design-4.html" class="phone-embed-frame" title="Agent Hari Phone Design 4 Preview"></iframe>
+      </div>
+    </article>
+
+  </main>
+
+</body>
+</html>

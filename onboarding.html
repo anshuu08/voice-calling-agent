@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Set Up Workspace — TakeRemo</title>
+  <meta name="description" content="Personalize your TakeRemo workspace and set up your business profile.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/auth.css">
+  <style>
+    .onboarding-card {
+      max-width: 520px;
+      width: 100%;
+    }
+
+    .field-hint {
+      font-size: 0.75rem;
+      color: var(--auth-text-muted);
+      margin-top: 2px;
+    }
+
+    .form-row-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 540px) {
+      .form-row-two {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .optional-tag {
+      font-size: 0.725rem;
+      font-weight: 500;
+      color: #94A3B8;
+      margin-left: 6px;
+    }
+
+    .input-readonly {
+      background-color: #F8FAFC !important;
+      color: #64748B !important;
+      cursor: not-allowed;
+      border-color: #E2E8F0 !important;
+    }
+
+    .onboarding-step-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--auth-primary-orange);
+      background: #FFF5F5;
+      border: 1px solid #FECACA;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      margin-bottom: 14px;
+    }
+  </style>
+</head>
+
+<body class="auth-body">
+  <div class="auth-bg-ambient"></div>
+  <div class="auth-bg-grid"></div>
+
+  <div class="auth-page-wrapper">
+    <!-- Brand Header -->
+    <header class="auth-brand-header">
+      <a href="/" class="auth-brand-link" title="Return to TakeRemo Home">
+        <img src="/assets/Takeremo%20AI%20Calling%20Logo.png" alt="TakeRemo AI Calling" style="height: 36px; width: auto; object-fit: contain;">
+      </a>
+    </header>
+
+    <!-- Onboarding Card -->
+    <main class="auth-card onboarding-card">
+      <div class="auth-header">
+        <div class="onboarding-step-indicator">
+          <span>WORKSPACE SETUP</span>
+        </div>
+        <h1 class="auth-headline">Let's set up your TakeRemo workspace</h1>
+        <p class="auth-subtitle">Tell us a little about you and your business so we can personalize your workspace.</p>
+      </div>
+
+      <!-- Alert Notification Container -->
+      <div id="onboarding-alert-container" style="display: none;"></div>
+
+      <form class="auth-form" id="onboarding-form" novalidate>
+        <!-- Read-only Email Field -->
+        <div class="form-group">
+          <label class="form-label" for="onboard-email">Account Email</label>
+          <div class="input-wrapper">
+            <input type="email" id="onboard-email" class="auth-input input-readonly" readonly aria-readonly="true">
+          </div>
+        </div>
+
+        <!-- Full Name -->
+        <div class="form-group">
+          <label class="form-label" for="onboard-name">Your Full Name <span style="color:#DC2626;">*</span></label>
+          <div class="input-wrapper">
+            <input type="text" id="onboard-name" class="auth-input" placeholder="e.g. Anshu Sharma" required
+              autocomplete="name">
+          </div>
+        </div>
+
+        <!-- Company Name -->
+        <div class="form-group">
+          <label class="form-label" for="onboard-company">Company Name <span style="color:#DC2626;">*</span></label>
+          <div class="input-wrapper">
+            <input type="text" id="onboard-company" class="auth-input" placeholder="e.g. Kondru Technologies" required
+              autocomplete="organization">
+          </div>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-group">
+          <label class="form-label" for="onboard-phone">Phone Number <span style="color:#DC2626;">*</span></label>
+          <div class="input-wrapper">
+            <input type="tel" id="onboard-phone" class="auth-input" placeholder="+91 98765 43210" required
+              autocomplete="tel">
+          </div>
+          <span class="field-hint">Used for test calls with your AI employee</span>
+        </div>
+
+        <!-- Optional Row: Job Title & Company Size -->
+        <div class="form-row-two">
+          <div class="form-group">
+            <label class="form-label" for="onboard-job-title">Job Title <span
+                class="optional-tag">(Optional)</span></label>
+            <div class="input-wrapper">
+              <input type="text" id="onboard-job-title" class="auth-input" placeholder="e.g. Founder, VP Sales">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="onboard-industry">Industry <span
+                class="optional-tag">(Optional)</span></label>
+            <div class="input-wrapper">
+              <input type="text" id="onboard-industry" class="auth-input" placeholder="e.g. Technology / SaaS">
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-auth-primary" style="margin-top: 8px;">
+          <span>Continue to Workspace</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </form>
+    </main>
+  </div>
+
+  <script src="/auth-client.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Guard: Must be authenticated
+      const user = await AuthClient.getCurrentUser();
+      if (!user) {
+        window.location.href = '/signin';
+        return;
+      }
+
+      // If user profile is ALREADY completed, immediately skip to /dashboard!
+      if (user.profileCompleted) {
+        window.location.href = '/dashboard';
+        return;
+      }
+
+      // Pre-fill email as read-only
+      const emailInput = document.getElementById('onboard-email');
+      if (emailInput) {
+        emailInput.value = user.email || '';
+      }
+
+      // Pre-fill name if user entered it during signup
+      const nameInput = document.getElementById('onboard-name');
+      if (nameInput && user.name) {
+        nameInput.value = user.name;
+      }
+
+      // Pre-fill company if available
+      const companyInput = document.getElementById('onboard-company');
+      if (companyInput && user.companyName) {
+        companyInput.value = user.companyName;
+      }
+
+      // Pre-fill phone if available
+      const phoneInput = document.getElementById('onboard-phone');
+      if (phoneInput && user.phone) {
+        phoneInput.value = user.phone;
+      }
+
+      // Form submission
+      const form = document.getElementById('onboarding-form');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        AuthClient.clearAlert('onboarding-alert-container');
+
+        const name = document.getElementById('onboard-name').value.trim();
+        const companyName = document.getElementById('onboard-company').value.trim();
+        const phone = document.getElementById('onboard-phone').value.trim();
+        const jobTitle = document.getElementById('onboard-job-title').value.trim();
+        const industry = document.getElementById('onboard-industry').value.trim();
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+        // Validation
+        if (!name || name.length < 2) {
+          AuthClient.showAlert('onboarding-alert-container', 'Please enter your full name.');
+          return;
+        }
+        if (!companyName || companyName.length < 2) {
+          AuthClient.showAlert('onboarding-alert-container', 'Please enter your company name.');
+          return;
+        }
+        const cleanPhone = phone.replace(/[\s\-\(\)\+]/g, '');
+        if (!phone || cleanPhone.length < 7) {
+          AuthClient.showAlert('onboarding-alert-container', 'Please enter a valid phone number.');
+          return;
+        }
+
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span class="auth-spinner"></span> <span>Personalizing Workspace...</span>`;
+
+        try {
+          await AuthClient.completeOnboarding({
+            name,
+            companyName,
+            phone,
+            jobTitle,
+            industry
+          });
+
+          AuthClient.showAlert('onboarding-alert-container', 'Workspace initialized! Entering dashboard...', 'success');
+          setTimeout(() => {
+            window.location.href = '/dashboard';
+          }, 600);
+        } catch (err) {
+          AuthClient.showAlert('onboarding-alert-container', err.message);
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

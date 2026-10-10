@@ -1,0 +1,21 @@
+{
+  "name": "agenthari",
+  "version": "1.0.0",
+  "main": "script.js",
+  "scripts": {
+    "start": "python server.py",
+    "test": "python test_auth.py && python test_onboarding_dashboard.py"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3"
+  }
+}
