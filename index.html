@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TakeRemo — AI Employee for Every Business Conversation</title>
+  <title>TakeRemo | Enterprise AI Voice Agents for Customer Support, Sales, Appointments & Hiring</title>
   <meta name="description"
-    content="TakeRemo is an AI voice employee for Recruitment, Sales, and Customer Support. Remo makes calls, understands natural conversations, creates structured notes, and triggers automated business workflows.">
+    content="TakeRemo delivers AI-powered voice agents for customer support, sales, appointment scheduling, hiring and recruitment. Automate outbound calls, manage conversations, and scale business communication with intelligent voice automation.">
 
   <!-- Premium Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,8 +15,8 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap"
     rel="stylesheet">
 
-  <link rel="icon" type="image/png" href="/assets/tabIcon.png">
-  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="icon" type="image/jpeg" href="/assets/tab.jpeg">
+  <link rel="apple-touch-icon" href="/assets/tab.jpeg">
   <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -62,8 +62,42 @@
         <a href="/signup" class="btn btn-primary btn-sm btn-glow" id="nav-signup-btn">
           <span>Create Account</span>
         </a>
+        <button type="button" class="nav-menu-toggle" id="nav-menu-toggle" aria-label="Open menu" aria-expanded="false"
+          aria-controls="mobile-nav-panel">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
+    <nav class="mobile-nav-panel" id="mobile-nav-panel" aria-label="Mobile navigation">
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#instant-call-demo" class="nav-link">60-Sec Test</a>
+      <a href="#recruitment" class="nav-link">Recruitment</a>
+      <a href="#sales" class="nav-link">Sales</a>
+      <a href="#support" class="nav-link">Customer Support</a>
+      <a href="#human-touch" class="nav-link">Human Touch</a>
+      <a href="#how-it-works" class="nav-link">How It Works</a>
+      <a href="#industries" class="nav-link">Industries</a>
+      <div class="mobile-nav-cta">
+        <a href="/signin" class="btn btn-outline btn-sm">Login</a>
+        <a href="/signup" class="btn btn-primary btn-sm">Create Account</a>
+      </div>
+    </nav>
+    <script>
+      (function () {
+        var btn = document.getElementById('nav-menu-toggle');
+        var nav = document.getElementById('top-nav');
+        if (!btn || !nav) return;
+        function setOpen(open) {
+          nav.classList.toggle('menu-open', open);
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+          btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        }
+        btn.addEventListener('click', function () { setOpen(!nav.classList.contains('menu-open')); });
+        document.getElementById('mobile-nav-panel').addEventListener('click', function (e) {
+          if (e.target.closest('a')) setOpen(false);
+        });
+      })();
+    </script>
   </header>
 
   <main>
@@ -81,12 +115,12 @@
         <div class="hero-content">
           <div class="hero-eyebrow">
             <span class="live-dot-pulse" style="background:#FC2415;"></span>
-            <span>AUTOMATED PHONE CALLS</span>
+            <span style="color: var(--brand-blue);">Initiate 1,000 calls with a single click</span>
           </div>
 
           <h1 class="hero-title hero-title-dark">
-            <span style="color: var(--brand-blue);">TakeRemo.</span><br>
-            <span style="color: #FC2415;">Calling, Talking &<br>Converting.</span>
+            <span style="color: var(--brand-blue);">Take</span><span style="color: #FC2415;">Remo</span><br>
+            <span style="color: var(--brand-blue);">Calling, Talking &<br>Converting.</span>
           </h1>
 
           <p class="hero-subtitle hero-subtitle-dark">
@@ -103,7 +137,8 @@
                 <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
             </a>
-            <button class="btn btn-primary btn-lg open-demo-btn" data-usecase="Hero Secondary" style="background-color: #FC2415 !important; border-color: #FC2415 !important; color: white !important;">
+            <button class="btn btn-primary btn-lg open-demo-btn" data-usecase="Hero Secondary"
+              style="background-color: #FC2415 !important; border-color: #FC2415 !important; color: white !important;">
               <span>Talk to Remo</span>
             </button>
           </div>
@@ -135,8 +170,8 @@
           <div class="hero-trust-bar-wrapper">
             <div class="hero-trust-bar hero-trust-dark">
               <span class="trust-item">
-                <svg class="trust-svg-icon" style="stroke: #FC2415;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="trust-svg-icon" style="stroke: #FC2415;" width="15" height="15" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                   <circle cx="9" cy="7" r="4" />
                   <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
@@ -146,16 +181,16 @@
               </span>
               <span class="trust-divider">•</span>
               <span class="trust-item">
-                <svg class="trust-svg-icon" style="stroke: #FC2415;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="trust-svg-icon" style="stroke: #FC2415;" width="15" height="15" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                   <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
                 </svg>
                 <span>Sales</span>
               </span>
               <span class="trust-divider">•</span>
               <span class="trust-item">
-                <svg class="trust-svg-icon" style="stroke: #FC2415;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="trust-svg-icon" style="stroke: #FC2415;" width="15" height="15" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
                   <path
                     d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
@@ -164,8 +199,8 @@
               </span>
               <span class="trust-divider">•</span>
               <span class="trust-item trust-item-naturalness">
-                <svg class="trust-svg-icon" style="stroke: #FC2415;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="trust-svg-icon" style="stroke: #FC2415;" width="14" height="14" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
                   <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
                   <line x1="12" y1="19" x2="12" y2="22" />
@@ -768,7 +803,8 @@
                 <span class="country-prefix-tag">+91</span>
                 <input type="tel" id="instant-mobile-input" placeholder="your mobile number" required
                   pattern="[0-9]{10}">
-                <button type="submit" class="btn btn-primary btn-call-now" id="btn-instant-trigger" style="background-color: #FC2415 !important; border-color: #FC2415 !important; color: white !important;">
+                <button type="submit" class="btn btn-primary btn-call-now" id="btn-instant-trigger"
+                  style="background-color: #FC2415 !important; border-color: #FC2415 !important; color: white !important;">
                   <span>Get instant call</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -1952,7 +1988,7 @@
             <span>THE HUMAN DIFFERENCE</span>
           </div>
           <h2 class="section-title">AI that sounds, listens, and feels like your best employee.</h2>
-          
+
         </div>
 
         <!-- 4 Human Pillars Grid -->

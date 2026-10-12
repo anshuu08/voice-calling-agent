@@ -143,12 +143,12 @@ a {
 }
 
 .container {
-  width: 94%;
-  max-width: 1600px;
+  width: 100%;
+  max-width: none;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 56px;
+  padding-right: 56px;
 }
 
 .glow-card {
@@ -309,10 +309,10 @@ a {
 }
 
 .nav-container {
-  width: 94%;
-  max-width: 1600px;
+  width: 100%;
+  max-width: none;
   margin: 0 auto;
-  padding: 8px 24px;
+  padding: 8px 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -415,7 +415,7 @@ a {
 
 .hero-content {
   max-width: 640px;
-  margin-left: 75px;
+  margin-left: 0;
 }
 
 .hero-eyebrow {
@@ -2008,10 +2008,10 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 40px;
+  padding: 0 56px;
   box-sizing: border-box;
   width: 100%;
-  max-width: 1320px;
+  max-width: none;
   margin: 0 auto;
 }
 
@@ -2093,7 +2093,7 @@ a {
 .cards-stack-stage {
   position: relative;
   width: 100%;
-  max-width: 1240px;
+  max-width: none;
   min-height: 540px;
   height: auto;
   margin: 0 auto;
@@ -5169,3 +5169,635 @@ a {
 .hp-bullet { background-color: #FC2415 !important; }
 .trust-item svg { stroke: #FC2415 !important; color: #FC2415 !important; }
 .hero-phone-screen .accent-dot, .hero-phone-screen .active-indicator { background-color: #FC2415 !important; }
+
+/* --------------------------------------------------------------------------
+   MOBILE VIEW (phones) — hamburger menu + layout fixes
+   -------------------------------------------------------------------------- */
+.nav-menu-toggle,
+.mobile-nav-panel {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  img, svg, video, canvas {
+    max-width: 100%;
+  }
+
+  .container {
+    width: 100%;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  /* Navigation */
+  .nav-container {
+    width: 100%;
+    padding: 8px 14px;
+    gap: 10px;
+  }
+
+  .nav-brand-logo-img {
+    height: 32px;
+    width: auto;
+    max-width: 150px;
+  }
+
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .nav-actions .btn-outline,
+  .nav-sound-toggle {
+    display: none;
+  }
+
+  .nav-actions .btn-sm {
+    padding: 8px 12px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  .nav-menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .nav-menu-toggle span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--text-primary);
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+
+  .top-nav.menu-open .nav-menu-toggle span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .top-nav.menu-open .nav-menu-toggle span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .top-nav.menu-open .nav-menu-toggle span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .mobile-nav-panel {
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 18px 18px;
+    background: #fff;
+    border-top: 1px solid var(--border-light);
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+
+  .top-nav.menu-open .mobile-nav-panel {
+    display: flex;
+  }
+
+  .mobile-nav-panel .nav-link {
+    display: block;
+    padding: 13px 4px;
+    font-size: 1rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .mobile-nav-cta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .mobile-nav-cta .btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Hero */
+  .hero-title {
+    font-size: clamp(1.9rem, 8vw, 2.5rem);
+    line-height: 1.15;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-trust-bar-wrapper,
+  .meta-strip-light {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* Section headings and grids */
+  h2 {
+    font-size: clamp(1.5rem, 6.4vw, 2rem);
+    line-height: 1.2;
+  }
+
+  .service-cards-grid,
+  .human-pillars-grid,
+  .footer-content-grid,
+  .instant-test-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .instant-test-grid {
+    padding: 28px 18px;
+  }
+
+  .story-card .feature-split-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-dash-side,
+  .feature-call-side {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  /* Wide tables/code blocks scroll inside their box instead of the page */
+  table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 420px) {
+  .nav-actions .btn-primary span {
+    font-size: 0.74rem;
+  }
+
+  .nav-brand-logo-img {
+    max-width: 120px;
+  }
+
+  .dash-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   HERO — tablet and phone
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .hero-content {
+    margin: 0 auto;
+    max-width: 640px;
+    padding-top: 28px;
+  }
+
+  .hero-subtitle-dark {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-eyebrow {
+    justify-content: center;
+  }
+
+  .hero-trust-dark {
+    justify-content: center;
+  }
+
+  .hero-voice-sample-card {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-visual {
+    justify-content: center;
+  }
+
+  .hero-phone-composition {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-grid {
+    gap: 12px;
+    padding-top: 0;
+  }
+
+  .hero-content {
+    padding-top: 20px;
+    max-width: 100%;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    margin-bottom: 14px;
+  }
+
+  .hero-title-dark {
+    font-size: clamp(1.85rem, 8.4vw, 2.4rem);
+    line-height: 1.16;
+    margin-bottom: 14px;
+  }
+
+  .hero-subtitle-dark {
+    font-size: 1rem;
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-voice-sample-card {
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 18px;
+  }
+
+  /* Trust bar: tidy wrapped row, no stray dividers */
+  .hero-trust-dark {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 14px;
+    font-size: 0.8rem;
+  }
+
+  .hero-trust-dark .trust-divider {
+    display: none;
+  }
+
+  .hero-trust-dark .trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Phone fits the screen width */
+  .hero-visual {
+    padding: 8px 0 0;
+    min-height: 0;
+  }
+
+  .glow-light {
+    right: 50%;
+    transform: translateX(50%);
+    width: 260px;
+    height: 260px;
+  }
+
+  .hero-phone-composition,
+  .phone-3d-wrapper {
+    width: 100%;
+    max-width: 330px;
+  }
+
+  .iphone-frame {
+    width: 100%;
+    max-width: 310px;
+    margin: 0 auto;
+  }
+
+  .iphone-screen {
+    height: 540px;
+    max-height: none;
+  }
+
+  .hero-light-theme {
+    padding-bottom: 32px;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero-title-dark {
+    font-size: 1.75rem;
+  }
+
+  .iphone-frame {
+    max-width: 280px;
+  }
+
+  .iphone-screen {
+    height: 500px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   WORKFLOW CARDS (Recruitment / Sales / Customer Support) — phone
+   Tabs switch one card at a time; no blank gaps from hidden cards.
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .industry-scroll-section {
+    padding: 36px 0 44px;
+  }
+
+  .industry-sticky-viewport {
+    padding: 0 14px !important;
+    align-items: stretch;
+  }
+
+  /* Bring the tab bar back (an earlier rule hides it) as a scrollable row */
+  .story-progress-indicator {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 6px;
+    padding: 5px;
+    margin-bottom: 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .story-progress-indicator::-webkit-scrollbar {
+    display: none;
+  }
+
+  .story-indicator-item {
+    flex: 1 0 auto;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 14px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  .story-hint-pill {
+    display: none;
+  }
+
+  /* Show only the selected card */
+  .cards-stack-stage {
+    min-height: 0;
+  }
+
+  .story-card:not(.active) {
+    display: none !important;
+  }
+
+  .story-card.active {
+    display: flex !important;
+    visibility: visible !important;
+    margin-bottom: 0;
+    min-height: 0;
+    padding: 22px 16px;
+    border-radius: 18px;
+  }
+
+  .story-card .feature-split-grid {
+    gap: 20px;
+  }
+
+  /* Text block: left aligned, readable */
+  .feature-text-side {
+    text-align: left;
+  }
+
+  .story-card .section-title {
+    font-size: 1.45rem;
+    line-height: 1.25;
+  }
+
+  .story-card .section-short-desc {
+    font-size: 0.92rem;
+    max-width: 100%;
+  }
+
+  .story-card .human-touch-highlight {
+    text-align: left;
+  }
+
+  .story-card .ht-text strong {
+    font-size: 0.88rem;
+  }
+
+  .story-card .ht-text span {
+    font-size: 0.82rem;
+  }
+
+  .feature-action-row {
+    justify-content: stretch;
+  }
+
+  .feature-action-row .btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Analytics panel */
+  .feature-dash-side,
+  .feature-call-side {
+    max-width: 100%;
+  }
+
+  .compact-dashboard {
+    padding: 12px;
+  }
+
+  .dash-header-strip {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .dash-stats-row {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .dash-stat-box {
+    padding: 8px 8px;
+  }
+
+  .dash-stat-number {
+    font-size: 1.15rem;
+  }
+
+  .dash-stat-label {
+    font-size: 0.62rem;
+    line-height: 1.25;
+  }
+
+  .dash-charts-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  /* Funnel card was hidden on phones; show it full width */
+  .dash-donut-card {
+    display: flex;
+  }
+
+  .dash-bar-container {
+    height: 84px;
+  }
+
+  .dash-act-tr {
+    font-size: 0.74rem;
+    padding: 5px 0;
+  }
+
+  /* Call card fits the screen */
+  .realistic-call-card {
+    max-width: 100% !important;
+  }
+
+  .call-card-top {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .extraction-items-row {
+    flex-wrap: wrap;
+  }
+
+  .extraction-items-row .ext-item {
+    flex: 1 1 calc(50% - 6px) !important;
+  }
+
+  .extraction-top {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 380px) {
+  .story-indicator-item {
+    padding: 8px 11px;
+    font-size: 0.74rem;
+  }
+
+  .dash-stats-row {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .dash-stat-number {
+    font-size: 1rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   "Built for conversations across industries" — phone
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  #industries .section-header-simple {
+    margin-bottom: 24px;
+    padding: 0 4px;
+  }
+
+  #industries .section-subtitle-clean {
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  /* All 8 industries visible as wrapped pills; centered scroll used to clip the first ones */
+  .ind-pill-selector {
+    flex-wrap: wrap !important;
+    justify-content: center;
+    overflow: visible;
+    gap: 8px;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+
+  .ind-pill-btn {
+    padding: 8px 13px;
+    font-size: 0.8rem;
+    flex-shrink: 1;
+  }
+
+  .ind-pill-btn:hover {
+    transform: none;
+  }
+
+  .ind-preview-card {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
+
+  .ind-preview-header {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .ind-badge-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .ind-preview-badge {
+    font-size: 0.74rem;
+    line-height: 1.3;
+  }
+
+  .ind-latency-pill {
+    font-size: 0.7rem;
+  }
+
+  .ind-dialogue-box {
+    padding: 14px 14px;
+    margin-bottom: 16px;
+  }
+
+  .ind-agent-line {
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.95rem;
+  }
+
+  .ind-text {
+    font-size: 0.92rem;
+  }
+
+  .ind-chips-row {
+    gap: 6px;
+  }
+
+  .ind-chip {
+    font-size: 0.74rem;
+    padding: 5px 10px;
+  }
+}
