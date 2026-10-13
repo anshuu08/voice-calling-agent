@@ -440,6 +440,44 @@ body.auth-body {
   color: var(--auth-deep-navy);
 }
 
+/* One-time code (OTP) steps */
+.otp-input {
+  text-align: center;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.5em;
+  padding-left: 0.5em;
+}
+
+.otp-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.otp-link {
+  background: none;
+  border: none;
+  padding: 6px 0;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--auth-primary-orange);
+  cursor: pointer;
+}
+
+.otp-link:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+.otp-link:disabled {
+  color: var(--auth-text-muted);
+  cursor: not-allowed;
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 480px) {
   .auth-page-wrapper {
@@ -453,5 +491,23 @@ body.auth-body {
 
   .auth-headline {
     font-size: 1.45rem;
+  }
+
+  /* 16px inputs stop iOS from zooming the page on focus */
+  .auth-card input,
+  .auth-card select,
+  .auth-card textarea {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .auth-page-wrapper {
+    justify-content: flex-start;
+    padding-top: 24px;
+  }
+
+  .auth-card {
+    max-width: 100%;
   }
 }

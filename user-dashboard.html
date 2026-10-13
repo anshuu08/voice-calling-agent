@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Dashboard — TakeRemo</title>
+  <meta name="description"
+    content="TakeRemo User Dashboard — Build your AI employee and automate your business calling.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="/assets/tab.jpeg">
+  <link rel="apple-touch-icon" href="/assets/tab.jpeg">
+  <link rel="stylesheet" href="/user-dashboard.css">
+</head>
+
+<body class="ud-body">
+
+  <div class="ud-layout">
+    <!-- Mobile Backdrop -->
+    <div class="ud-mobile-backdrop" id="ud-mobile-backdrop"></div>
+
+    <!-- ======================================================================
+         SIDEBAR
+         ====================================================================== -->
+    <aside class="ud-sidebar" id="ud-sidebar">
+      <div class="ud-sidebar-header">
+        <a href="/" class="ud-sidebar-logo" title="TakeRemo Home">
+          <img src="/assets/Takeremo AI Calling Logo.png" alt="TakeRemo AI Calling">
+        </a>
+        <button type="button" class="ud-sidebar-toggle" id="ud-sidebar-toggle" aria-label="Collapse sidebar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="ud-sidebar-nav" aria-label="User navigation">
+
+        <!-- Dashboard -->
+        <button type="button" class="ud-nav-item active" id="nav-dashboard" data-view="dashboard" aria-current="page">
+          <svg class="ud-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="14" width="7" height="7" rx="1" />
+            <rect x="3" y="14" width="7" height="7" rx="1" />
+          </svg>
+          <span class="ud-nav-label">Dashboard</span>
+        </button>
+
+        <!-- Settings -->
+        <button type="button" class="ud-nav-item" id="nav-settings" data-view="settings">
+          <svg class="ud-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+          <span class="ud-nav-label">Settings</span>
+        </button>
+
+        <!-- Billing -->
+        <button type="button" class="ud-nav-item" id="nav-billing" data-view="billing">
+          <svg class="ud-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+            <line x1="1" y1="10" x2="23" y2="10" />
+          </svg>
+          <span class="ud-nav-label">Billing</span>
+        </button>
+
+        <!-- Back to Home -->
+        <a href="/" class="ud-nav-item" id="nav-home" style="text-decoration:none; margin-top:auto;">
+          <svg class="ud-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+          <span class="ud-nav-label">Back to Home</span>
+        </a>
+
+      </nav>
+
+      <div class="ud-sidebar-footer">
+        <div class="ud-user-card" id="ud-user-card" role="button" tabindex="0" title="Profile">
+          <div class="ud-user-avatar" id="ud-sidebar-avatar">U</div>
+          <div class="ud-user-details">
+            <div class="ud-user-name" id="ud-sidebar-name">Loading...</div>
+            <div class="ud-user-email" id="ud-sidebar-email">...</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ======================================================================
+         MAIN AREA
+         ====================================================================== -->
+    <div class="ud-main-area">
+
+      <!-- Top Header -->
+      <header class="ud-header">
+        <div class="ud-header-left">
+          <!-- Mobile menu button -->
+          <button type="button" class="ud-mobile-menu-btn" id="ud-mobile-toggle" aria-label="Open navigation">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+          <div>
+            <h1 class="ud-page-title" id="ud-page-title">Dashboard</h1>
+            <p class="ud-page-subtitle" id="ud-page-subtitle">TakeRemo Workspace</p>
+          </div>
+        </div>
+
+        <div class="ud-header-right">
+          <!-- Profile trigger -->
+          <div class="ud-header-profile" id="ud-header-profile" role="button" tabindex="0" aria-haspopup="true"
+            aria-expanded="false">
+            <div class="ud-header-avatar" id="ud-header-avatar">U</div>
+            <span class="ud-header-name" id="ud-header-name">Loading...</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+
+            <!-- Dropdown -->
+            <div class="ud-profile-dropdown" id="ud-profile-dropdown">
+              <div class="ud-dd-header">
+                <div class="ud-dd-name" id="ud-dd-name">User</div>
+                <div class="ud-dd-email" id="ud-dd-email">email@example.com</div>
+              </div>
+              <button type="button" class="ud-dd-item" id="ud-dd-settings">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3" />
+                  <path
+                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                </svg>
+                <span>Settings</span>
+              </button>
+              <a href="/" class="ud-dd-item" style="text-decoration:none;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                <span>Back to Home</span>
+              </a>
+              <button type="button" class="ud-dd-item logout" id="ud-logout-btn">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                  <polyline points="16 17 21 12 16 7" />
+                  <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+                <span>Sign Out</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ====================================================================
+           WORKSPACE CONTENT
+           ==================================================================== -->
+      <main class="ud-workspace">
+
+        <!-- ==================================================================
+             VIEW: DASHBOARD
+             ================================================================== -->
+        <div class="ud-view active" id="view-dashboard">
+
+          <!-- Top Horizontal Agent Remo Hero Card (Inspired by reference, TakeRemo theme) -->
+          <div class="ud-hero-banner">
+            <!-- Top mini pill bar -->
+            <div class="ud-hero-pill-bar">
+              <div class="ud-hero-pill-left">
+                <span class="ud-pill-icon">📞</span>
+                <span class="ud-pill-text"><strong>Build your AI employee</strong> — Tailored voice agent for your
+                  business calls in minutes</span>
+              </div>
+              <span class="ud-pill-badge">FREE PROPOSAL</span>
+            </div>
+
+            <!-- Main Dark Navy Glass Banner Container -->
+            <div class="ud-hero-card">
+              <div class="ud-hero-card-mesh"></div>
+
+              <!-- Left side of hero: Title, description, quick pill filters, preview input -->
+              <div class="ud-hero-left">
+                <div class="ud-hero-badge-tag">
+                  <span>DESCRIBE THE JOB · WE BUILD THE EMPLOYEE</span>
+                </div>
+
+                <div class="ud-hero-title-wrap">
+                  <h2 class="ud-hero-title">Build your AI employee</h2>
+                  <span class="ud-hero-badge-free">ENTERPRISE</span>
+                </div>
+
+                <p class="ud-hero-desc">
+                  Tell us what you want your AI calling agent to handle. We train Remo to talk naturally in your
+                  language and automate your business calls.
+                </p>
+
+                <!-- Quick Action Mode Tags -->
+                <div class="ud-hero-mode-chips">
+                  <div class="ud-hero-mode-chip active">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2.5">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                    </svg>
+                    <span>Instant Lead Calling</span>
+                  </div>
+                  <div class="ud-hero-mode-chip">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                    </svg>
+                    <span>Bulk Campaign Calling</span>
+                  </div>
+                  <div class="ud-hero-mode-chip">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    </svg>
+                    <span>Support & Inbound</span>
+                  </div>
+                </div>
+
+                <!-- Horizontal Quick Voice Preview Box -->
+                <div class="ud-hero-prompt-preview">
+                  <div class="ud-hero-lang-row">
+                    <span class="ud-hero-lang-label">SUPPORTED LANGUAGES:</span>
+                    <div class="ud-hero-lang-scroll">
+                      <span class="ud-lang-pill active">English</span>
+                      <span class="ud-lang-pill">తెలుగు</span>
+                      <span class="ud-lang-pill">हिन्दी</span>
+                      <span class="ud-lang-pill">தமிழ்</span>
+                      <span class="ud-lang-pill">ಕನ್ನಡ</span>
+                      <span class="ud-lang-pill">മലയാളം</span>
+                      <span class="ud-lang-pill">मराठी</span>
+                    </div>
+                  </div>
+
+                  <div class="ud-hero-sample-prompt">
+                    <span class="ud-quote-icon">“</span>
+                    <span>e.g. Call new leads in 60 seconds, qualify budget & book appointments.</span>
+                  </div>
+
+                  <div class="ud-hero-quick-industries">
+                    <span class="ud-ind-pill">🏢 Real Estate</span>
+                    <span class="ud-ind-pill">🎯 Recruitment</span>
+                    <span class="ud-ind-pill">🏥 Clinic & Health</span>
+                    <span class="ud-ind-pill">🚗 Auto Sales</span>
+                    <a href="#ud-proposal-form" class="ud-hero-cta-btn">
+                      <span>Customize in Form Below</span>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <polyline points="19 12 12 19 5 12"></polyline>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <!-- Right side of hero: Circular Interactive Remo Voice Visual -->
+              <div class="ud-hero-right">
+                <div class="ud-hero-remo-badge">
+                  <span>POWERED BY AGENT REMO</span>
+                </div>
+
+                <!-- Pulsing Interactive Voice Orb -->
+                <div class="ud-hero-voice-orb" id="ud-remo-voice-orb" title="Agent Remo Voice Engine">
+                  <div class="ud-hero-ring ud-ring-1"></div>
+                  <div class="ud-hero-ring ud-ring-2"></div>
+                  <div class="ud-hero-ring ud-ring-3"></div>
+                  <div class="ud-hero-orb-core">
+                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                      <line x1="12" y1="19" x2="12" y2="22" />
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Sound Wave Indicator -->
+                <div class="ud-hero-waves">
+                  <span class="ud-wave" style="animation-delay: 0.1s"></span>
+                  <span class="ud-wave" style="animation-delay: 0.25s"></span>
+                  <span class="ud-wave" style="animation-delay: 0.4s"></span>
+                  <span class="ud-wave" style="animation-delay: 0.15s"></span>
+                  <span class="ud-wave" style="animation-delay: 0.35s"></span>
+                  <span class="ud-wave" style="animation-delay: 0.5s"></span>
+                  <span class="ud-wave" style="animation-delay: 0.2s"></span>
+                </div>
+
+                <div class="ud-hero-remo-title">Meet Agent Remo</div>
+                <div class="ud-hero-remo-sub">Your AI employee, designed around your business.</div>
+
+                <div class="ud-hero-stats-row">
+                  <div class="ud-hero-stat">
+                    <strong>99.4%</strong>
+                    <span>Human Accuracy</span>
+                  </div>
+                  <div class="ud-hero-stat-div"></div>
+                  <div class="ud-hero-stat">
+                    <strong>&lt; 500ms</strong>
+                    <span>Latency</span>
+                  </div>
+                  <div class="ud-hero-stat-div"></div>
+                  <div class="ud-hero-stat">
+                    <strong>7+</strong>
+                    <span>Languages</span>
+                  </div>
+                </div>
+
+                <div class="ud-proposals-badge" id="ud-proposals-badge" style="display:none; margin-top:16px;">
+                  <span>✓</span>
+                  <span id="ud-proposals-count">Proposal submitted</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Down: Full-width Glassmorphic Build Your Agent Form -->
+          <div class="ud-form-container-full">
+            <div class="ud-form-glass-card" id="form-card-wrapper">
+
+              <!-- Form Header with subtle topography accent -->
+              <div class="ud-form-card-header">
+                <div class="ud-topo-pattern" aria-hidden="true"></div>
+                <div class="ud-form-card-header-inner">
+                  <div class="ud-form-title-badge">
+                    <span class="ud-badge-dot"></span>
+                    <span>AI AGENT SPECIFICATION FORM</span>
+                  </div>
+                  <h3 class="ud-form-card-title">Build Your Agent</h3>
+                  <p class="ud-form-card-desc">
+                    Tell us what you need in detail. Our engineering team will review your requirements, customize Agent
+                    Remo's speech and workflow models, and contact you with a tailored demo.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Form Body -->
+              <div class="ud-form-body" id="form-body-content">
+
+                <!-- Alert -->
+                <div class="ud-form-alert" id="ud-form-alert" role="alert"></div>
+
+                <form id="ud-proposal-form" novalidate autocomplete="off">
+
+                  <!-- Step 1 Glass Box: Contact & Company Profile -->
+                  <div class="ud-glass-box">
+                    <div class="ud-glass-box-header">
+                      <div class="ud-step-number">1</div>
+                      <div class="ud-step-title-group">
+                        <h4 class="ud-step-title">Your Business & Contact Profile</h4>
+                        <p class="ud-step-desc">Who should our AI engineers coordinate with regarding this agent?</p>
+                      </div>
+                    </div>
+
+                    <!-- Full Name + Phone -->
+                    <div class="ud-form-row-two">
+                      <div class="ud-form-row" style="margin-bottom:0;">
+                        <label class="ud-form-label" for="prop-name">
+                          Full Name <span class="ud-required">*</span>
+                        </label>
+                        <input type="text" id="prop-name" name="fullName" class="ud-input" placeholder="Your full name"
+                          autocomplete="name" required>
+                        <div class="ud-field-error" id="err-name">Please enter your full name.</div>
+                      </div>
+                      <div class="ud-form-row" style="margin-bottom:0;">
+                        <label class="ud-form-label" for="prop-phone">
+                          Phone Number <span class="ud-required">*</span>
+                        </label>
+                        <input type="tel" id="prop-phone" name="phone" class="ud-input" placeholder="+91 98765 43210"
+                          autocomplete="tel" required>
+                        <div class="ud-field-error" id="err-phone">Please enter a valid phone number.</div>
+                      </div>
+                    </div>
+
+                    <!-- Email + Company -->
+                    <div class="ud-form-row-two" style="margin-top:16px;">
+                      <div class="ud-form-row" style="margin-bottom:0;">
+                        <label class="ud-form-label" for="prop-email">
+                          Email Address <span class="ud-required">*</span>
+                        </label>
+                        <input type="email" id="prop-email" name="email" class="ud-input" placeholder="you@company.com"
+                          autocomplete="email" required>
+                        <div class="ud-field-error" id="err-email">Please enter a valid email address.</div>
+                      </div>
+                      <div class="ud-form-row" style="margin-bottom:0;">
+                        <label class="ud-form-label" for="prop-company">
+                          Company Name <span class="ud-required">*</span>
+                        </label>
+                        <input type="text" id="prop-company" name="companyName" class="ud-input"
+                          placeholder="Your company name" required>
+                        <div class="ud-field-error" id="err-company">Company name is required.</div>
+                      </div>
+                    </div>
+
+                    <!-- Company Website + GST Number -->
+                    <div class="ud-form-row-two" style="margin-top:16px;">
+                      <div class="ud-form-row" style="margin-bottom:0;">
+                        <label class="ud-form-label" for="prop-website">
+                          Company Website <span class="ud-optional">(Optional)</span>
+                        </label>
+                        <input type="url" id="prop-website" name="companyWebsite" class="ud-input"
+                          placeholder="https://yourcompany.com">
+                      </div>
+                      <div class="ud-form-row" style="margin-bottom:0;">
+                        <label class="ud-form-label" for="prop-gst">
+                          GST Number <span class="ud-optional">(Optional)</span>
+                        </label>
+                        <input type="text" id="prop-gst" name="gstNumber" class="ud-input" placeholder="22AAAAA0000A1Z5"
+                          maxlength="15">
+                      </div>
+                    </div>
+
+                    <!-- Govt ID / Identity Proof (Required) -->
+                    <div class="ud-form-row" style="margin-top:16px; margin-bottom:0;">
+                      <label class="ud-form-label" for="prop-govt-id">
+                        Govt ID / PAN / Aadhaar / Business Reg No. <span class="ud-required">*</span>
+                      </label>
+                      <input type="text" id="prop-govt-id" name="govtId" class="ud-input"
+                        placeholder="e.g. ABCDE1234F or Business ID / Aadhaar / Passport No." required>
+                      <div class="ud-field-error" id="err-govt-id">Please enter a valid Govt ID or Business Registration
+                        number.</div>
+                    </div>
+                  </div>
+
+                  <!-- Step 2 Glass Box: Industry & AI Agent Role -->
+                  <div class="ud-glass-box" style="margin-top:24px;">
+                    <div class="ud-glass-box-header">
+                      <div class="ud-step-number">2</div>
+                      <div class="ud-step-title-group">
+                        <h4 class="ud-step-title">Industry & Agent Type</h4>
+                        <p class="ud-step-desc">Select the domain and primary responsibility for Agent Remo.</p>
+                      </div>
+                    </div>
+
+                    <!-- Industry Selection -->
+                    <div class="ud-form-row">
+                      <label class="ud-form-label">Industry <span class="ud-required">*</span></label>
+                      <div class="ud-industry-grid" id="industry-grid" role="group" aria-label="Select your industry">
+                        <!-- Dynamically rendered via JS -->
+                      </div>
+                      <div class="ud-form-row" id="industry-other-row"
+                        style="display:none; margin-top:12px; margin-bottom:0;">
+                        <input type="text" id="prop-industry-other" class="ud-input"
+                          placeholder="Please specify your industry">
+                      </div>
+                      <div class="ud-field-error" id="err-industry">Please select your industry.</div>
+                    </div>
+
+                    <!-- Agent Type Selection -->
+                    <div class="ud-form-row" style="margin-top:20px;">
+                      <label class="ud-form-label">Type of AI Agent <span class="ud-required">*</span></label>
+                      <div class="ud-agent-type-grid" role="group" aria-label="Select agent type">
+                        <label class="ud-agent-card">
+                          <input type="radio" name="agentType" value="Recruitment Agent">
+                          <span class="ud-agent-card-label">
+                            <span class="ud-agent-icon">🎯</span>
+                            <span class="ud-agent-text-wrap">
+                              <strong>Recruitment Agent</strong>
+                              <small>Interview, screen resumes & follow up with candidates</small>
+                            </span>
+                          </span>
+                        </label>
+                        <label class="ud-agent-card">
+                          <input type="radio" name="agentType" value="Sales Agent">
+                          <span class="ud-agent-card-label">
+                            <span class="ud-agent-icon">📈</span>
+                            <span class="ud-agent-text-wrap">
+                              <strong>Sales & Leads</strong>
+                              <small>Qualify incoming leads, pitch & schedule appointments</small>
+                            </span>
+                          </span>
+                        </label>
+                        <label class="ud-agent-card">
+                          <input type="radio" name="agentType" value="Customer Support Agent">
+                          <span class="ud-agent-card-label">
+                            <span class="ud-agent-icon">🤝</span>
+                            <span class="ud-agent-text-wrap">
+                              <strong>Customer Support</strong>
+                              <small>Answer FAQs, resolve tickets & handle complaints</small>
+                            </span>
+                          </span>
+                        </label>
+                        <label class="ud-agent-card">
+                          <input type="radio" name="agentType" value="Custom AI Agent">
+                          <span class="ud-agent-card-label">
+                            <span class="ud-agent-icon">⚡</span>
+                            <span class="ud-agent-text-wrap">
+                              <strong>Custom AI Agent</strong>
+                              <small>Tailored business logic, database lookups & APIs</small>
+                            </span>
+                          </span>
+                        </label>
+                      </div>
+                      <div class="ud-field-error" id="err-agent-type">Please select the type of agent.</div>
+                    </div>
+                  </div>
+
+                  <!-- Step 3 Glass Box: Agent Workflow & Business Objectives -->
+                  <div class="ud-glass-box" style="margin-top:24px;">
+                    <div class="ud-glass-box-header">
+                      <div class="ud-step-number">3</div>
+                      <div class="ud-step-title-group">
+                        <h4 class="ud-step-title">Agent Workflow & Business Objectives</h4>
+                        <p class="ud-step-desc">Detail how Remo will operate and the specific ROI you expect.</p>
+                      </div>
+                    </div>
+
+                    <!-- Agent Description -->
+                    <div class="ud-form-row">
+                      <label class="ud-form-label" for="prop-description">
+                        What do you want your AI agent to do? <span class="ud-required">*</span>
+                      </label>
+                      <textarea id="prop-description" name="agentDescription" class="ud-textarea" rows="4"
+                        placeholder="Describe what you want your AI employee to do. For example, call candidates, qualify leads, answer customer questions, schedule appointments, or follow up with enquiries."
+                        required></textarea>
+                      <div class="ud-field-error" id="err-description">Please describe what your AI agent should do.
+                      </div>
+                    </div>
+
+                    <!-- Business Benefit -->
+                    <div class="ud-form-row" style="margin-top:16px;">
+                      <label class="ud-form-label" for="prop-benefit">
+                        How do you think Agent Remo will help your business? <span class="ud-required">*</span>
+                      </label>
+                      <textarea id="prop-benefit" name="businessBenefit" class="ud-textarea" rows="3"
+                        placeholder="Tell us what problems you want to solve, which tasks you want to automate, and what results you expect."
+                        required></textarea>
+                      <div class="ud-field-error" id="err-benefit">Please describe how Agent Remo will help your
+                        business.</div>
+                    </div>
+
+                    <!-- Call Volume + Preferred Languages -->
+                    <div class="ud-form-row-two" style="margin-top:16px;">
+                      <div class="ud-form-row" style="margin-bottom:0;">
+                        <label class="ud-form-label" for="prop-call-volume">
+                          Expected Call Volume <span class="ud-optional">(Optional)</span>
+                        </label>
+                        <select id="prop-call-volume" name="callVolume" class="ud-select">
+                          <option value="">Select expected volume...</option>
+                          <option value="Fewer than 100 calls per month">Fewer than 100 calls per month</option>
+                          <option value="100–1,000 calls per month">100–1,000 calls per month</option>
+                          <option value="1,000–5,000 calls per month">1,000–5,000 calls per month</option>
+                          <option value="More than 5,000 calls per month">More than 5,000 calls per month</option>
+                          <option value="Not sure yet">Not sure yet</option>
+                        </select>
+                      </div>
+                      <div class="ud-form-row" style="margin-bottom:0;">
+                        <label class="ud-form-label">Preferred Languages <span
+                            class="ud-optional">(Multiple)</span></label>
+                        <div class="ud-lang-grid" id="lang-grid" role="group" aria-label="Select preferred languages">
+                          <!-- Rendered by JS -->
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="ud-form-row" id="lang-other-row"
+                      style="display:none; margin-top:12px; margin-bottom:0;">
+                      <input type="text" id="prop-lang-other" class="ud-input"
+                        placeholder="Specify additional languages">
+                    </div>
+                  </div>
+
+                  <!-- Step 4 Glass Box: Documents & Knowledge Base -->
+                  <div class="ud-glass-box" style="margin-top:24px;">
+                    <div class="ud-glass-box-header">
+                      <div class="ud-step-number">4</div>
+                      <div class="ud-step-title-group">
+                        <h4 class="ud-step-title">Knowledge Base & Additional Requirements</h4>
+                        <p class="ud-step-desc">Provide reference scripts, product catalogs, FAQ documents, or special
+                          instructions.</p>
+                      </div>
+                    </div>
+
+                    <!-- Documents text -->
+                    <div class="ud-form-row">
+                      <label class="ud-form-label" for="prop-docs-text">
+                        List Required Documents or Scripts <span class="ud-optional">(Optional)</span>
+                      </label>
+                      <textarea id="prop-docs-text" name="documentsText" class="ud-textarea" rows="3"
+                        placeholder="List documents such as candidate resumes, product catalogues, FAQ sheets, sales scripts, company policies, or spreadsheets that Agent Remo should refer to."></textarea>
+                    </div>
+
+                    <!-- File Upload Glass Area -->
+                    <div class="ud-form-row" style="margin-top:16px;">
+                      <label class="ud-form-label">Upload Reference Documents <span class="ud-optional">(Optional — max
+                          5 files, 10 MB each)</span></label>
+                      <div class="ud-file-upload" id="ud-file-upload-zone">
+                        <input type="file" id="prop-files" name="documents" multiple
+                          accept=".pdf,.doc,.docx,.txt,.xlsx,.xls,.csv,.pptx,.ppt">
+                        <div class="ud-file-upload-icon-box">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="17 8 12 3 7 8" />
+                            <line x1="12" y1="3" x2="12" y2="15" />
+                          </svg>
+                        </div>
+                        <p class="ud-file-upload-text"><strong>Click to upload</strong> or drag and drop files here</p>
+                        <p class="ud-file-upload-hint">PDF, DOCX, XLSX, CSV, TXT, PPTX supported (up to 10 MB each)</p>
+                      </div>
+                      <div class="ud-file-list" id="ud-file-list"></div>
+                    </div>
+
+                    <!-- Additional Requirements -->
+                    <div class="ud-form-row" style="margin-top:16px;">
+                      <label class="ud-form-label" for="prop-additional">
+                        Additional Requirements <span class="ud-optional">(Optional)</span>
+                      </label>
+                      <textarea id="prop-additional" name="additionalRequirements" class="ud-textarea" rows="3"
+                        placeholder="Anything else our engineers should know about integrations, operating hours, call transfers, or accent preferences?"></textarea>
+                    </div>
+                  </div>
+
+                  <!-- Submit Action Footer -->
+                  <div class="ud-submit-container">
+                    <button type="submit" class="ud-submit-btn" id="ud-submit-btn">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <line x1="22" y1="2" x2="11" y2="13" />
+                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                      </svg>
+                      <span id="ud-submit-label">Submit Agent Proposal</span>
+                    </button>
+                    <p class="ud-submit-assurance">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                      </svg>
+                      Encrypted transmission. Your proposal will be reviewed by TakeRemo AI specialists within 1–2
+                      business days.
+                    </p>
+                  </div>
+
+                </form>
+              </div>
+
+              <!-- Success Screen (hidden until submit) -->
+              <div class="ud-success-screen" id="ud-success-screen" style="display:none;">
+                <div class="ud-success-icon-wrap">
+                  <div class="ud-success-icon">✓</div>
+                </div>
+                <h3 class="ud-success-title">Your Proposal Has Been Received!</h3>
+                <p class="ud-success-message">
+                  Thank you for choosing TakeRemo. Your Agent Remo proposal has been submitted successfully.
+                  Our team will review the details you provided and get in touch with you to discuss the next steps.
+                </p>
+                <div class="ud-success-note-box">
+                  <p class="ud-success-email-note" id="ud-success-email-note">
+                    We've also sent a confirmation email with your submitted details to your email address.
+                  </p>
+                </div>
+                <div class="ud-success-actions">
+                  <button type="button" class="ud-btn-primary" id="ud-back-to-form-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="19" y1="12" x2="5" y2="12" />
+                      <polyline points="12 19 5 12 12 5" />
+                    </svg>
+                    Back to Form
+                  </button>
+                  <a href="/" class="ud-btn-outline">Back to Home</a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ==================================================================
+             VIEW: SETTINGS
+             ================================================================== -->
+          <div class="ud-view" id="view-settings">
+            <div class="ud-welcome-section">
+              <h2 class="ud-welcome-title">Settings</h2>
+              <p class="ud-welcome-subtitle">Manage your TakeRemo account and workspace preferences.</p>
+            </div>
+
+            <div class="ud-settings-card">
+              <h3 class="ud-settings-title">Profile Information</h3>
+              <p class="ud-settings-desc">Update your personal details and workspace settings.</p>
+
+              <div class="ud-form-alert" id="settings-alert" role="alert"></div>
+
+              <form id="ud-settings-form">
+                <div class="ud-form-row-two">
+                  <div class="ud-form-row" style="margin-bottom:0;">
+                    <label class="ud-form-label" for="settings-name">Full Name</label>
+                    <input type="text" id="settings-name" class="ud-input" placeholder="Your full name">
+                  </div>
+                  <div class="ud-form-row" style="margin-bottom:0;">
+                    <label class="ud-form-label" for="settings-phone">Phone Number</label>
+                    <input type="tel" id="settings-phone" class="ud-input" placeholder="+91 98765 43210">
+                  </div>
+                </div>
+                <div class="ud-form-row" style="margin-top:16px;">
+                  <label class="ud-form-label" for="settings-email">Email Address
+                    <span class="ud-optional">(Read-only)</span></label>
+                  <input type="email" id="settings-email" class="ud-input" readonly
+                    style="background:#F8FAFC;cursor:not-allowed;color:#64748B;">
+                </div>
+                <div class="ud-form-row-two" style="margin-top:16px;">
+                  <div class="ud-form-row" style="margin-bottom:0;">
+                    <label class="ud-form-label" for="settings-company">Company Name</label>
+                    <input type="text" id="settings-company" class="ud-input" placeholder="Your company">
+                  </div>
+                  <div class="ud-form-row" style="margin-bottom:0;">
+                    <label class="ud-form-label" for="settings-job">Job Title</label>
+                    <input type="text" id="settings-job" class="ud-input" placeholder="e.g. CEO, HR Manager">
+                  </div>
+                </div>
+                <div class="ud-form-row" style="margin-top:20px;">
+                  <button type="submit" class="ud-save-btn" id="settings-save-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- ==================================================================
+             VIEW: BILLING
+             ================================================================== -->
+          <div class="ud-view" id="view-billing">
+            <div class="ud-welcome-section">
+              <h2 class="ud-welcome-title">Billing</h2>
+              <p class="ud-welcome-subtitle">Manage your TakeRemo subscription and billing information.</p>
+            </div>
+
+            <div class="ud-billing-placeholder">
+              <span class="ud-billing-icon">💳</span>
+              <h3 class="ud-billing-title">Billing Coming Soon</h3>
+              <p class="ud-billing-desc">
+                Subscription management, invoices, and usage-based billing will be available here once your
+                Agent Remo proposal is reviewed and your plan is configured.<br><br>
+                If you have any billing questions, please contact us at
+                <a href="mailto:Reach@takeremo.com"
+                  style="color:var(--ud-red);text-decoration:none;font-weight:600;">Reach@takeremo.com</a>.
+              </p>
+            </div>
+          </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/auth-client.js"></script>
+  <script>
+    /* ============================================================================
+       USER DASHBOARD — CLIENT SCRIPT
+       ============================================================================ */
+    document.addEventListener('DOMContentLoaded', async () => {
+
+      // ── 1. Auth Guard ────────────────────────────────────────────────────────
+      const user = await AuthClient.getCurrentUser();
+      if (!user) {
+        window.location.href = '/signin';
+        return;
+      }
+      if (!user.profileCompleted) {
+        window.location.href = '/onboarding';
+        return;
+      }
+      // Admin users should not be on this page
+      if ((user.role || 'user').toLowerCase() === 'admin') {
+        window.location.href = '/dashboard';
+        return;
+      }
+
+      // ── 2. Populate User Info ────────────────────────────────────────────────
+      const initials = (() => {
+        const parts = (user.name || 'U').trim().split(' ');
+        return parts.length > 1
+          ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+          : parts[0][0].toUpperCase();
+      })();
+
+      const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      setTxt('ud-sidebar-avatar', initials);
+      setTxt('ud-sidebar-name', user.name || 'User');
+      setTxt('ud-sidebar-email', user.email || '');
+      setTxt('ud-header-avatar', initials);
+      setTxt('ud-header-name', user.name ? user.name.split(' ')[0] : 'User');
+      setTxt('ud-dd-name', user.name || 'User');
+      setTxt('ud-dd-email', user.email || '');
+
+      // Pre-fill form with user data
+      const nameInput = document.getElementById('prop-name');
+      const emailInput = document.getElementById('prop-email');
+      const companyInput = document.getElementById('prop-company');
+      const phoneInput = document.getElementById('prop-phone');
+
+      if (nameInput && user.name) nameInput.value = user.name;
+      if (emailInput && user.email) emailInput.value = user.email;
+      if (companyInput && user.companyName) companyInput.value = user.companyName;
+      if (phoneInput && user.phone) phoneInput.value = user.phone;
+
+      // ── 3. Industry chips ────────────────────────────────────────────────────
+      const INDUSTRIES = [
+        { icon: '👔', label: 'Recruitment & HR' },
+        { icon: '🏠', label: 'Real Estate' },
+        { icon: '📈', label: 'Sales & Lead Gen' },
+        { icon: '🏥', label: 'Healthcare & Clinics' },
+        { icon: '🎓', label: 'Education & Coaching' },
+        { icon: '🚗', label: 'Automotive' },
+        { icon: '💬', label: 'Customer Support' },
+        { icon: '💼', label: 'Finance & Professional' },
+        { icon: '🛒', label: 'E-commerce' },
+        { icon: '➕', label: 'Other' }
+      ];
+
+      const industryGrid = document.getElementById('industry-grid');
+      const industryOtherRow = document.getElementById('industry-other-row');
+
+      INDUSTRIES.forEach(ind => {
+        const lbl = document.createElement('label');
+        lbl.className = 'ud-industry-card';
+        lbl.innerHTML = `
+          <input type="radio" name="industry" value="${ind.label}">
+          <span class="ud-industry-card-label">
+            <span class="ud-industry-icon">${ind.icon}</span>
+            <span>${ind.label}</span>
+          </span>`;
+        lbl.querySelector('input').addEventListener('change', () => {
+          industryOtherRow.style.display = ind.label === 'Other' ? 'block' : 'none';
+        });
+        industryGrid.appendChild(lbl);
+      });
+
+      // ── 4. Language chips ────────────────────────────────────────────────────
+      const LANGUAGES = ['English', 'Telugu', 'Hindi', 'Tamil', 'Kannada', 'Malayalam', 'Marathi', 'Other'];
+      const langGrid = document.getElementById('lang-grid');
+      const langOtherRow = document.getElementById('lang-other-row');
+
+      LANGUAGES.forEach(lang => {
+        const lbl = document.createElement('label');
+        lbl.className = 'ud-lang-chip';
+        lbl.innerHTML = `
+          <input type="checkbox" name="languages" value="${lang}">
+          <span class="ud-lang-chip-label">${lang}</span>`;
+        lbl.querySelector('input').addEventListener('change', function () {
+          langOtherRow.style.display =
+            langGrid.querySelector('input[value="Other"]:checked') ? 'block' : 'none';
+        });
+        langGrid.appendChild(lbl);
+      });
+
+      // ── 5. File upload preview ───────────────────────────────────────────────
+      const fileInput = document.getElementById('prop-files');
+      const fileList = document.getElementById('ud-file-list');
+      let selectedFiles = [];
+
+      fileInput.addEventListener('change', () => {
+        const newFiles = Array.from(fileInput.files);
+        newFiles.forEach(f => {
+          if (selectedFiles.length >= 5) return;
+          if (f.size > 10 * 1024 * 1024) {
+            showFormAlert(`File "${f.name}" exceeds 10 MB and was not added.`, 'error');
+            return;
+          }
+          selectedFiles.push(f);
+        });
+        renderFileList();
+        fileInput.value = '';
+      });
+
+      function renderFileList() {
+        fileList.innerHTML = selectedFiles.map((f, i) => `
+          <div class="ud-file-item">
+            <span>📄</span>
+            <span class="ud-file-item-name">${escHtml(f.name)}</span>
+            <span style="color:#94A3B8;font-size:0.72rem;">${(f.size / 1024).toFixed(0)} KB</span>
+            <button type="button" class="ud-file-remove" data-index="${i}" aria-label="Remove ${escHtml(f.name)}">✕</button>
+          </div>`).join('');
+        fileList.querySelectorAll('.ud-file-remove').forEach(btn => {
+          btn.addEventListener('click', () => {
+            selectedFiles.splice(parseInt(btn.dataset.index), 1);
+            renderFileList();
+          });
+        });
+      }
+
+      function escHtml(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      // ── 6. View Navigation ───────────────────────────────────────────────────
+      let activeView = 'dashboard';
+
+      const views = {
+        dashboard: { el: document.getElementById('view-dashboard'), title: 'Dashboard', subtitle: 'TakeRemo Workspace' },
+        settings: { el: document.getElementById('view-settings'), title: 'Settings', subtitle: 'Account & Preferences' },
+        billing: { el: document.getElementById('view-billing'), title: 'Billing', subtitle: 'Subscription & Payments' }
+      };
+
+      function switchView(name) {
+        if (!views[name]) return;
+        activeView = name;
+
+        Object.entries(views).forEach(([k, v]) => {
+          v.el.classList.toggle('active', k === name);
+        });
+
+        document.querySelectorAll('.ud-nav-item[data-view]').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.view === name);
+          btn.setAttribute('aria-current', btn.dataset.view === name ? 'page' : 'false');
+        });
+
+        setTxt('ud-page-title', views[name].title);
+        setTxt('ud-page-subtitle', views[name].subtitle);
+
+        // On mobile, close sidebar after nav
+        if (window.innerWidth <= 820) closeMobileSidebar();
+      }
+
+      document.querySelectorAll('.ud-nav-item[data-view]').forEach(btn => {
+        btn.addEventListener('click', () => switchView(btn.dataset.view));
+      });
+
+      // Settings from dropdown
+      document.getElementById('ud-dd-settings')?.addEventListener('click', () => {
+        closeDropdown();
+        switchView('settings');
+      });
+      document.getElementById('ud-user-card')?.addEventListener('click', () => switchView('settings'));
+
+      // ── 7. Sidebar collapse (desktop) ────────────────────────────────────────
+      const SIDEBAR_KEY = 'takeremo_ud_sidebar';
+      const sidebarToggle = document.getElementById('ud-sidebar-toggle');
+
+      try {
+        if (localStorage.getItem(SIDEBAR_KEY) === 'true' && window.innerWidth > 820) {
+          document.body.classList.add('ud-collapsed');
+        }
+      } catch (e) { }
+
+      sidebarToggle?.addEventListener('click', () => {
+        const collapsed = document.body.classList.toggle('ud-collapsed');
+        try { localStorage.setItem(SIDEBAR_KEY, collapsed ? 'true' : 'false'); } catch (e) { }
+      });
+
+      // ── 8. Mobile sidebar ────────────────────────────────────────────────────
+      const sidebar = document.getElementById('ud-sidebar');
+      const mobileToggle = document.getElementById('ud-mobile-toggle');
+      const mobileBackdrop = document.getElementById('ud-mobile-backdrop');
+
+      function openMobileSidebar() {
+        sidebar.classList.add('mobile-open');
+        mobileBackdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeMobileSidebar() {
+        sidebar.classList.remove('mobile-open');
+        mobileBackdrop.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      mobileToggle?.addEventListener('click', () => {
+        sidebar.classList.contains('mobile-open') ? closeMobileSidebar() : openMobileSidebar();
+      });
+      mobileBackdrop?.addEventListener('click', closeMobileSidebar);
+
+      // ── 9. Profile dropdown ──────────────────────────────────────────────────
+      const profileTrigger = document.getElementById('ud-header-profile');
+      const profileDropdown = document.getElementById('ud-profile-dropdown');
+
+      function closeDropdown() {
+        profileDropdown.classList.remove('open');
+        profileTrigger.setAttribute('aria-expanded', 'false');
+      }
+
+      profileTrigger?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const open = profileDropdown.classList.toggle('open');
+        profileTrigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      document.addEventListener('click', closeDropdown);
+
+      // Logout
+      document.getElementById('ud-logout-btn')?.addEventListener('click', () => AuthClient.logout());
+
+      // ── 10. Settings form ────────────────────────────────────────────────────
+      const settingsForm = document.getElementById('ud-settings-form');
+      const settingsAlert = document.getElementById('settings-alert');
+
+      // Pre-fill settings
+      const sName = document.getElementById('settings-name');
+      const sEmail = document.getElementById('settings-email');
+      const sPhone = document.getElementById('settings-phone');
+      const sCompany = document.getElementById('settings-company');
+      const sJob = document.getElementById('settings-job');
+      if (sName) sName.value = user.name || '';
+      if (sEmail) sEmail.value = user.email || '';
+      if (sPhone) sPhone.value = user.phone || '';
+      if (sCompany) sCompany.value = user.companyName || '';
+      if (sJob) sJob.value = user.jobTitle || '';
+
+      settingsForm?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        showSettingsAlert('', '');
+        const saveBtn = document.getElementById('settings-save-btn');
+        const orig = saveBtn.innerHTML;
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<span class="ud-spinner"></span> Saving...';
+
+        try {
+          await AuthClient.updateProfile({
+            name: sName?.value.trim() || '',
+            companyName: sCompany?.value.trim() || '',
+            phone: sPhone?.value.trim() || '',
+            jobTitle: sJob?.value.trim() || ''
+          });
+          showSettingsAlert('Profile updated successfully!', 'success');
+          setTxt('ud-sidebar-name', sName?.value.trim() || user.name);
+          setTxt('ud-header-name', (sName?.value.trim() || user.name || '').split(' ')[0]);
+        } catch (err) {
+          showSettingsAlert(err.message || 'Could not update profile.', 'error');
+        } finally {
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = orig;
+        }
+      });
+
+      function showSettingsAlert(msg, type) {
+        if (!settingsAlert) return;
+        if (!msg) { settingsAlert.classList.remove('visible', 'error', 'success'); return; }
+        settingsAlert.textContent = msg;
+        settingsAlert.className = `ud-form-alert ${type} visible`;
+      }
+
+      // ── 11. Check existing proposals ─────────────────────────────────────────
+      async function checkExistingProposals() {
+        try {
+          const res = await fetch('/api/user/proposals', { credentials: 'include' });
+          if (!res.ok) return;
+          const data = await res.json();
+          if (data.success && data.data && data.data.length > 0) {
+            const badge = document.getElementById('ud-proposals-badge');
+            const countEl = document.getElementById('ud-proposals-count');
+            if (badge && countEl) {
+              countEl.textContent = data.data.length === 1
+                ? '1 proposal submitted'
+                : `${data.data.length} proposals submitted`;
+              badge.style.display = 'inline-flex';
+            }
+          }
+        } catch (e) { /* non-critical */ }
+      }
+      checkExistingProposals();
+
+      // ── 12. Proposal Form Submission ─────────────────────────────────────────
+      const proposalForm = document.getElementById('ud-proposal-form');
+      const submitBtn = document.getElementById('ud-submit-btn');
+      const submitLabel = document.getElementById('ud-submit-label');
+      const formAlert = document.getElementById('ud-form-alert');
+      const successScreen = document.getElementById('ud-success-screen');
+      const formBodyContent = document.getElementById('form-body-content');
+      let submitting = false;
+
+      function showFormAlert(msg, type) {
+        formAlert.textContent = msg;
+        formAlert.className = `ud-form-alert ${type} visible`;
+        formAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      function hideFormAlert() {
+        formAlert.className = 'ud-form-alert';
+      }
+
+      function setFieldError(fieldId, errId, show) {
+        const field = document.getElementById(fieldId);
+        const err = document.getElementById(errId);
+        if (field) field.classList.toggle('error', show);
+        if (err) err.classList.toggle('visible', show);
+      }
+
+      proposalForm?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (submitting) return;
+
+        hideFormAlert();
+        let valid = true;
+
+        // Validate
+        const name = nameInput?.value.trim() || '';
+        const phone = document.getElementById('prop-phone')?.value.trim() || '';
+        const email = emailInput?.value.trim() || '';
+        const company = companyInput?.value.trim() || '';
+        const industry = proposalForm.querySelector('input[name="industry"]:checked')?.value || '';
+        const agentType = proposalForm.querySelector('input[name="agentType"]:checked')?.value || '';
+        const govtId = document.getElementById('prop-govt-id')?.value.trim() || '';
+        const desc = document.getElementById('prop-description')?.value.trim() || '';
+        const benefit = document.getElementById('prop-benefit')?.value.trim() || '';
+
+        const validateField = (cond, fieldId, errId) => { setFieldError(fieldId, errId, !cond); if (!cond) valid = false; };
+        validateField(name.length >= 2, 'prop-name', 'err-name');
+        validateField(/^\+?[\d\s\-().]{7,20}$/.test(phone), 'prop-phone', 'err-phone');
+        validateField(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email), 'prop-email', 'err-email');
+        validateField(company.length >= 1, 'prop-company', 'err-company');
+        validateField(govtId.length >= 3, 'prop-govt-id', 'err-govt-id');
+        setFieldError(null, 'err-industry', !industry); document.getElementById('err-industry').classList.toggle('visible', !industry); if (!industry) valid = false;
+        setFieldError(null, 'err-agent-type', !agentType); document.getElementById('err-agent-type').classList.toggle('visible', !agentType); if (!agentType) valid = false;
+        validateField(desc.length >= 10, 'prop-description', 'err-description');
+        validateField(benefit.length >= 10, 'prop-benefit', 'err-benefit');
+
+        if (!valid) {
+          showFormAlert('Please fill in all required fields.', 'error');
+          proposalForm.querySelector('.ud-input.error, .ud-textarea.error, .ud-select.error')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
+        // Build FormData
+        const fd = new FormData();
+        fd.append('fullName', name);
+        fd.append('phone', phone);
+        fd.append('email', email);
+        fd.append('companyName', company);
+        fd.append('companyWebsite', document.getElementById('prop-website')?.value.trim() || '');
+        fd.append('gstNumber', document.getElementById('prop-gst')?.value.trim() || '');
+        fd.append('govtId', govtId);
+        fd.append('industry', industry);
+        fd.append('industryOther', document.getElementById('prop-industry-other')?.value.trim() || '');
+        fd.append('agentType', agentType);
+        fd.append('agentDescription', desc);
+        fd.append('businessBenefit', benefit);
+        fd.append('callVolume', document.getElementById('prop-call-volume')?.value || '');
+        fd.append('documentsText', document.getElementById('prop-docs-text')?.value.trim() || '');
+        fd.append('additionalRequirements', document.getElementById('prop-additional')?.value.trim() || '');
+
+        // Languages
+        const checkedLangs = Array.from(proposalForm.querySelectorAll('input[name="languages"]:checked')).map(i => i.value);
+        fd.append('languages', JSON.stringify(checkedLangs));
+        fd.append('languagesOther', document.getElementById('prop-lang-other')?.value.trim() || '');
+
+        // Files
+        selectedFiles.forEach(f => fd.append('documents', f));
+
+        // Submit
+        submitting = true;
+        submitBtn.disabled = true;
+        submitLabel.textContent = 'Submitting...';
+        submitBtn.querySelector('svg').style.display = 'none';
+        submitBtn.insertAdjacentHTML('afterbegin', '<span class="ud-spinner" style="margin-right:8px;"></span>');
+
+        try {
+          const res = await fetch('/api/user/proposals', {
+            method: 'POST',
+            body: fd,
+            credentials: 'include'
+          });
+          const data = await res.json();
+
+          if (!res.ok || !data.success) {
+            throw new Error(data.message || 'Submission failed. Please try again.');
+          }
+
+          // Show success screen
+          formBodyContent.style.display = 'none';
+          successScreen.style.display = 'flex';
+          const emailNote = document.getElementById('ud-success-email-note');
+          if (emailNote) emailNote.textContent = data.emailNote || "We've also sent a confirmation email to your email address.";
+
+          // Update badge
+          checkExistingProposals();
+
+        } catch (err) {
+          showFormAlert(err.message, 'error');
+        } finally {
+          submitting = false;
+          submitBtn.disabled = false;
+          submitLabel.textContent = 'Submit Agent Proposal';
+          submitBtn.querySelector('.ud-spinner')?.remove();
+          submitBtn.querySelector('svg').style.display = '';
+        }
+      });
+
+      // Back to form
+      document.getElementById('ud-back-to-form-btn')?.addEventListener('click', () => {
+        successScreen.style.display = 'none';
+        formBodyContent.style.display = '';
+        proposalForm.reset();
+        selectedFiles = [];
+        renderFileList();
+        hideFormAlert();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+    });
+  </script>
+
+</body>
+
+</html>

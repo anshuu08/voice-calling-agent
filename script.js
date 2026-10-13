@@ -181,6 +181,197 @@ document.addEventListener('DOMContentLoaded', () => {
   runLiveCallCycle();
 
   // ------------------------------------------------------------------------
+  // C2. HERO VOICE ORBIT: scripted live-call story inside the phone
+  //     (word-by-word captions, orb state, stage tracker, data capture, fit score, booking badge)
+  // ------------------------------------------------------------------------
+  (() => {
+    const orbStage = document.getElementById('rp-orb-stage');
+    const capBox = document.querySelector('.rp-captions');
+    const capWho = document.getElementById('rp-cap-who');
+    const capText = document.getElementById('rp-cap-text');
+    const stateLabel = document.getElementById('rp-state-label');
+    const stageItems = document.querySelectorAll('#rp-stages li');
+    const chips = document.querySelectorAll('.rp-chip');
+    const fitFill = document.getElementById('rp-fit-fill');
+    const fitNum = document.getElementById('rp-fit-num');
+    if (!orbStage || !capText) return;
+
+    const FIT = 92;
+    const story = [
+      { who: 'Remo', text: 'Hi Rahul, this is Remo from the TakeRemo hiring team. Is now a good time for a quick chat?', stage: 0 },
+      { who: 'Rahul', text: 'Yes, sure. Go ahead.', stage: 0 },
+      { who: 'Remo', text: 'Great! How many years have you worked with React and Node?', stage: 1 },
+      { who: 'Rahul', text: 'Around three years, mostly building dashboards.', stage: 1, capture: ['exp', 'skills'] },
+      { who: 'Remo', text: 'Lovely. And what are your expected CTC and notice period?', stage: 2 },
+      { who: 'Rahul', text: 'About 8.5 LPA, and I can join in 30 days.', stage: 2, capture: ['ctc', 'notice'] },
+      { who: 'Remo', text: 'Perfect. I have booked your interview for Tuesday at 4:30 PM.', stage: 3, final: true }
+    ];
+
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const setStage = (n) => stageItems.forEach((li, i) => li.classList.toggle('on', i <= n));
+    const setCaptured = (keys) => keys.forEach((k) => {
+      const chip = document.querySelector(`.rp-chip[data-key="${k}"]`);
+      if (chip) chip.classList.add('on');
+    });
+    const setFit = (v) => {
+      if (fitFill) fitFill.style.width = v + '%';
+      if (fitNum) fitNum.textContent = v ? v + '%' : '--';
+    };
+
+    const resetAll = () => {
+      chips.forEach((c) => c.classList.remove('on'));
+      setStage(0);
+      setFit(0);
+    };
+
+    const showLine = (line, instant) => {
+      const speaking = line.who === 'Remo';
+      orbStage.dataset.state = speaking ? 'speaking' : 'listening';
+      if (stateLabel) stateLabel.textContent = speaking ? 'Remo is speaking' : 'Listening to Rahul';
+      if (capBox) capBox.classList.toggle('is-caller', !speaking);
+      if (capWho) capWho.textContent = line.who;
+
+      capText.textContent = '';
+      const words = line.text.split(' ').map((w) => {
+        const s = document.createElement('span');
+        s.className = 'w' + (instant ? ' on' : '');
+        s.textContent = w + ' ';
+        capText.appendChild(s);
+        return s;
+      });
+      return words;
+    };
+
+    // Reduced motion: show the finished call, no looping
+    if (reduceMotion) {
+      showLine(story[story.length - 1], true);
+      setStage(3);
+      setCaptured(['exp', 'skills', 'ctc', 'notice']);
+      setFit(FIT);
+      return;
+    }
+
+    const play = async () => {
+      resetAll();
+      await sleep(600);
+      for (const line of story) {
+        setStage(line.stage);
+        const words = showLine(line, false);
+        for (const w of words) {
+          w.classList.add('on');
+          await sleep(line.who === 'Remo' ? 105 : 130);
+        }
+        if (line.capture) {
+          await sleep(350);
+          setCaptured(line.capture);
+        }
+        if (line.final) {
+          setFit(FIT);
+        }
+        await sleep(line.final ? 4200 : 1100);
+      }
+      play();
+    };
+
+    play();
+  })();
+
+  // ------------------------------------------------------------------------
+  // C3. HERO BADGES: timed morphs
+  //   0s  : Lead Generation, Instant Response are visible
+  //   2s  : Lead Generation -> Lead Qualified, Instant Response -> Appointment Booked,
+  //         Interview Booked badge appears (early)
+  //   4s  : Interview Booked -> Interview Call
+  //   7s  : everything resets to the first state and the whole round repeats (loop)
+  // ------------------------------------------------------------------------
+  (() => {
+    const lead = document.getElementById('hero-banner-lead');
+    const instant = document.getElementById('hero-banner-instant');
+    const booking = document.getElementById('hero-banner-booking');
+    if (!lead && !instant && !booking) return;
+
+    const ICON = {
+      check: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FC2415" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+      calendarCheck: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FC2415" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><polyline points="9 16 11 18 15 14"></polyline></svg>',
+      phone: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FC2415" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>'
+    };
+
+    const setContent = (badge, title, sub, icon) => {
+      const t = badge.querySelector('.hfb-title');
+      const s2 = badge.querySelector('.hfb-subtitle');
+      const box = badge.querySelector('.hfb-icon-box');
+      if (t) t.textContent = title;
+      if (s2) s2.textContent = sub;
+      if (box && icon) box.innerHTML = icon;
+    };
+
+    // fade the old text out, swap, fade the new text in, flash the badge
+    const morph = (badge, title, sub, icon, instant) => {
+      if (!badge) return;
+      if (instant) { setContent(badge, title, sub, icon); return; }
+      badge.classList.add('hfb-swap-out');
+      setTimeout(() => {
+        setContent(badge, title, sub, icon);
+        badge.classList.remove('hfb-swap-out');
+        badge.classList.add('hfb-swap-in', 'hfb-flash');
+        setTimeout(() => badge.classList.remove('hfb-swap-in', 'hfb-flash'), 1000);
+      }, 280);
+    };
+
+    const FIRST = {
+      lead: ['LEAD GENERATION', 'Capturing new leads', null],
+      instant: ['INSTANT RESPONSE', 'No waiting', null],
+      booking: ['INTERVIEW BOOKED', 'Tue · 4:30 PM', null]
+    };
+    // original icons, saved so the loop can restore them
+    const startIcons = {};
+    [['lead', lead], ['instant', instant], ['booking', booking]].forEach(([k, el]) => {
+      const box = el && el.querySelector('.hfb-icon-box');
+      if (box) startIcons[k] = box.innerHTML;
+    });
+
+    // the interview badge stays on screen; only its text changes
+    if (booking) booking.classList.add('on');
+
+    // step 2 (2s): Lead Qualified, Appointment Booked, Interview Booked appears
+    const stepTwo = (instantly) => {
+      morph(lead, 'LEAD QUALIFIED', 'Ready for a demo', ICON.check, instantly);
+      morph(instant, 'APPOINTMENT BOOKED', 'Tue · 4:30 PM', ICON.calendarCheck, instantly);
+    };
+
+    // step 3 (4s): Interview Booked -> Interview Call
+    const stepThree = (instantly) => {
+      morph(booking, 'INTERVIEW CALL', 'Remo is dialing…', ICON.phone, instantly);
+    };
+
+    // reset: everything goes back to its first state, ready for the next round
+    const resetAll = () => {
+      morph(lead, FIRST.lead[0], FIRST.lead[1], startIcons.lead, false);
+      morph(instant, FIRST.instant[0], FIRST.instant[1], startIcons.instant, false);
+      morph(booking, FIRST.booking[0], FIRST.booking[1], startIcons.booking, false);
+    };
+
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      stepTwo(true);
+      stepThree(true);
+      return;
+    }
+
+    // one round = 7s: 2s Qualified/Booked, 4s Interview Call, 7s reset, then repeat
+    const ROUND_MS = 7000;
+    const runRound = () => {
+      setTimeout(() => stepTwo(false), 2000);
+      setTimeout(() => stepThree(false), 4000);
+      setTimeout(resetAll, 6600);
+    };
+    runRound();
+    setInterval(runRound, ROUND_MS);
+  })();
+
+  // ------------------------------------------------------------------------
   // D. PRESERVED HERO PARTICLES (DASHBOARD BLUE)
   // ------------------------------------------------------------------------
   const particlesContainer = document.getElementById('particles-container');

@@ -49,7 +49,11 @@ venv.bak/
 *.swo
 .DS_Store
 
-# Logs and databases (uncomment if applicable)
-# *.sqlite3
-# *.log
-# data/
+# Logs and databases
+*.sqlite3
+*.log
+data/*.db
+data/*.db-wal
+data/*.db-shm
+data/uploads/*
+!data/uploads/.gitkeep

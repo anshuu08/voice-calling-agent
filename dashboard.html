@@ -12,6 +12,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
     rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="/assets/tab.jpeg">
+  <link rel="apple-touch-icon" href="/assets/tab.jpeg">
   <link rel="stylesheet" href="/dashboard.css">
   <link rel="stylesheet" href="/auth.css">
 </head>
@@ -29,7 +31,7 @@
       <!-- Sidebar Header / Logo + Collapse Toggle -->
       <div class="sidebar-header">
         <a href="/" class="sidebar-brand" title="TakeRemo Home" data-tooltip="TakeRemo Home">
-          <img src="/assets/Takeremo%20AI%20Calling%20Logo.png" alt="TakeRemo AI Calling" style="height: 32px; width: auto; object-fit: contain;">
+          <img src="/assets/Takeremo%20AI%20Calling%20Logo.png" alt="TakeRemo AI Calling" style="height: 54px; width: auto; object-fit: contain;">
         </a>
 
         <!-- Desktop Sidebar Toggle Button -->
@@ -2235,9 +2237,11 @@
           const stageStatus = document.getElementById('stage-status-badge');
           if (stageStatus) {
             stageStatus.className = 'badge-pill badge-status-completed';
-            stageStatus.textContent = res.status || 'READY';
           }
-          stagedFileId = `file_${Date.now()}`;
+          stagedFileId = res.fileId || res.batchId || stagedFileId || `file_${Date.now()}`;
+          if (serviceBatchState && selectedCampaignService) {
+            serviceBatchState[selectedCampaignService] = res;
+          }
         } catch (err) {
           if (alertBox) {
             alertBox.className = 'admin-alert-banner error';

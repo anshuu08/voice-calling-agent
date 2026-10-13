@@ -1,0 +1,152 @@
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { createServer } from 'http';
+import { WebSocketServer } from 'ws';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
+const server = createServer(app);
+const PORT = process.env.PORT || 8080;
+
+// Configure CORS
+app.use(cors({
+    origin: (origin, callback) => callback(null, true), // Allow all origins for dev, restrict in prod
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+}));
+
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from root
+app.use(express.static(__dirname));
+
+import authRoutes from './routes/auth.js';
+import adminRoutes, { handleExotelWebhook } from './routes/admin.js';
+import userRoutes from './routes/user.js';
+import jwt from 'jsonwebtoken';
+import { getJwtSecret } from './middleware/auth.js';
+import { findUserById } from './users_store.js';
+
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/user', userRoutes);
+
+// Health Check Endpoint
+app.get('/api/health', (req, res) => res.status(200).json({ status: 'ok', uptime: process.uptime(), timestamp: new Date().toISOString() }));
+
+// Dedicated Full-Page Routes
+app.get('/signin', (req, res) => res.sendFile(path.join(__dirname, 'signin.html')));
+app.get('/login', (req, res) => res.redirect(301, '/signin'));
+app.get('/signup', (req, res) => res.sendFile(path.join(__dirname, 'signup.html')));
+app.get('/forgot-password', (req, res) => res.sendFile(path.join(__dirname, 'forgot-password.html')));
+// Password reset now uses an emailed 6-digit code on the forgot-password page
+app.get('/reset-password', (req, res) => res.redirect(302, '/forgot-password'));
+app.get('/onboarding', (req, res) => res.sendFile(path.join(__dirname, 'onboarding.html')));
+
+app.get('/dashboard', (req, res) => {
+    // Protected Admin Dashboard Route
+    let token = req.cookies.agent_hari_token;
+    if (!token) {
+        const authHeader = req.headers.authorization || '';
+        if (authHeader.startsWith('Bearer ')) {
+            token = authHeader.split(' ')[1];
+        }
+    }
+
+    if (!token && !process.env.TESTING) {
+        return res.redirect(302, '/signin');
+    }
+
+    // Role restriction: Non-admin users cannot access the admin dashboard
+    if (token && !process.env.TESTING) {
+        try {
+            const decoded = jwt.verify(token, getJwtSecret(), { algorithms: ['HS256'] });
+            const user = findUserById(decoded.id);
+            if (!user) {
+                return res.redirect(302, '/signin');
+            }
+            const isAdmin = (user.role || '').toLowerCase() === 'admin';
+            if (!isAdmin) {
+                return res.redirect(302, '/user-dashboard');
+            }
+        } catch (e) {
+            return res.redirect(302, '/signin');
+        }
+    }
+
+    res.sendFile(path.join(__dirname, 'dashboard.html'));
+});
+
+// User Dashboard Route (for non-admin users)
+app.get('/user-dashboard', (req, res) => {
+    let token = req.cookies.agent_hari_token;
+    if (!token) {
+        const authHeader = req.headers.authorization || '';
+        if (authHeader.startsWith('Bearer ')) {
+            token = authHeader.split(' ')[1];
+        }
+    }
+    if (!token && !process.env.TESTING) {
+        return res.redirect(302, '/signin');
+    }
+    res.sendFile(path.join(__dirname, 'user-dashboard.html'));
+});
+
+app.get('/account', (req, res) => res.redirect(302, '/dashboard'));
+
+// Phone Preview Routes
+app.get('/phone-preview', (req, res) => res.sendFile(path.join(__dirname, 'phone-designs-preview.html')));
+app.get('/phone-designs-preview', (req, res) => res.sendFile(path.join(__dirname, 'phone-designs-preview.html')));
+
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+
+// Webhook for Exotel
+app.all('/api/exotel/callback', handleExotelWebhook);
+app.all('/api/exotel/webhook', handleExotelWebhook);
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+    console.error('Unhandled server error:', err);
+    res.status(err.status || 500).json({
+        success: false,
+        message: err.message || 'An unexpected error occurred.'
+    });
+});
+
+import { handleVoicebotWebsocket } from './services/voicebot_stream_service.js';
+
+// Configure WebSockets
+const wss = new WebSocketServer({ noServer: true });
+
+server.on('upgrade', (request, socket, head) => {
+    let pathname = '/';
+    try {
+        pathname = new URL(request.url, 'http://localhost').pathname;
+    } catch (e) {
+        pathname = (request.url || '').split('?')[0];
+    }
+
+    if (pathname === '/voicebot' || pathname === '/voicebot/' || pathname.startsWith('/voicebot')) {
+        wss.handleUpgrade(request, socket, head, (ws) => {
+            handleVoicebotWebsocket(ws, request);
+        });
+    } else {
+        socket.destroy();
+    }
+});
+
+server.listen(PORT, () => {
+    console.log("===============================================");
+    console.log(`  Agent Hari Node.js Server running on http://localhost:${PORT}`);
+    console.log(`  Exotel AgentStream WebSocket Active on /voicebot`);
+    console.log("===============================================");
+});

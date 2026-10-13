@@ -41,6 +41,66 @@ const AuthClient = {
   },
 
   /**
+   * POST JSON helper used by the OTP steps
+   */
+  async postJson(url, payload, fallbackMessage) {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      credentials: 'include'
+    });
+    let data = {};
+    try { data = await res.json(); } catch (e) { /* non-JSON error page */ }
+    if (!res.ok || !data.success) {
+      const err = new Error(data.message || fallbackMessage);
+      err.expired = !!data.expired;
+      err.retryAfterSec = data.retryAfterSec;
+      throw err;
+    }
+    return data;
+  },
+
+  verifySignup(payload) {
+    return this.postJson('/api/auth/signup/verify', payload, 'Verification failed.');
+  },
+
+  resendSignup(payload) {
+    return this.postJson('/api/auth/signup/resend', payload, 'Could not resend the code.');
+  },
+
+  /**
+   * "Resend code" button with a countdown
+   */
+  startResendTimer(btn, seconds = 45) {
+    if (!btn) return;
+    if (btn._timer) clearInterval(btn._timer);
+    let left = seconds;
+    btn.disabled = true;
+    btn.textContent = `Resend code in ${left}s`;
+    btn._timer = setInterval(() => {
+      left -= 1;
+      if (left <= 0) {
+        clearInterval(btn._timer);
+        btn.disabled = false;
+        btn.textContent = 'Resend code';
+      } else {
+        btn.textContent = `Resend code in ${left}s`;
+      }
+    }, 1000);
+  },
+
+  /**
+   * Keep a code input to digits only
+   */
+  bindDigitsOnly(input) {
+    if (!input) return;
+    input.addEventListener('input', () => {
+      input.value = input.value.replace(/\D/g, '').slice(0, 6);
+    });
+  },
+
+  /**
    * Login user
    */
   async login(payload) {
@@ -270,26 +330,116 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
       }
 
-      // Submit
+      // Submit: step 1 emails a verification code
       const originalText = submitBtn.innerHTML;
       submitBtn.disabled = true;
-      submitBtn.innerHTML = `<span class="auth-spinner"></span> <span>Creating Account...</span>`;
+      submitBtn.innerHTML = `<span class="auth-spinner"></span> <span>Sending code...</span>`;
 
       try {
         const result = await AuthClient.signup({ name, email, password, confirmPassword });
-        AuthClient.showAlert('auth-alert-container', 'Account created successfully! Preparing workspace...', 'success');
+        showSignupOtpStep(result.email || email, result.message);
+      } catch (err) {
+        AuthClient.showAlert('auth-alert-container', err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+    });
+
+    // ---- Step 2: verify the emailed code ----
+    const otpForm = document.getElementById('otp-form');
+    const otpInput = document.getElementById('otp-input');
+    const otpResendBtn = document.getElementById('otp-resend');
+    const otpChangeBtn = document.getElementById('otp-change');
+    let pendingEmail = '';
+    AuthClient.bindDigitsOnly(otpInput);
+
+    function toggleSignupSteps(showOtp) {
+      signupForm.style.display = showOtp ? 'none' : '';
+      otpForm.style.display = showOtp ? '' : 'none';
+      const divider = document.querySelector('.auth-divider');
+      const googleBtn2 = document.getElementById('btn-google-auth');
+      if (divider) divider.style.display = showOtp ? 'none' : '';
+      if (googleBtn2) googleBtn2.style.display = showOtp ? 'none' : '';
+      const headline = document.querySelector('.auth-headline');
+      const subtitle = document.querySelector('.auth-subtitle');
+      if (headline) headline.textContent = showOtp ? 'Verify your email' : 'Create your TakeRemo account';
+      if (subtitle && showOtp) subtitle.textContent = `Enter the 6-digit code we emailed to ${pendingEmail}.`;
+      if (subtitle && !showOtp) subtitle.textContent = 'Start building conversations that move your business forward.';
+    }
+
+    function showSignupOtpStep(email, message) {
+      pendingEmail = email;
+      toggleSignupSteps(true);
+      AuthClient.showAlert('auth-alert-container', message || `We sent a 6-digit code to ${email}.`, 'success');
+      otpInput.value = '';
+      otpInput.focus();
+      AuthClient.startResendTimer(otpResendBtn, 45);
+    }
+
+    otpForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      AuthClient.clearAlert('auth-alert-container');
+      const otp = otpInput.value.trim();
+      const btn = otpForm.querySelector('button[type="submit"]');
+
+      if (!/^\d{6}$/.test(otp)) {
+        AuthClient.showAlert('auth-alert-container', 'Please enter the 6-digit code.');
+        return;
+      }
+
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<span class="auth-spinner"></span> <span>Verifying...</span>`;
+
+      try {
+        const result = await AuthClient.verifySignup({ email: pendingEmail, otp });
+        AuthClient.showAlert('auth-alert-container', 'Email verified! Preparing workspace...', 'success');
         setTimeout(() => {
           if (result.user && result.user.profileCompleted) {
-            window.location.href = '/dashboard';
+            const isAdmin = (result.user.role || 'user').toLowerCase() === 'admin';
+            window.location.href = isAdmin ? '/dashboard' : '/user-dashboard';
           } else {
             window.location.href = '/onboarding';
           }
         }, 600);
       } catch (err) {
         AuthClient.showAlert('auth-alert-container', err.message);
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+        if (err.expired) {
+          // Code is burned: let the user request a new one right away
+          otpResendBtn.disabled = false;
+          otpResendBtn.textContent = 'Resend code';
+        }
       }
+    });
+
+    otpResendBtn.addEventListener('click', async () => {
+      AuthClient.clearAlert('auth-alert-container');
+      otpResendBtn.disabled = true;
+      try {
+        const res = await AuthClient.resendSignup({ email: pendingEmail });
+        AuthClient.showAlert('auth-alert-container', res.message, 'success');
+        otpInput.value = '';
+        otpInput.focus();
+        AuthClient.startResendTimer(otpResendBtn, 45);
+      } catch (err) {
+        AuthClient.showAlert('auth-alert-container', err.message);
+        if (err.expired) {
+          // The pending signup is gone (server restarted or timed out): start over
+          setTimeout(() => { toggleSignupSteps(false); AuthClient.clearAlert('auth-alert-container'); }, 1800);
+        } else if (err.retryAfterSec) {
+          AuthClient.startResendTimer(otpResendBtn, err.retryAfterSec);
+        } else {
+          otpResendBtn.disabled = false;
+        }
+      }
+    });
+
+    otpChangeBtn.addEventListener('click', () => {
+      AuthClient.clearAlert('auth-alert-container');
+      toggleSignupSteps(false);
     });
   }
 
@@ -318,7 +468,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         AuthClient.showAlert('auth-alert-container', 'Logged in successfully! Redirecting...', 'success');
         setTimeout(() => {
           if (result.user && result.user.profileCompleted) {
-            window.location.href = '/dashboard';
+            const isAdmin = (result.user.role || 'user').toLowerCase() === 'admin';
+            window.location.href = isAdmin ? '/dashboard' : '/user-dashboard';
           } else {
             window.location.href = '/onboarding';
           }
@@ -331,9 +482,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // 6. Forgot Password Form Handler
+  // 6. Forgot Password: step 1 (email a code) + step 2 (code and new password)
   const forgotForm = document.getElementById('forgot-password-form');
-  if (forgotForm) {
+  const resetOtpForm = document.getElementById('reset-otp-form');
+  if (forgotForm && resetOtpForm) {
+    const resetOtpInput = document.getElementById('reset-otp');
+    const resetResendBtn = document.getElementById('reset-resend');
+    const resetChangeBtn = document.getElementById('reset-change');
+    const subtitle = document.getElementById('forgot-subtitle');
+    const headline = document.querySelector('.auth-headline');
+    let resetEmail = '';
+    AuthClient.bindDigitsOnly(resetOtpInput);
+
+    function toggleResetSteps(showOtp) {
+      forgotForm.style.display = showOtp ? 'none' : '';
+      resetOtpForm.style.display = showOtp ? '' : 'none';
+      if (headline) headline.textContent = showOtp ? 'Enter your code' : 'Forgot your password?';
+      if (subtitle) {
+        subtitle.textContent = showOtp
+          ? `Enter the 6-digit code sent to ${resetEmail} and choose a new password.`
+          : "Enter your registered email address and we'll send you a 6-digit code to reset your password.";
+      }
+    }
+
+    async function requestResetCode(email) {
+      return AuthClient.postJson('/api/auth/forgot-password', { email }, 'Could not process request.');
+    }
+
     forgotForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       AuthClient.clearAlert('auth-alert-container');
@@ -341,7 +516,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const email = document.getElementById('forgot-email').value.trim();
       const submitBtn = forgotForm.querySelector('button[type="submit"]');
 
-      if (!email) {
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         AuthClient.showAlert('auth-alert-container', 'Please enter your registered email address.');
         return;
       }
@@ -351,44 +526,32 @@ document.addEventListener('DOMContentLoaded', async () => {
       submitBtn.innerHTML = `<span class="auth-spinner"></span> <span>Sending...</span>`;
 
       try {
-        const res = await AuthClient.forgotPassword({ email });
-        let msg = res.message;
-        if (res.debugResetToken) {
-          msg += ` <br><br><strong>Dev Mode Token:</strong> <a href="/reset-password?token=${res.debugResetToken}" style="color:#2563EB;word-break:break-all;">Click here to reset password directly</a>`;
-        }
-        AuthClient.showAlert('auth-alert-container', msg, 'success');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
+        const res = await requestResetCode(email);
+        resetEmail = res.email || email.toLowerCase();
+        toggleResetSteps(true);
+        AuthClient.showAlert('auth-alert-container', res.message, 'success');
+        resetOtpInput.value = '';
+        resetOtpInput.focus();
+        AuthClient.startResendTimer(resetResendBtn, 45);
       } catch (err) {
         AuthClient.showAlert('auth-alert-container', err.message);
+      } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
       }
     });
-  }
 
-  // 7. Reset Password Form Handler
-  const resetForm = document.getElementById('reset-password-form');
-  if (resetForm) {
-    // Auto-populate token from query param if present
-    const urlParams = new URLSearchParams(window.location.search);
-    const tokenParam = urlParams.get('token');
-    const tokenInput = document.getElementById('reset-token');
-    if (tokenParam && tokenInput) {
-      tokenInput.value = tokenParam;
-    }
-
-    resetForm.addEventListener('submit', async (e) => {
+    resetOtpForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       AuthClient.clearAlert('auth-alert-container');
 
-      const token = document.getElementById('reset-token').value.trim();
+      const otp = resetOtpInput.value.trim();
       const newPassword = document.getElementById('reset-new-password').value;
       const confirmPassword = document.getElementById('reset-confirm-password').value;
-      const submitBtn = resetForm.querySelector('button[type="submit"]');
+      const submitBtn = resetOtpForm.querySelector('button[type="submit"]');
 
-      if (!token) {
-        AuthClient.showAlert('auth-alert-container', 'Password reset token is required.');
+      if (!/^\d{6}$/.test(otp)) {
+        AuthClient.showAlert('auth-alert-container', 'Please enter the 6-digit code.');
         return;
       }
       if (!newPassword || newPassword.length < 6) {
@@ -405,16 +568,38 @@ document.addEventListener('DOMContentLoaded', async () => {
       submitBtn.innerHTML = `<span class="auth-spinner"></span> <span>Resetting Password...</span>`;
 
       try {
-        await AuthClient.resetPassword({ token, newPassword, confirmPassword });
+        await AuthClient.postJson('/api/auth/reset-password', { email: resetEmail, otp, newPassword, confirmPassword }, 'Password reset failed.');
         AuthClient.showAlert('auth-alert-container', 'Password updated successfully! Redirecting to login...', 'success');
-        setTimeout(() => {
-          window.location.href = '/signin';
-        }, 1500);
+        setTimeout(() => { window.location.href = '/signin'; }, 1500);
       } catch (err) {
         AuthClient.showAlert('auth-alert-container', err.message);
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
+        if (err.expired) {
+          resetResendBtn.disabled = false;
+          resetResendBtn.textContent = 'Resend code';
+        }
       }
+    });
+
+    resetResendBtn.addEventListener('click', async () => {
+      AuthClient.clearAlert('auth-alert-container');
+      resetResendBtn.disabled = true;
+      try {
+        const res = await requestResetCode(resetEmail);
+        AuthClient.showAlert('auth-alert-container', res.message, 'success');
+        resetOtpInput.value = '';
+        resetOtpInput.focus();
+        AuthClient.startResendTimer(resetResendBtn, 45);
+      } catch (err) {
+        AuthClient.showAlert('auth-alert-container', err.message);
+        resetResendBtn.disabled = false;
+      }
+    });
+
+    resetChangeBtn.addEventListener('click', () => {
+      AuthClient.clearAlert('auth-alert-container');
+      toggleResetSteps(false);
     });
   }
 

@@ -12,6 +12,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
     rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="/assets/tab.jpeg">
+  <link rel="apple-touch-icon" href="/assets/tab.jpeg">
   <link rel="stylesheet" href="/auth.css">
 </head>
 
@@ -95,6 +97,27 @@
             <polyline points="9 18 15 12 9 6" />
           </svg>
         </button>
+      </form>
+
+      <!-- Step 2: email verification code (hidden until the signup form is submitted) -->
+      <form class="auth-form" id="otp-form" style="display: none;" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="otp-input">6-digit verification code</label>
+          <div class="input-wrapper">
+            <input type="text" id="otp-input" class="auth-input otp-input" inputmode="numeric" pattern="[0-9]*"
+              maxlength="6" placeholder="000000" autocomplete="one-time-code" required>
+          </div>
+        </div>
+        <button type="submit" class="btn-auth-primary">
+          <span>Verify &amp; Create Account</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+        <div class="otp-actions">
+          <button type="button" class="otp-link" id="otp-resend">Resend code</button>
+          <button type="button" class="otp-link" id="otp-change">Change email</button>
+        </div>
       </form>
 
       <!-- OR Divider -->

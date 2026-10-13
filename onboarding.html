@@ -11,6 +11,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
     rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="/assets/tab.jpeg">
+  <link rel="apple-touch-icon" href="/assets/tab.jpeg">
   <link rel="stylesheet" href="/auth.css">
   <style>
     .onboarding-card {
@@ -240,8 +242,10 @@
           });
 
           AuthClient.showAlert('onboarding-alert-container', 'Workspace initialized! Entering dashboard...', 'success');
+          const freshUser = await AuthClient.getCurrentUser();
           setTimeout(() => {
-            window.location.href = '/dashboard';
+            const isAdmin = freshUser && (freshUser.role || 'user').toLowerCase() === 'admin';
+            window.location.href = isAdmin ? '/dashboard' : '/user-dashboard';
           }, 600);
         } catch (err) {
           AuthClient.showAlert('onboarding-alert-container', err.message);

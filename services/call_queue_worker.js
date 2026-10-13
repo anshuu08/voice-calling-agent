@@ -1,0 +1,182 @@
+import db, { utcNow } from './db.js';
+import ExotelService from './exotel_service.js';
+
+export class CallQueueWorker {
+    static isPaused = false;
+    static isRunning = false;
+    static activeLoop = null;
+
+    static async getQueueStatus(batchId = null) {
+        try {
+            let activeCount = 0;
+            if (batchId) {
+                const row = await db.get("SELECT COUNT(*) as cnt FROM call_queue WHERE status = 'QUEUED' AND batch_id = ?", [batchId]);
+                activeCount = row ? Number(row.cnt) : 0;
+            } else {
+                const row = await db.get("SELECT COUNT(*) as cnt FROM call_queue WHERE status = 'QUEUED'");
+                activeCount = row ? Number(row.cnt) : 0;
+            }
+            return {
+                isPaused: this.isPaused,
+                queueLength: activeCount,
+                active: this.isRunning
+            };
+        } catch (e) {
+            console.error('[CallQueueWorker] getQueueStatus error:', e);
+            return { isPaused: this.isPaused, queueLength: 0, active: this.isRunning };
+        }
+    }
+
+    static pauseQueue() {
+        this.isPaused = true;
+    }
+
+    static resumeQueue() {
+        this.isPaused = false;
+        this._startLoop();
+    }
+
+    static async recoverStaleJobs() {
+        const now = utcNow();
+        try {
+            await db.run("UPDATE call_queue SET status = 'FAILED', updated_at = ? WHERE status = 'IN_PROGRESS'", [now]);
+            await db.run("UPDATE contacts SET call_status = 'FAILED', error_details = 'Call interrupted by server restart', updated_at = ? WHERE call_status IN ('CALLING', 'in-progress')", [now]);
+        } catch (e) {
+            console.error('[CallQueueWorker] recoverStaleJobs error:', e);
+        }
+    }
+
+    static async cancelQueue(batchId) {
+        const now = utcNow();
+        try {
+            if (batchId) {
+                await db.run("UPDATE call_queue SET status = 'CANCELLED', updated_at = ? WHERE batch_id = ? AND status IN ('QUEUED', 'IN_PROGRESS')", [now, batchId]);
+                await db.run("UPDATE contacts SET call_status = 'CANCELLED', updated_at = ? WHERE batch_id = ? AND call_status IN ('PENDING', 'CALLING', 'in-progress')", [now, batchId]);
+                await db.run("UPDATE batches SET status = 'CANCELLED', updated_at = ? WHERE id = ?", [now, batchId]);
+            } else {
+                await db.run("UPDATE call_queue SET status = 'CANCELLED', updated_at = ? WHERE status IN ('QUEUED', 'IN_PROGRESS')", [now]);
+                await db.run("UPDATE contacts SET call_status = 'CANCELLED', updated_at = ? WHERE call_status IN ('PENDING', 'CALLING', 'in-progress')", [now]);
+                await db.run("UPDATE batches SET status = 'CANCELLED', updated_at = ? WHERE status IN ('READY', 'IN_PROGRESS')", [now]);
+            }
+        } catch (e) {
+            console.error('[CallQueueWorker] cancelQueue error:', e);
+        }
+    }
+
+    static async enqueueBatch(batchId) {
+        const now = utcNow();
+        try {
+            await db.run("UPDATE batches SET status = 'IN_PROGRESS', updated_at = ? WHERE id = ?", [now, batchId]);
+            const contacts = await db.all("SELECT id, service FROM contacts WHERE batch_id = ? AND validation_status = 'VALID' AND call_status = 'PENDING'", [batchId]);
+
+            await db.transaction(async (trx) => {
+                for (const c of contacts) {
+                    const queueId = `q_${Math.random().toString(36).substring(2, 9)}`;
+                    await trx.run(
+                        "INSERT IGNORE INTO call_queue (id, batch_id, contact_id, service, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)",
+                        [queueId, batchId, c.id, c.service, now, now]
+                    );
+                }
+            });
+
+            this._startLoop();
+            return { queuedCount: contacts.length };
+        } catch (e) {
+            console.error('[CallQueueWorker] enqueueBatch error:', e);
+            return { queuedCount: 0 };
+        }
+    }
+
+    static _startLoop() {
+        if (this.isRunning || this.isPaused) return;
+        this.isRunning = true;
+        this._processNext();
+    }
+
+    static async _processNext() {
+        if (this.isPaused) {
+            this.isRunning = false;
+            return;
+        }
+
+        let nextJob = null;
+        try {
+            nextJob = await db.get(`
+                SELECT cq.id as queue_id, cq.contact_id, cq.batch_id, c.phone, c.name, c.service
+                FROM call_queue cq
+                JOIN contacts c ON cq.contact_id = c.id
+                WHERE cq.status = 'QUEUED'
+                ORDER BY cq.priority DESC, cq.created_at ASC
+                LIMIT 1
+            `);
+
+            if (!nextJob) {
+                // Queue is empty, mark finished batches as COMPLETED
+                const now = utcNow();
+                await db.run(`
+                    UPDATE batches SET status = 'COMPLETED', updated_at = ? 
+                    WHERE status = 'IN_PROGRESS' AND id NOT IN (SELECT DISTINCT batch_id FROM call_queue WHERE status IN ('QUEUED', 'IN_PROGRESS'))
+                `, [now]);
+
+                this.isRunning = false;
+                return;
+            }
+
+            // Mark as IN_PROGRESS
+            const now = utcNow();
+            await db.run("UPDATE call_queue SET status = 'IN_PROGRESS', updated_at = ? WHERE id = ?", [now, nextJob.queue_id]);
+            await db.run("UPDATE contacts SET call_status = 'CALLING', started_at = ?, updated_at = ? WHERE id = ?", [now, now, nextJob.contact_id]);
+
+        } catch (e) {
+            console.error('[CallQueueWorker] Fetch next job error:', e);
+            this.isRunning = false;
+            return;
+        }
+
+        console.log(`[QUEUE] Initiating real Exotel call to ${nextJob.phone} for service ${nextJob.service}...`);
+
+        try {
+            const result = await ExotelService.initiateOutboundCall(nextJob.phone, nextJob.contact_id);
+            const now = utcNow();
+
+            if (result.success && result.callSid) {
+                await db.run(
+                    "UPDATE contacts SET provider_call_id = ?, call_status = 'CALLING', started_at = ?, updated_at = ? WHERE id = ?",
+                    [result.callSid, now, now, nextJob.contact_id]
+                );
+                console.log(`[QUEUE] Outbound call connected! CallSid: ${result.callSid}`);
+            } else {
+                console.warn(`[QUEUE] Exotel dispatch failed: ${result.error}`);
+                await db.run(
+                    "UPDATE contacts SET call_status = 'FAILED', error_details = ?, updated_at = ? WHERE id = ?",
+                    [result.error || 'Exotel dispatch rejected', now, nextJob.contact_id]
+                );
+                await db.run(
+                    "UPDATE call_queue SET status = 'FAILED', updated_at = ? WHERE id = ?",
+                    [now, nextJob.queue_id]
+                );
+            }
+        } catch (err) {
+            console.error(`[QUEUE] Error dialing ${nextJob.phone}:`, err);
+            const now = utcNow();
+            await db.run(
+                "UPDATE contacts SET call_status = 'FAILED', error_details = ?, updated_at = ? WHERE id = ?",
+                [err.message, now, nextJob.contact_id]
+            );
+            await db.run(
+                "UPDATE call_queue SET status = 'FAILED', updated_at = ? WHERE id = ?",
+                [now, nextJob.queue_id]
+            );
+        }
+
+        // Wait before dialing next item in the queue
+        setTimeout(() => {
+            this._processNext();
+        }, 8000);
+    }
+}
+
+CallQueueWorker.recoverStaleJobs().catch(e => console.error('[CallQueueWorker] Startup recovery error:', e));
+
+export default CallQueueWorker;
+
